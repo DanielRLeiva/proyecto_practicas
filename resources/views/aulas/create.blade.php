@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Aula</title>
     <!-- Incluir Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -16,19 +16,19 @@
             @csrf
 
             <!-- Nombre del Aula -->
-            <div class="form-group">
+            <div class="form-group mb-2">
                 <label for="nombre">Nombre</label>
                 <input type="text" class="form-control" id="nombre" name="nombre" required>
             </div>
 
             <!-- Ubicación del Aula -->
-            <div class="form-group">
+            <div class="form-group mb-2">
                 <label for="ubicacion">Ubicación</label>
                 <input type="text" class="form-control" id="ubicacion" name="ubicacion" required>
             </div>
 
             <!-- Descripción del Aula -->
-            <div class="form-group">
+            <div class="form-group mb-4">
                 <label for="descripcion">Descripción</label>
                 <textarea class="form-control" id="descripcion" name="descripcion"></textarea>
             </div>
@@ -40,9 +40,8 @@
     </div>
 
     <!-- Incluir Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>
