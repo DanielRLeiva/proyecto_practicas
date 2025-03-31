@@ -29,7 +29,7 @@ class AulaController extends Controller
      */
     public function store(Request $request)
     {
-        $request ->validate([
+        $request->validate([
             "nombre"=> "required|string|max:255",
             "ubicacion"=> "required|string|max:255",
             "descripcion"=> "nullable|string",
