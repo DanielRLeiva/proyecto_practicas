@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('profesor_portatils', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('profesor_id');
-            $table->unsignedBigInteger('portatil_id')->unique();
+            $table->unsignedBigInteger('portatil_id');
             $table->date('fecha_inicio');
             $table->date('fecha_fin')->nullable();
             $table->text('comentarios')->nullable();
@@ -22,6 +22,8 @@ return new class extends Migration
 
             $table->foreign('profesor_id')->references('id')->on('profesors')->onDelete('cascade');
             $table->foreign('portatil_id')->references('id')->on('portatils')->onDelete('cascade');
+
+            $table->unique(['profesor_id','portatil_id', 'fecha_fin'],'');
         });
     }
 

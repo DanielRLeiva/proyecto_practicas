@@ -40,20 +40,23 @@
                     <td>{{ $aula->ubicacion }}</td>
                     <td>{{ $aula->descripcion }}</td>
                     <td>
-                        <a href="{{ route('aulas.show', $aula->id) }}" class="btn btn-info">Ver Detalles</a>
+                        <a href="{{ route('aulas.show', $aula->id) }}" class="btn btn-info">Ver</a>
                         <a href="{{ route('aulas.edit', $aula->id) }}" class="btn btn-warning">Editar</a>
-
-                        <!-- Formulario para eliminar aula -->
-                        <form action="{{ route('aulas.destroy', $aula->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar esta aula?')">Eliminar</button>
+                        <form action="{{ route('aulas.destroy', $aula->id) }}" method="POST" class="d-inline">
+                            @csrf @method('DELETE')
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar aula?')">Eliminar</button>
                         </form>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
+
+        <hr>
+
+        <!-- Botón para redirigir a usufructos -->
+        <a href="{{ route('usufructos.index') }}" class="btn btn-success mb-3">Ver Usufructos Activos</a>
+
     </div>
 
     <!-- Incluir Bootstrap JS -->

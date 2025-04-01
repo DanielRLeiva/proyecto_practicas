@@ -11,10 +11,8 @@ class Profesor extends Model
 
     protected $fillable = ['nombre', 'apellido_1', 'apellido_2'];
 
-    public function portatiles()
+    public function usufructo()
     {
-        return $this->belongsToMany(Portatil::class, 'profesor_portatils')
-            ->whitPivot('fecha_inicio', 'fecha_fin', 'comentarios')
-            ->whitTimestamps();
+       return $this->hasMany(ProfesorPortatil::class);
     }
 }

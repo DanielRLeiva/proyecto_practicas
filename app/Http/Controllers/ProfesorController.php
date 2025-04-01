@@ -12,9 +12,9 @@ class ProfesorController extends Controller
      */
     public function index()
     {
-        $profesor = Profesor::all();
+        $profesores = Profesor::all();
 
-        return view('aulas.index', compact('profesores'));
+        return view("profesores.index", compact("profesores"));
     }
 
     /**
@@ -22,7 +22,7 @@ class ProfesorController extends Controller
      */
     public function create()
     {
-        return view('profesor.create');
+        return view("profesores.create");
     }
 
     /**
@@ -31,9 +31,9 @@ class ProfesorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre'=> 'required|string|max:255',
-            'apellido_1'=> 'required|string|max:255',
-            'apellido_2'=> 'nullable|string|max:255',
+           'nombre' => 'required|string|max:255',
+            'apellido_1' => 'required|string|max:255',
+            'apellido_2' => 'nullable|string|max:255',
         ]);
 
         Profesor::create($request->all());
@@ -55,7 +55,7 @@ class ProfesorController extends Controller
      */
     public function edit(Profesor $profesor)
     {
-        //
+        return view('profesores.edit', compact('profesor'));
     }
 
     /**
@@ -63,7 +63,20 @@ class ProfesorController extends Controller
      */
     public function update(Request $request, Profesor $profesor)
     {
-        //
+        $request->validate([
+          'nombre' => 'required|string|max:255',
+            'apellido_1' => 'required|string|max:255',
+            'apellido_2' => 'nullable|string|max:255',
+        ]);
+        
+        $profesor->update([
+            'nombre' => $request->nombre,
+            'apellido_1'=> $request->apellido_1,
+            'apellido_2'=> $request->apellido_2
+        ]);
+
+        return redirect()->route('profesores.index')
+            ->with('success','Profesor actualizado con éxito.');
     }
 
     /**
@@ -71,6 +84,9 @@ class ProfesorController extends Controller
      */
     public function destroy(Profesor $profesor)
     {
-        //
+        $profesor->delete();
+
+        return redirect()->route('profesores.index')
+            ->with('success','Profesor eliminado con éxito.');
     }
 }

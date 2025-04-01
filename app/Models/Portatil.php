@@ -11,8 +11,8 @@ class Portatil extends Model
 
     protected $fillable = ['marca_modelo', 'comentarios'];
 
-    public function profesores()
+    public function usufructo()
     {
-    return $this->hasOne(ProfesorPortatil::class, 'portatil_id');
+    return $this->hasOne(ProfesorPortatil::class);
     } 
 }

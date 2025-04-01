@@ -12,7 +12,9 @@ class PortatilController extends Controller
      */
     public function index()
     {
-        //
+        $portatiles = Portatil::all();
+
+        return view("portatiles.index", compact("portatiles"));
     }
 
     /**
@@ -20,7 +22,8 @@ class PortatilController extends Controller
      */
     public function create()
     {
-        //
+        return view("portatiles.create")
+            ->with("success", "Portátil creado con éxito.");
     }
 
     /**
@@ -28,7 +31,15 @@ class PortatilController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "marca_modelo"=> "required|string|max:255",
+            "comentarios"=> "nullable|string|max:255",
+        ]);
+
+        Portatil::create($request->all());
+
+        return redirect()->route("portatiles.index")
+            ->with("success","Portátil creado con éxito.");
     }
 
     /**
@@ -43,8 +54,8 @@ class PortatilController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Portatil $portatil)
-    {
-        //
+    {        
+        return view("portatiles.edit", compact("portatil"));
     }
 
     /**
@@ -52,7 +63,18 @@ class PortatilController extends Controller
      */
     public function update(Request $request, Portatil $portatil)
     {
-        //
+        $request->validate([
+            'marca_modelo' => 'required|string|max:255',
+            'comentarios' => 'nullable|string|max:255',
+        ]);
+
+        $portatil->update([
+            'marca_modelo' => $request->marca_modelo,
+            'comentarios'=> $request->comentarios,
+        ]);
+
+        return redirect()->route('portatiles.index')
+            ->with('success','Portátil creado con éxito.');
     }
 
     /**
@@ -60,6 +82,9 @@ class PortatilController extends Controller
      */
     public function destroy(Portatil $portatil)
     {
-        //
+        $portatil->delete();
+
+        return redirect()->route('portatiles.index')
+            ->with('success','Portátil eliminado con éxito.');
     }
 }

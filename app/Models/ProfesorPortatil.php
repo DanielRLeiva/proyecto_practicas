@@ -14,7 +14,7 @@ class ProfesorPortatil extends Model
         'portatil_id',
         'fecha_inicio',
         'fecha_fin',
-        'comentariso'
+        'comentarios',
     ];
 
     public function profesor()

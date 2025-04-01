@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aula;
+use App\Models\ProfesorPortatil;
 use Illuminate\Http\Request;
 
 class AulaController extends Controller
@@ -13,6 +14,7 @@ class AulaController extends Controller
     public function index()
     {
         $aulas = Aula::with(['equipos', 'materiales'])->get();
+
         return view("aulas.index", compact("aulas"));
     }
 
@@ -30,9 +32,9 @@ class AulaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "nombre"=> "required|string|max:255",
-            "ubicacion"=> "required|string|max:255",
-            "descripcion"=> "nullable|string",
+            "nombre" => "required|string|max:255",
+            "ubicacion" => "required|string|max:255",
+            "descripcion" => "nullable|string",
         ]);
 
         Aula::create($request->all());
@@ -47,6 +49,7 @@ class AulaController extends Controller
     public function show($id)
     {
         $aula = Aula::with(['equipos', 'materiales'])->findOrFail($id);
+
         return view("aulas.show", compact("aula"));
     }
 
@@ -63,16 +66,16 @@ class AulaController extends Controller
      */
     public function update(Request $request, Aula $aula)
     {
-        $request ->validate([
-            "nombre"=> "required|string|max:255",
-            "ubicacion"=> "required|string|max:255",
-            "descripcion"=> "nullable|string",
+        $request->validate([
+            "nombre" => "required|string|max:255",
+            "ubicacion" => "required|string|max:255",
+            "descripcion" => "nullable|string",
         ]);
 
         $aula->update($request->all());
 
         return redirect()->route("aulas.index")
-            ->with("success","Aula actualizada con éxito.");
+            ->with("success", "Aula actualizada con éxito.");
     }
 
     /**
@@ -83,6 +86,6 @@ class AulaController extends Controller
         $aula->delete();
 
         return redirect()->route("aulas.index")
-            ->with("success","Aula eliminada con éxito.");
+            ->with("success", "Aula eliminada con éxito.");
     }
 }
