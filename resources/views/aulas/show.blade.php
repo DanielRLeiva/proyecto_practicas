@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div class="container-fluid m-3">
+    <div class="container mt-5">
         <h2>{{ $aula->nombre }}</h2>
         <p><strong>Ubicación:</strong> {{ $aula->ubicacion }}</p>
         <p><strong>Descripción:</strong> {{ $aula->descripcion }}</p>
@@ -22,11 +22,15 @@
         </div>
         @endif
 
+        <hr>
+
         <h3>Equipos</h3>
-        <a href="{{ route('equipos.create', $aula->id) }}" class="btn btn-primary mb-3">Crear equipo</a>
+        <a href="{{ route('equipos.create', $aula->id) }}" class="btn btn-success mb-3">Crear equipo</a>
+
         @if($aula->equipos->isEmpty())
         <p>No hay equipos registrados para esta aula.</p>
         @else
+
         <div class="table-responsive mb-4">
             <table class="table table-bordered">
                 <thead>
@@ -88,8 +92,10 @@
 
         @endif
 
+        <hr>
+
         <h3>Materiales</h3>
-        <a href="{{ route('materiales.create', $aula->id) }}" class="btn btn-primary mb-3">Crear material</a>
+        <a href="{{ route('materiales.create', $aula->id) }}" class="btn btn-success mb-3">Crear material</a>
 
         @if($aula->materiales->isEmpty())
         <p>No hay materiales registrados para esta aula.</p>
@@ -133,7 +139,7 @@
 
         @endif
 
-        <a href="{{ route('aulas.index') }}" class="btn btn-secondary mb-5">Volver a la lista de aulas</a>
+        <a href="{{ route('aulas.index') }}" class="btn btn-primary mb-5">Volver a la lista de aulas</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

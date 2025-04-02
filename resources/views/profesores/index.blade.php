@@ -10,16 +10,24 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container mt-5">
         <h1>Profesores</h1>
 
         @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
         @endif
 
-        <a href="{{ route('profesores.create') }}" class="btn btn-primary mb-3">Nuevo Profesor</a>
+        @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+        @endif
 
-        <table class="table">
+        <a href="{{ route('profesores.create') }}" class="btn btn-success mb-3">Nuevo Profesor</a>
+
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -46,7 +54,7 @@
             </tbody>
         </table>
 
-        <a href="{{ route('usufructos.index') }}" class="btn btn-secondary mb-5">Volver a la lista de Usufructos</a>
+        <a href="{{ route('usufructos.index') }}" class="btn btn-primary mb-5">Volver a la lista de Usufructos</a>
     </div>
     <!-- Incluir Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Carbon\Traits\LocalFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Portatil extends Model
 {
-    use LocalFactory;
+    use HasFactory;
 
     protected $fillable = ['marca_modelo', 'comentarios'];
 

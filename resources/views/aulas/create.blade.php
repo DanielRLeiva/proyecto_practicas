@@ -34,8 +34,8 @@
             </div>
 
             <!-- Botón de Guardar -->
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <a href="{{ route('aulas.index') }}" class="btn btn-secondary ml-2">Cancelar</a>
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a href="{{ route('aulas.index') }}" class="btn btn-primary ml-2">Cancelar</a>
         </form>
     </div>
 

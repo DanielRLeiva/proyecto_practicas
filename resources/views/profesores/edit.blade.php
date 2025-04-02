@@ -53,7 +53,7 @@
         </form>
 
         <!-- Botón para regresar a la lista de profesores -->
-        <a href="{{ route('profesores.index') }}" class="btn btn-secondary mt-3">Volver a la lista de Profesores</a>
+        <a href="{{ route('profesores.index') }}" class="btn btn-primary mt-3">Volver a la lista de Profesores</a>
     </div>
 
     <!-- Incluir Bootstrap JS -->

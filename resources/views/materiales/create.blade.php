@@ -10,10 +10,8 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container mt-5">
         <h2>Crear Material - Aula: {{ $aula->nombre }}</h2>
-        <p><strong>Ubicación:</strong> {{ $aula->ubicacion }}</p>
-        <p><strong>Descripción:</strong> {{ $aula->descripcion }}</p>
 
         <!-- Mostrar mensaje de error en caso de que haya validación -->
         @if ($errors->any())
@@ -30,39 +28,39 @@
             @csrf
             <input type="hidden" name="aula_id" value="{{ $aula->id }}">
 
-            <div class="form-group mb-2">
-                <label for="etiqueta">Etiqueta</label>
+            <div class="form-group mb-3">
+                <label for="etiqueta" class="fw-bold">Etiqueta</label>
                 <input type="text" name="etiqueta" class="form-control" id="etiqueta" value="{{ old('etiqueta') }}" required>
             </div>
 
-            <div class="form-group mb-2">
-                <label for="descripcion">Descripción</label>
+            <div class="form-group mb-3">
+                <label for="descripcion" class="fw-bold">Descripción</label>
                 <input type="text" name="descripcion" class="form-control" id="descripcion" value="{{ old('descripcion') }}" required>
             </div>
 
-            <div class="form-group mb-2">
-                <label for="marca">Marca</label>
+            <div class="form-group mb-3">
+                <label for="marca" class="fw-bold">Marca</label>
                 <input type="text" name="marca" class="form-control" id="marca" value="{{ old('marca') }}" required>
             </div>
 
-            <div class="form-group mb-2">
-                <label for="modelo">Modelo</label>
+            <div class="form-group mb-3">
+                <label for="modelo" class="fw-bold">Modelo</label>
                 <input type="text" name="modelo" class="form-control" id="modelo" value="{{ old('modelo') }}" required>
             </div>
 
-            <div class="form-group mb-2">
-                <label for="numero_serie">Número de serie</label>
+            <div class="form-group mb-3">
+                <label for="numero_serie" class="fw-bold">Número de serie</label>
                 <input type="text" name="numero_serie" class="form-control" id="numero_serie" value="{{ old('numero_serie') }}" required>
             </div>
 
             <div class="form-group mb-4">
-                <label for="caracteristicas">Características</label>
+                <label for="caracteristicas" class="fw-bold">Características</label>
                 <textarea name="caracteristicas" class="form-control" id="caracteristicas">{{ old('caracteristicas') }}</textarea>
             </div>
 
             <div class="form-group mb-4">
                 <button type="submit" class="btn btn-success">Guardar Material</button>
-                <a href="{{ route('aulas.show', $aula->id) }}" class="btn btn-secondary">Cancelar</a>
+                <a href="{{ route('aulas.show', $aula->id) }}" class="btn btn-primary">Cancelar</a>
             </div>
         </form>
     </div>

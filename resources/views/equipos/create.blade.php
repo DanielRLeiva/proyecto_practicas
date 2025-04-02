@@ -94,7 +94,7 @@
                 <input type="text" class="form-control" name="etiqueta_teclado" required>
             </div>
 
-            <div class="form-group mb-2">
+            <div class="form-group mb-3">
                 <label for="etiqueta_raton">Etiqueta Ratón:</label>
                 <input type="text" class="form-control" name="etiqueta_raton" required>
             </div>
@@ -105,9 +105,9 @@
             </div>
 
             <div class="form-group mb-5">
-                <button type="submit" class="btn btn-primary">Crear Equipo</button>
+                <button type="submit" class="btn btn-success">Crear Equipo</button>
 
-                <a href="{{ route('aulas.show', $aula_id) }}" class="btn btn-secondary">Volver al Aula</a>
+                <a href="{{ route('aulas.show', $aula_id) }}" class="btn btn-primary">Volver al Aula</a>
             </div>
         </form>
     </div>

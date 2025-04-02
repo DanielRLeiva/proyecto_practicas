@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Portatil;
 use App\Models\Profesor;
 use App\Models\ProfesorPortatil;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ProfesorPortatilController extends Controller
 {
@@ -44,12 +46,26 @@ class ProfesorPortatilController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'profesor_id' => 'required|exists:profesors,id',
             'portatil_id' => 'required|exists:portatils,id',
             'fecha_inicio' => 'required|date',
-            'fecha_fin' => 'nullable|date|after_or_equal:fecha_inicio',
+            'fecha_fin' => 'nullable|date',
         ]);
+
+        if ($request->fecha_fin && $request->fecha_inicio > $request->fecha_fin) {
+            $validator->errors()->add('fecha_inicio','La fecha de inicio no puede ser posterior a la fecha de fin.');
+            return redirect()->back()->withErrors($validator)->withInput();
+        } 
+
+        $portatilEnUso = ProfesorPortatil::where('portatil_id', $request->portatil_id)
+        ->whereNull('fecha_fin') // Solo verificar los que no tienen fecha de finalización
+        ->exists();
+
+        if ($portatilEnUso) {
+            $validator->errors()->add('portatil_id', 'El portátil ya está en uso.');
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         ProfesorPortatil::create($request->all());
 
@@ -80,12 +96,27 @@ class ProfesorPortatilController extends Controller
      */
     public function update(Request $request, ProfesorPortatil $usufructo)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'profesor_id' => 'required|exists:profesors,id',
             'portatil_id' => 'required|exists:portatils,id',
             'fecha_inicio' => 'required|date',
-            'fecha_fin' => 'nullable|date|after_or_equal:fecha_inicio',
+            'fecha_fin' => 'nullable|date',
         ]);
+
+        if ($request->fecha_fin && $request->fecha_inicio > $request->fecha_fin) {
+            $validator->errors()->add('fecha_inicio','La fecha de inicio no puede ser posterior a la fecha de fin.');
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $portatilEnUso = ProfesorPortatil::where('portatil_id', $request->portatil_id)
+            ->whereNull('fecha_fin')
+            ->where('id', '!=',$usufructo->id)
+            ->exists();
+
+        if ($portatilEnUso) {
+            $validator->errors()->add('portatil_id', 'El portátil ya está en uso.');
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         $usufructo->update([
             'profesor_id' => $request->profesor_id,

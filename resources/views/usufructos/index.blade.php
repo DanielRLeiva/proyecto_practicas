@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
         <h1>Préstamos Activos de Portátiles</h1>
 
         <!-- Mostrar mensaje de éxito -->
@@ -47,9 +47,9 @@
             <tbody>
                 @foreach ($usufructosActivos as $usufructo)
                 <tr>
-                    <td>{{ $usufructo->profesor->nombre }} {{ $usufructo->profesor->apellido_1 }}</td>
+                    <td>{{ $usufructo->profesor->nombre }} {{ $usufructo->profesor->apellido_1 }} {{ $usufructo->profesor->apellido_2 }}</td>
                     <td>{{ $usufructo->portatil->marca_modelo }}</td>
-                    <td>{{ $usufructo->fecha_inicio }}</td>
+                    <td>{{ \Carbon\Carbon::parse($usufructo->fecha_inicio)->format('d-m-Y') }}</td>
                     <td>{{ $usufructo->fecha_fin ?? 'En uso' }}</td>
                     <td>
                         <a href="{{ route('usufructos.edit', $usufructo->id) }}" class="btn btn-warning">Finalizar</a>
@@ -70,6 +70,7 @@
 
         <!-- Tabla de historial de usufructos (préstamos finalizados) -->
         <h2>Historial de Préstamos</h2>
+
         @if($usufructosFinalizados->count() > 0)
         <table class="table table-bordered">
             <thead>
@@ -83,10 +84,10 @@
             <tbody>
                 @foreach ($usufructosFinalizados as $usufructo)
                 <tr>
-                    <td>{{ $usufructo->profesor->nombre }} {{ $usufructo->profesor->apellido_1 }}</td>
+                    <td>{{ $usufructo->profesor->nombre }} {{ $usufructo->profesor->apellido_1 }} {{ $usufructo->profesor->apellido_2 }}</td>
                     <td>{{ $usufructo->portatil->marca_modelo }}</td>
-                    <td>{{ $usufructo->fecha_inicio }}</td>
-                    <td>{{ $usufructo->fecha_fin }}</td>
+                    <td>{{ \Carbon\Carbon::parse($usufructo->fecha_inicio)->format('d-m-Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($usufructo->fecha_fin)->format('d-m-Y') }}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -95,7 +96,7 @@
         <p>No hay historial de usufructos.</p>
         @endif
 
-        <a href="{{ route('aulas.index') }}" class="btn btn-secondary mt-3">Volver a la lista de Aulas</a>
+        <a href="{{ route('aulas.index') }}" class="btn btn-primary mt-3">Volver a la lista de Aulas</a>
     </div>
 
     <!-- Incluir Bootstrap JS -->

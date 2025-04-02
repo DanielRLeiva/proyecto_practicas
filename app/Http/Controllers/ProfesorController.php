@@ -84,6 +84,13 @@ class ProfesorController extends Controller
      */
     public function destroy(Profesor $profesor)
     {
+        $activo = $profesor->usufructo()->whereNull('fecha_fin')->exists();
+
+        if ($activo) {
+            return redirect()->route('profesores.index')
+                ->with('error', 'El profesor no puede ser eliminado mientras tenga un usufructo activo.');
+        }
+
         $profesor->delete();
 
         return redirect()->route('profesores.index')

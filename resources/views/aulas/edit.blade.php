@@ -35,8 +35,8 @@
             </div>
 
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Actualizar</button>
-                <a href="{{ route('aulas.index') }}" class="btn btn-secondary ml-2">Cancelar</a>
+                <button type="submit" class="btn btn-success">Actualizar</button>
+                <a href="{{ route('aulas.index') }}" class="btn btn-primary ml-2">Cancelar</a>
             </div>
         </form>
     </div>

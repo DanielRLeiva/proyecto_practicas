@@ -74,7 +74,7 @@ class PortatilController extends Controller
         ]);
 
         return redirect()->route('portatiles.index')
-            ->with('success','Portátil creado con éxito.');
+            ->with('success','Portátil actualizado con éxito.');
     }
 
     /**
@@ -82,6 +82,13 @@ class PortatilController extends Controller
      */
     public function destroy(Portatil $portatil)
     {
+        $activo = $portatil->usufructo()->whereNull('fecha_fin')->exists();
+
+        if ($activo) {
+            return redirect()->route('portatiles.index')
+                ->with('error', 'El portatil no puede ser eliminado mientras tenga un usufructo activo.');
+        }
+
         $portatil->delete();
 
         return redirect()->route('portatiles.index')

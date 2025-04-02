@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
         <h1>Aulas</h1>
 
         <!-- Mostrar mensaje de éxito -->
@@ -21,7 +21,9 @@
         @endif
 
         <!-- Botón para crear un nuevo aula -->
-        <a href="{{ route('aulas.create') }}" class="btn btn-primary mb-3">Crear Aula</a>
+        <a href="{{ route('aulas.create') }}" class="btn btn-success">Crear Aula</a>
+
+        <hr>
 
         <!-- Tabla de aulas -->
         <table class="table table-bordered">
@@ -55,7 +57,7 @@
         <hr>
 
         <!-- Botón para redirigir a usufructos -->
-        <a href="{{ route('usufructos.index') }}" class="btn btn-success mb-3">Ver Usufructos Activos</a>
+        <a href="{{ route('usufructos.index') }}" class="btn btn-primary mb-3">Ver Usufructos Activos</a>
 
     </div>
 

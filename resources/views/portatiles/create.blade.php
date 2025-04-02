@@ -41,7 +41,7 @@
             <button type="submit" class="btn btn-success">Crear Portátil</button>
         </form>
 
-        <a href="{{ route('portatiles.index') }}" class="btn btn-secondary mt-3">Volver a la lista de Portátiles</a>
+        <a href="{{ route('portatiles.index') }}" class="btn btn-primary mt-3">Volver a la lista de Portátiles</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

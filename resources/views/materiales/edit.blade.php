@@ -68,9 +68,9 @@
             </div>
 
             <div class="form-group mb-5">
-                <button type="submit" class="btn btn-primary">Actualizar Material</button>
+                <button type="submit" class="btn btn-success">Actualizar Material</button>
 
-                <a href="{{ route('aulas.show', $material->aula_id) }}" class="btn btn-secondary">Volver a los detalles del aula</a>
+                <a href="{{ route('aulas.show', $material->aula_id) }}" class="btn btn-primary">Volver a los detalles del aula</a>
             </div>
 
             <input type="hidden" name="aula_id" value="{{ $material->aula_id }}">
