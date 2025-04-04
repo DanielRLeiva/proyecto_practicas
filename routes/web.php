@@ -23,9 +23,13 @@ Route::get('equipos/create/{aula_id}', [EquipoController::class, 'create'])->nam
 Route::get('equipos/{equipo}/edit/{aula_id}', [EquipoController::class, 'edit'])->name('equipos.edit');
 Route::put('equipos/{aula_id}', [EquipoController::class, 'update'])->name('equipos.update');
 
+// Rutas para profesores
 Route::resource('profesores', ProfesorController::class)
     ->parameters(['profesores' => 'profesor',]);
+
+// Rutas para portatiles
 Route::resource('portatiles', PortatilController::class)
     ->parameters(['portatiles' => 'portatil']);
-Route::resource('usufructos', ProfesorPortatilController::class)
-    ->parameters(['usufructos' => 'usufructo']);
+
+// rutas para usufructos
+Route::resource('usufructos', ProfesorPortatilController::class);

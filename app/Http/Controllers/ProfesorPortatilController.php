@@ -77,7 +77,7 @@ class ProfesorPortatilController extends Controller
      */
     public function show(ProfesorPortatil $usufructo)
     {
-        return view('usufructos.show', compact('usufructo'));
+    //     return view('usufructos.show', compact('usufructo'));
     }
 
     /**
