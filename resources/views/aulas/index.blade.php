@@ -11,6 +11,12 @@
 
 <body>
     <div class="container mt-5 mb-5">
+         <!-- Botón Logout -->
+         <form action="{{ route('logout') }}" method="POST" class="d-inline">
+            @csrf
+            <button type="submit" class="btn btn-danger mb-3">Cerrar sesión</button>
+        </form>
+        
         <h1>Aulas</h1>
 
         <!-- Mostrar mensaje de éxito -->
@@ -21,9 +27,11 @@
         @endif
 
         <!-- Botón para crear un nuevo aula -->
+        @role('admin')
         <a href="{{ route('aulas.create') }}" class="btn btn-success">Crear Aula</a>
-
+        
         <hr>
+        @endrole
 
         <!-- Tabla de aulas -->
         <table class="table table-bordered">
@@ -43,11 +51,14 @@
                     <td>{{ $aula->descripcion }}</td>
                     <td>
                         <a href="{{ route('aulas.show', $aula->id) }}" class="btn btn-info">Ver</a>
+                        @role('admin')
                         <a href="{{ route('aulas.edit', $aula->id) }}" class="btn btn-warning">Editar</a>
                         <form action="{{ route('aulas.destroy', $aula->id) }}" method="POST" class="d-inline">
-                            @csrf @method('DELETE')
+                            @csrf 
+                            @method('DELETE')
                             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar aula?')">Eliminar</button>
                         </form>
+                        @endrole
                     </td>
                 </tr>
                 @endforeach

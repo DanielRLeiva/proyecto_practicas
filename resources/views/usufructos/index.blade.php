@@ -11,7 +11,7 @@
 
 <body>
     <div class="container mt-5 mb-5">
-        <h1>Préstamos Activos de Portátiles</h1>
+        <h1>Usufructo de Portátiles</h1>
 
         <!-- Mostrar mensaje de éxito -->
         @if(session()->has('success'))
@@ -79,6 +79,7 @@
                     <th>Portátil</th>
                     <th>Fecha Inicio</th>
                     <th>Fecha Fin</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -88,6 +89,13 @@
                     <td>{{ $usufructo->portatil->marca_modelo }}</td>
                     <td>{{ \Carbon\Carbon::parse($usufructo->fecha_inicio)->format('d-m-Y') }}</td>
                     <td>{{ \Carbon\Carbon::parse($usufructo->fecha_fin)->format('d-m-Y') }}</td>
+                    <td>
+                        <a href="{{ route('usufructos.edit', $usufructo->id) }}" class="btn btn-warning">Finalizar</a>
+                        <form action="{{ route('usufructos.destroy', $usufructo->id) }}" method="POST" class="d-inline">
+                            @csrf @method('DELETE')
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar usufructo?')">Eliminar</button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

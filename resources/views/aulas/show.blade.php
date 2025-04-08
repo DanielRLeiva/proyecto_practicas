@@ -13,7 +13,7 @@
     <div class="container mt-5">
         <h2>{{ $aula->nombre }}</h2>
         <p><strong>Ubicación:</strong> {{ $aula->ubicacion }}</p>
-        <p><strong>Descripción:</strong> {{ $aula->descripcion }}</p>
+        <p class="mb-5"><strong>Descripción:</strong> {{ $aula->descripcion }}</p>
 
         <!-- Mostrar mensaje de éxito -->
         @if(session()->has('success'))
@@ -25,7 +25,10 @@
         <hr>
 
         <h3>Equipos</h3>
+
+        @role('admin|editor')
         <a href="{{ route('equipos.create', $aula->id) }}" class="btn btn-success mb-3">Crear equipo</a>
+        @endrole
 
         @if($aula->equipos->isEmpty())
         <p>No hay equipos registrados para esta aula.</p>
@@ -52,7 +55,9 @@
                         <th>Etiqueta Teclado</th>
                         <th>Etiqueta Ratón</th>
                         <th>Observaciones</th>
+                        @role('admin|editor')
                         <th>Acciones</th>
+                        @endrole
                     </tr>
                 </thead>
                 <tbody>
@@ -75,6 +80,7 @@
                         <td>{{ $equipo->etiqueta_teclado }}</td>
                         <td>{{ $equipo->etiqueta_raton }}</td>
                         <td>{{ $equipo->observaciones }}</td>
+                        @role('admin|editor')
                         <td>
                             <a href="{{ route('equipos.edit', ['equipo' => $equipo->id, 'aula_id' => $aula->id]) }}" class="btn btn-warning">Editar</a>
 
@@ -84,6 +90,7 @@
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar este equipo?')">Eliminar</button>
                             </form>
                         </td>
+                        @endrole
                     </tr>
                     @endforeach
                 </tbody>
@@ -95,7 +102,10 @@
         <hr>
 
         <h3>Materiales</h3>
+
+        @role('admin|editor')
         <a href="{{ route('materiales.create', $aula->id) }}" class="btn btn-success mb-3">Crear material</a>
+        @endrole
 
         @if($aula->materiales->isEmpty())
         <p>No hay materiales registrados para esta aula.</p>
@@ -110,7 +120,9 @@
                         <th>Modelo</th>
                         <th>Nº de serie</th>
                         <th>Características</th>
+                        @role('admin|editor')
                         <th>Acciones</th>
+                        @endrole
                     </tr>
                 </thead>
                 <tbody>
@@ -122,6 +134,7 @@
                         <td>{{ $material->modelo }}</td>
                         <td>{{ $material->numero_serie }}</td>
                         <td>{{ $material->caracteristicas }}</td>
+                        @role('admin|editor')
                         <td>
                             <a href="{{ route('materiales.edit', ['material' => $material->id, 'aula_id' => $aula->id]) }}" class="btn btn-warning">Editar</a>
 
@@ -131,6 +144,7 @@
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar este material?')">Eliminar</button>
                             </form>
                         </td>
+                        @endrole
                     </tr>
                     @endforeach
                 </tbody>

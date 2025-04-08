@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AulaController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\PortatilController;
@@ -8,7 +9,28 @@ use App\Http\Controllers\ProfesorController;
 use App\Http\Controllers\ProfesorPortatilController;
 use Illuminate\Support\Facades\Route;
 
+// Rutas para login
+Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('login', [AuthController::class, 'login']);
+
+// Rutas para registro
+Route::get('register', [AuthController::class, 'showRegisterForm'])->name('register');
+Route::post('register', [AuthController::class, 'register']);
+
+// Ruta para logout
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
 // Rutas para Aulas
+
+// Solo admin puede crear, editar, borrar
+Route::group(['middleware' => ['auth', 'role:admin']], function () {
+    Route::get('aulas/create', [AulaController::class, 'create'])->name('aulas.create');
+    Route::post('aulas', [AulaController::class, 'store'])->name('aulas.store');
+    Route::get('aulas/{aula}/edit', [AulaController::class, 'edit'])->name('aulas.edit');
+    Route::put('aulas/{aula}', [AulaController::class, 'update'])->name('aulas.update');
+    Route::delete('aulas/{aula}', [AulaController::class, 'destroy'])->name('aulas.destroy');
+});
+// Rutas púbicas (sólo ver)
 Route::resource('aulas', AulaController::class);
 
 // Rutas para Materiales
