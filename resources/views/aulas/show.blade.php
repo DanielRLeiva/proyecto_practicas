@@ -11,9 +11,20 @@
 
 <body>
     <div class="container mt-5">
-        <h2>{{ $aula->nombre }}</h2>
-        <p><strong>Ubicación:</strong> {{ $aula->ubicacion }}</p>
-        <p class="mb-5"><strong>Descripción:</strong> {{ $aula->descripcion }}</p>
+        <div class="d-flex justify-content-between">
+            <div>
+                <h2>{{ $aula->nombre }}</h2>
+                <p><strong>Ubicación:</strong> {{ $aula->ubicacion }}</p>
+                <p class="mb-4"><strong>Descripción:</strong> {{ $aula->descripcion }}</p>
+            </div>
+            
+            <!-- Botón Logout -->
+            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                @csrf
+                <button type="submit" class="btn btn-danger mb-3">Cerrar sesión</button>
+            </form>
+        </div>
+
 
         <!-- Mostrar mensaje de éxito -->
         @if(session()->has('success'))
@@ -84,11 +95,13 @@
                         <td>
                             <a href="{{ route('equipos.edit', ['equipo' => $equipo->id, 'aula_id' => $aula->id]) }}" class="btn btn-warning">Editar</a>
 
+                            @role('admin')
                             <form action="{{ route('equipos.destroy', $equipo->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar este equipo?')">Eliminar</button>
                             </form>
+                            @endrole
                         </td>
                         @endrole
                     </tr>
@@ -104,7 +117,7 @@
         <h3>Materiales</h3>
 
         @role('admin|editor')
-        <a href="{{ route('materiales.create', $aula->id) }}" class="btn btn-success mb-3">Crear material</a>
+        <a href="{{ route('materials.create', $aula->id) }}" class="btn btn-success mb-3">Crear material</a>
         @endrole
 
         @if($aula->materiales->isEmpty())
@@ -136,13 +149,15 @@
                         <td>{{ $material->caracteristicas }}</td>
                         @role('admin|editor')
                         <td>
-                            <a href="{{ route('materiales.edit', ['material' => $material->id, 'aula_id' => $aula->id]) }}" class="btn btn-warning">Editar</a>
+                            <a href="{{ route('materials.edit', ['material' => $material->id, 'aula_id' => $aula->id]) }}" class="btn btn-warning">Editar</a>
 
-                            <form action="{{ route('materiales.destroy', $material->id) }}" method="POST" style="display:inline;">
+                            @role('admin')
+                            <form action="{{ route('materials.destroy', $material->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar este material?')">Eliminar</button>
                             </form>
+                            @endrole
                         </td>
                         @endrole
                     </tr>

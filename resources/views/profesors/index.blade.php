@@ -11,7 +11,15 @@
 
 <body>
     <div class="container mt-5">
-        <h1>Profesores</h1>
+        <div class="d-flex justify-content-between">
+            <h1>Profesores</h1>
+
+            <!-- Botón Logout -->
+            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                @csrf
+                <button type="submit" class="btn btn-danger mb-3">Cerrar sesión</button>
+            </form>
+        </div>
 
         @if(session('success'))
         <div class="alert alert-success">
@@ -25,7 +33,9 @@
         </div>
         @endif
 
-        <a href="{{ route('profesores.create') }}" class="btn btn-success mb-3">Nuevo Profesor</a>
+        @role('admin|editor')
+        <a href="{{ route('profesors.create') }}" class="btn btn-success mb-3">Nuevo Profesor</a>
+        @endrole
 
         <table class="table table-bordered">
             <thead>
@@ -33,7 +43,9 @@
                     <th>Nombre</th>
                     <th>Apellido 1</th>
                     <th>Apellido 2</th>
+                    @role('admin|editor')
                     <th>Acciones</th>
+                    @endrole
                 </tr>
             </thead>
             <tbody>
@@ -42,13 +54,19 @@
                     <td>{{ $profesor->nombre }}</td>
                     <td>{{ $profesor->apellido_1 }}</td>
                     <td>{{ $profesor->apellido_2 }}</td>
+
+                    @role('admin|editor')
                     <td>
-                        <a href="{{ route('profesores.edit', $profesor->id) }}" class="btn btn-warning">Editar</a>
-                        <form action="{{ route('profesores.destroy', $profesor->id) }}" method="POST" class="d-inline">
+                        <a href="{{ route('profesors.edit', $profesor->id) }}" class="btn btn-warning">Editar</a>
+                        @endrole
+
+                        @role('admin')
+                        <form action="{{ route('profesors.destroy', $profesor->id) }}" method="POST" class="d-inline">
                             @csrf @method('DELETE')
                             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar profesor?')">Eliminar</button>
                         </form>
                     </td>
+                    @endrole
                 </tr>
                 @endforeach
             </tbody>

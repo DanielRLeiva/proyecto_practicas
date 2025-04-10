@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('aulas.index');
+            return redirect()->intended('aulas');
         }
 
         return back()->withErrors([
@@ -52,7 +52,8 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $user->assignRole('admin');
+        // Asignar rol 'viewer' al usuario por defecto
+        $user->assignRole('editor');
 
         Auth::login($user);
 

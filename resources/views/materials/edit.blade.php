@@ -15,7 +15,7 @@
 
         <h2>Editar Material - {{ $material->etiqueta }}</h2>
 
-        <form action="{{ route('materiales.update', $material) }}" method="POST">
+        <form action="{{ route('materials.update', $material) }}" method="POST">
             @csrf
             @method('PUT') <!-- Esto es necesario para hacer un update en Laravel -->
 

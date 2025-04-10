@@ -14,7 +14,7 @@ class ProfesorController extends Controller
     {
         $profesores = Profesor::all();
 
-        return view("profesores.index", compact("profesores"));
+        return view("profesors.index", compact("profesores"));
     }
 
     /**
@@ -22,7 +22,7 @@ class ProfesorController extends Controller
      */
     public function create()
     {
-        return view("profesores.create");
+        return view("profesors.create");
     }
 
     /**
@@ -38,7 +38,7 @@ class ProfesorController extends Controller
 
         Profesor::create($request->all());
 
-        return redirect()->route('profesores.index')
+        return redirect()->route('profesors.index')
             ->with('success','Profesor creado con éxito.');
     }
 
@@ -55,7 +55,7 @@ class ProfesorController extends Controller
      */
     public function edit(Profesor $profesor)
     {
-        return view('profesores.edit', compact('profesor'));
+        return view('profesors.edit', compact('profesor'));
     }
 
     /**
@@ -75,7 +75,7 @@ class ProfesorController extends Controller
             'apellido_2'=> $request->apellido_2
         ]);
 
-        return redirect()->route('profesores.index')
+        return redirect()->route('profesors.index')
             ->with('success','Profesor actualizado con éxito.');
     }
 
@@ -87,13 +87,13 @@ class ProfesorController extends Controller
         $activo = $profesor->usufructo()->whereNull('fecha_fin')->exists();
 
         if ($activo) {
-            return redirect()->route('profesores.index')
+            return redirect()->route('profesors.index')
                 ->with('error', 'El profesor no puede ser eliminado mientras tenga un usufructo activo.');
         }
 
         $profesor->delete();
 
-        return redirect()->route('profesores.index')
+        return redirect()->route('profesors.index')
             ->with('success','Profesor eliminado con éxito.');
     }
 }

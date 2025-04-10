@@ -21,7 +21,7 @@
         @endif
 
         <!-- Formulario de edición del profesor -->
-        <form action="{{ route('profesores.update', $profesor->id) }}" method="POST">
+        <form action="{{ route('profesors.update', $profesor->id) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -53,7 +53,7 @@
         </form>
 
         <!-- Botón para regresar a la lista de profesores -->
-        <a href="{{ route('profesores.index') }}" class="btn btn-primary mt-3">Volver a la lista de Profesores</a>
+        <a href="{{ route('profesors.index') }}" class="btn btn-primary mt-3">Volver a la lista de Profesores</a>
     </div>
 
     <!-- Incluir Bootstrap JS -->

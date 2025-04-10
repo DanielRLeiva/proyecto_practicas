@@ -11,7 +11,15 @@
 
 <body>
     <div class="container mt-5">
-        <h1>Portátiles</h1>
+        <div class="d-flex justify-content-between">
+            <h1>Portátiles</h1>
+
+            <!-- Botón Logout -->
+            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                @csrf
+                <button type="submit" class="btn btn-danger mb-3">Cerrar sesión</button>
+            </form>
+        </div>
 
         @if(session('success'))
         <div class="alert alert-success">
@@ -25,7 +33,9 @@
         </div>
         @endif
 
-        <a href="{{ route('portatiles.create') }}" class="btn btn-success mb-3">Nuevo Portatil</a>
+        @role('admin|editor')
+        <a href="{{ route('portatils.create') }}" class="btn btn-success mb-3">Nuevo Portatil</a>
+        @endrole
 
         <div class="table-responsive mb-4">
             <table class="table table-bordered">
@@ -33,7 +43,9 @@
                     <tr>
                         <th>Marca y Modelo</th>
                         <th>Comentarios</th>
+                        @role('admin|editor')
                         <th>Acciones</th>
+                        @endrole
                     </tr>
                 </thead>
                 <tbody>
@@ -41,13 +53,17 @@
                     <tr>
                         <td>{{ $portatil->marca_modelo }}</td>
                         <td>{{ $portatil->comentarios }}</td>
+                        @role('admin|editor')
                         <td>
-                            <a href="{{ route('portatiles.edit', $portatil->id) }}" class="btn btn-warning">Editar</a>
-                            <form action="{{ route('portatiles.destroy', $portatil->id) }}" method="POST" class="d-inline">
+                            <a href="{{ route('portatils.edit', $portatil->id) }}" class="btn btn-warning">Editar</a>
+                            @endrole
+                            @role('admin')
+                            <form action="{{ route('portatils.destroy', $portatil->id) }}" method="POST" class="d-inline">
                                 @csrf @method('DELETE')
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar portatil?')">Eliminar</button>
                             </form>
                         </td>
+                        @endrole
                     </tr>
                     @endforeach
                 </tbody>

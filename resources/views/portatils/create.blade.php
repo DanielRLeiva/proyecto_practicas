@@ -25,7 +25,7 @@
         @endif
 
         <!-- Formulario para crear un portátil -->
-        <form action="{{ route('portatiles.store') }}" method="POST">
+        <form action="{{ route('portatils.store') }}" method="POST">
             @csrf
 
             <div class="mb-3">
@@ -41,7 +41,7 @@
             <button type="submit" class="btn btn-success">Crear Portátil</button>
         </form>
 
-        <a href="{{ route('portatiles.index') }}" class="btn btn-primary mt-3">Volver a la lista de Portátiles</a>
+        <a href="{{ route('portatils.index') }}" class="btn btn-primary mt-3">Volver a la lista de Portátiles</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

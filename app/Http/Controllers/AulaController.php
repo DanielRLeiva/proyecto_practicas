@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aula;
-use App\Models\ProfesorPortatil;
 use Illuminate\Http\Request;
 
 class AulaController extends Controller

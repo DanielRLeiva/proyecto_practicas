@@ -11,13 +11,15 @@
 
 <body>
     <div class="container mt-5 mb-5">
-         <!-- Botón Logout -->
-         <form action="{{ route('logout') }}" method="POST" class="d-inline">
-            @csrf
-            <button type="submit" class="btn btn-danger mb-3">Cerrar sesión</button>
-        </form>
-        
-        <h1>Aulas</h1>
+        <div class="d-flex justify-content-between">
+            <h1>Aulas</h1>
+
+            <!-- Botón Logout -->
+            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                @csrf
+                <button type="submit" class="btn btn-danger mb-3">Cerrar sesión</button>
+            </form>
+        </div>
 
         <!-- Mostrar mensaje de éxito -->
         @if(session()->has('success'))
@@ -29,7 +31,7 @@
         <!-- Botón para crear un nuevo aula -->
         @role('admin')
         <a href="{{ route('aulas.create') }}" class="btn btn-success">Crear Aula</a>
-        
+
         <hr>
         @endrole
 
@@ -54,7 +56,7 @@
                         @role('admin')
                         <a href="{{ route('aulas.edit', $aula->id) }}" class="btn btn-warning">Editar</a>
                         <form action="{{ route('aulas.destroy', $aula->id) }}" method="POST" class="d-inline">
-                            @csrf 
+                            @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar aula?')">Eliminar</button>
                         </form>

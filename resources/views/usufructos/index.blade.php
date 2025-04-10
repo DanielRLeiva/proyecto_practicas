@@ -11,7 +11,15 @@
 
 <body>
     <div class="container mt-5 mb-5">
-        <h1>Usufructo de Portátiles</h1>
+        <div class="d-flex justify-content-between">
+            <h1>Usufructo de Portátiles</h1>
+
+            <!-- Botón Logout -->
+            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                @csrf
+                <button type="submit" class="btn btn-danger mb-3">Cerrar sesión</button>
+            </form>
+        </div>
 
         <!-- Mostrar mensaje de éxito -->
         @if(session()->has('success'))
@@ -22,14 +30,16 @@
 
         <!-- Botones de navegación -->
         <div class="mb-3">
-            <a href="{{ route('profesores.index') }}" class="btn btn-primary">Profesores</a>
-            <a href="{{ route('portatiles.index') }}" class="btn btn-primary">Portátiles</a>
+            <a href="{{ route('profesors.index') }}" class="btn btn-primary">Profesores</a>
+            <a href="{{ route('portatils.index') }}" class="btn btn-primary">Portátiles</a>
         </div>
 
         <hr>
 
         <!-- Botón para asignar un nuevo usufructo -->
+        @role('admin|editor')
         <a href="{{ route('usufructos.create') }}" class="btn btn-success mb-3">Asignar Nuevo Usufructo</a>
+        @endrole
 
         <!-- Tabla de usufructos (préstamos activos) -->
         <h2>Préstamos Activos</h2>
@@ -41,7 +51,9 @@
                     <th>Portátil</th>
                     <th>Fecha Inicio</th>
                     <th>Fecha Fin</th>
+                    @role('admin|editor')
                     <th>Acciones</th>
+                    @endrole
                 </tr>
             </thead>
             <tbody>
@@ -51,13 +63,18 @@
                     <td>{{ $usufructo->portatil->marca_modelo }}</td>
                     <td>{{ \Carbon\Carbon::parse($usufructo->fecha_inicio)->format('d-m-Y') }}</td>
                     <td>{{ $usufructo->fecha_fin ?? 'En uso' }}</td>
+                    @role('admin|editor')
                     <td>
                         <a href="{{ route('usufructos.edit', $usufructo->id) }}" class="btn btn-warning">Finalizar</a>
+                        @endrole
+
+                        @role('admin')
                         <form action="{{ route('usufructos.destroy', $usufructo->id) }}" method="POST" class="d-inline">
                             @csrf @method('DELETE')
                             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar usufructo?')">Eliminar</button>
                         </form>
                     </td>
+                    @endrole
                 </tr>
                 @endforeach
             </tbody>
@@ -79,7 +96,9 @@
                     <th>Portátil</th>
                     <th>Fecha Inicio</th>
                     <th>Fecha Fin</th>
+                    @role('admin')
                     <th>Acciones</th>
+                    @endrole
                 </tr>
             </thead>
             <tbody>
@@ -89,12 +108,13 @@
                     <td>{{ $usufructo->portatil->marca_modelo }}</td>
                     <td>{{ \Carbon\Carbon::parse($usufructo->fecha_inicio)->format('d-m-Y') }}</td>
                     <td>{{ \Carbon\Carbon::parse($usufructo->fecha_fin)->format('d-m-Y') }}</td>
+                    @role('admin')
                     <td>
-                        <a href="{{ route('usufructos.edit', $usufructo->id) }}" class="btn btn-warning">Finalizar</a>
                         <form action="{{ route('usufructos.destroy', $usufructo->id) }}" method="POST" class="d-inline">
                             @csrf @method('DELETE')
                             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar usufructo?')">Eliminar</button>
                         </form>
+                        @endrole
                     </td>
                 </tr>
                 @endforeach

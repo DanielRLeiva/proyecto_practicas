@@ -15,7 +15,7 @@ class MaterialController extends Controller
     {
         $materiales = Material::all();
 
-        return view('materiales.index', compact('materiales'));
+        return view('materials.index', compact('materiales'));
     }
 
     /**
@@ -25,7 +25,7 @@ class MaterialController extends Controller
     {
         $aula = Aula::findOrFail($aula_id);
 
-        return view('materiales.create', compact('aula', 'aula_id'));
+        return view('materials.create', compact('aula', 'aula_id'));
     }
 
     /**
@@ -64,7 +64,7 @@ class MaterialController extends Controller
     {
         $aula = Aula::findOrFail($aula_id);
     
-        return view('materiales.edit', compact('material', 'aula'));
+        return view('materials.edit', compact('material', 'aula'));
     }
 
     /**

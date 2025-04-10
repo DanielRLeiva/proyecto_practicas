@@ -13,7 +13,7 @@
     <div class="container mt-5">
         <h1>Crear Profesor</h1>
 
-        <form action="{{ route('profesores.store') }}" method="POST">
+        <form action="{{ route('profesors.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
@@ -33,7 +33,7 @@
             <button type="submit" class="btn btn-success">Guardar Profesor</button>
         </form>
 
-        <a href="{{ route('profesores.index') }}" class="btn btn-primary mt-3">Volver a la lista de Profesores</a>
+        <a href="{{ route('profesors.index') }}" class="btn btn-primary mt-3">Volver a la lista de Profesores</a>
     </div>
     <!-- Incluir Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

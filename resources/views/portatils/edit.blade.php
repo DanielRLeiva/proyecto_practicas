@@ -25,7 +25,7 @@
         @endif
 
         <!-- Formulario para editar un portátil -->
-        <form action="{{ route('portatiles.update', $portatil->id) }}" method="POST">
+        <form action="{{ route('portatils.update', $portatil->id) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -42,7 +42,7 @@
             <button type="submit" class="btn btn-success">Actualizar Portátil</button>
         </form>
 
-        <a href="{{ route('portatiles.index') }}" class="btn btn-primary mt-3">Volver a la lista de Portátiles</a>
+        <a href="{{ route('portatils.index') }}" class="btn btn-primary mt-3">Volver a la lista de Portátiles</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

@@ -24,7 +24,7 @@
         </div>
         @endif
 
-        <form action="{{ route('materiales.store') }}" method="POST">
+        <form action="{{ route('materials.store') }}" method="POST">
             @csrf
             <input type="hidden" name="aula_id" value="{{ $aula->id }}">
 
