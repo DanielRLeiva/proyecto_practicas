@@ -12,7 +12,12 @@
 <body>
     <div class="container mt-5">
         <div class="d-flex justify-content-between">
-            <h1>Profesores</h1>
+            <div class="mb-4">
+                <h1>Profesores</h1>
+                <span class="navbar-text">
+                    Bienvenido, {{ Auth::user()->name }}
+                </span>
+            </div>
 
             <!-- Botón Logout -->
             <form action="{{ route('logout') }}" method="POST" class="d-inline">
@@ -37,7 +42,7 @@
         <a href="{{ route('profesors.create') }}" class="btn btn-success mb-3">Nuevo Profesor</a>
         @endrole
 
-        <table class="table table-bordered">
+        <table class="table table-bordered mb-5">
             <thead>
                 <tr>
                     <th>Nombre</th>

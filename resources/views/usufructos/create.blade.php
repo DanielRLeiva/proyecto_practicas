@@ -52,7 +52,7 @@
                 <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" required>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-5">
                 <label for="fecha_fin" class="form-label">Fecha Fin</label>
                 <input type="date" name="fecha_fin" id="fecha_fin" class="form-control">
             </div>

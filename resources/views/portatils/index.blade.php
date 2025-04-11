@@ -12,7 +12,12 @@
 <body>
     <div class="container mt-5">
         <div class="d-flex justify-content-between">
-            <h1>Portátiles</h1>
+            <div class="mb-4">
+                <h1>Portátiles</h1>
+                <span class="navbar-text">
+                    Bienvenido, {{ Auth::user()->name }}
+                </span>
+            </div>
 
             <!-- Botón Logout -->
             <form action="{{ route('logout') }}" method="POST" class="d-inline">

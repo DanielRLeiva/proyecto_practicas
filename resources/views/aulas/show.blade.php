@@ -12,12 +12,16 @@
 <body>
     <div class="container mt-5">
         <div class="d-flex justify-content-between">
-            <div>
-                <h2>{{ $aula->nombre }}</h2>
-                <p><strong>Ubicación:</strong> {{ $aula->ubicacion }}</p>
-                <p class="mb-4"><strong>Descripción:</strong> {{ $aula->descripcion }}</p>
-            </div>
-            
+                <div class="mb-4">
+                    <h2>{{ $aula->nombre }}</h2>
+                    <p><strong>Ubicación:</strong> {{ $aula->ubicacion }}</p>
+                    <p class="mb-4"><strong>Descripción:</strong> {{ $aula->descripcion }}</p>
+                    <span class="navbar-text">
+                        Bienvenido, {{ Auth::user()->name }}
+                    </span>
+                </div>
+
+
             <!-- Botón Logout -->
             <form action="{{ route('logout') }}" method="POST" class="d-inline">
                 @csrf

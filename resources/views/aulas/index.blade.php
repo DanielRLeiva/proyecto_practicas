@@ -11,14 +11,29 @@
 
 <body>
     <div class="container mt-5 mb-5">
-        <div class="d-flex justify-content-between">
-            <h1>Aulas</h1>
 
-            <!-- Botón Logout -->
-            <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                @csrf
-                <button type="submit" class="btn btn-danger mb-3">Cerrar sesión</button>
-            </form>
+        <div class="d-flex justify-content-between mb-4">
+            <div>
+                <h1>Aulas</h1>
+                <span class="navbar-text">
+                    Bienvenido, {{ Auth::user()->name }}
+                </span>
+            </div>
+
+            <div>
+                @role('admin')
+                <a href="{{ route('users.index') }}" class="btn btn-primary mb-3">
+                    Administrar Usuarios
+                </a>
+                @endrole
+
+                <!-- Botón Logout -->
+                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-danger mb-3">Cerrar sesión</button>
+                </form>
+            </div>
+
         </div>
 
         <!-- Mostrar mensaje de éxito -->

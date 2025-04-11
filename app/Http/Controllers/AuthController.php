@@ -52,7 +52,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // Asignar rol 'viewer' al usuario por defecto
+        // Asignar rol al usuario por defecto
         $user->assignRole('editor');
 
         Auth::login($user);

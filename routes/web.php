@@ -7,7 +7,12 @@ use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\PortatilController;
 use App\Http\Controllers\ProfesorController;
 use App\Http\Controllers\ProfesorPortatilController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
+// ======================
+// Rutas de usuarios
+// ======================
 
 // Rutas para login
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -20,7 +25,9 @@ Route::post('register', [AuthController::class, 'register']);
 // Ruta para logout
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
+// =======================
 // Rutas para Aulas
+// =======================
 
 // Rutas para admin
 Route::middleware(['auth', 'role:admin', 'nocache'])->group(function () {
@@ -38,9 +45,7 @@ Route::middleware(['auth', 'role:admin|editor|viewer', 'nocache'])->group(functi
 
 // Admin - acceso total
 Route::middleware(['auth', 'role:admin', 'nocache'])->group(function () {
-    Route::resource('equipos', EquipoController::class)
-        ->except(['create', 'edit'])
-        ->parameters(['equipos' => 'equipo']);
+    Route::resource('equipos', EquipoController::class)->except(['create', 'edit']);
 
     Route::get('equipos/create/{aula_id}', [EquipoController::class, 'create'])->name('equipos.create');
     Route::get('equipos/{equipo}/edit/{aula_id}', [EquipoController::class, 'edit'])->name('equipos.edit');
@@ -147,4 +152,15 @@ Route::middleware(['auth', 'role:admin|editor', 'nocache'])->group(function () {
 // Viewer - solo ver
 Route::middleware(['auth', 'role:admin|editor|viewer', 'nocache'])->group(function () {
     Route::resource('usufructos', ProfesorPortatilController::class)->only(['index', 'show']);
+});
+
+
+// ===========================
+// Rutas para asignar Roles
+// ===========================
+
+// Solo admin puede acceder a esto
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('users', [UserController::class,'index'])->name('users.index');
+    Route::put('users/{user}/role', [UserController::class,'updateRole'])->name('users.updateRole');
 });
