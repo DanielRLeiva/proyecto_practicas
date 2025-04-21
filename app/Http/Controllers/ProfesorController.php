@@ -31,7 +31,7 @@ class ProfesorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-           'nombre' => 'required|string|max:255',
+            'nombre' => 'required|string|max:255',
             'apellido_1' => 'required|string|max:255',
             'apellido_2' => 'nullable|string|max:255',
         ]);
@@ -39,7 +39,7 @@ class ProfesorController extends Controller
         Profesor::create($request->all());
 
         return redirect()->route('profesors.index')
-            ->with('success','Profesor creado con éxito.');
+            ->with('success', 'Profesor creado con éxito.');
     }
 
     /**
@@ -64,19 +64,19 @@ class ProfesorController extends Controller
     public function update(Request $request, Profesor $profesor)
     {
         $request->validate([
-          'nombre' => 'required|string|max:255',
+            'nombre' => 'required|string|max:255',
             'apellido_1' => 'required|string|max:255',
             'apellido_2' => 'nullable|string|max:255',
         ]);
-        
+
         $profesor->update([
             'nombre' => $request->nombre,
-            'apellido_1'=> $request->apellido_1,
-            'apellido_2'=> $request->apellido_2
+            'apellido_1' => $request->apellido_1,
+            'apellido_2' => $request->apellido_2
         ]);
 
         return redirect()->route('profesors.index')
-            ->with('success','Profesor actualizado con éxito.');
+            ->with('success', 'Profesor actualizado con éxito.');
     }
 
     /**
@@ -91,9 +91,23 @@ class ProfesorController extends Controller
                 ->with('error', 'El profesor no puede ser eliminado mientras tenga un usufructo activo.');
         }
 
-        $profesor->delete();
+        $profesor->activo = false;
+        $profesor->save();
 
         return redirect()->route('profesors.index')
-            ->with('success','Profesor eliminado con éxito.');
+            ->with('success', 'Profesor desactivado con éxito.');
+    }
+
+    /**
+     * Activar
+     */
+    public function activar($id)
+    {
+        $profesor = Profesor::findOrFail($id);
+        $profesor->activo = true;
+        $profesor->save();
+
+        return redirect()->route('profesors.index')
+            ->with('success', 'Profesor activado correctamente.');
     }
 }

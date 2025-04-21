@@ -35,8 +35,8 @@ class ProfesorPortatilController extends Controller
      */
     public function create()
     {
-        $profesores = Profesor::all();
-        $portatiles = Portatil::all();
+        $profesores = Profesor::where('activo', true)->get();
+        $portatiles = Portatil::where('activo', true)->get();
 
         return view("usufructos.create", compact("profesores", "portatiles"));
     }
@@ -69,6 +69,11 @@ class ProfesorPortatilController extends Controller
 
         ProfesorPortatil::create($request->all());
 
+        // Marcar el portátil como inactivo
+        $portatil = Portatil::find($request->portatil_id);
+        $portatil->activo = false;
+        $portatil->save();
+
         return redirect()->route('usufructos.index')->with('success', 'Usufructo creado con éxito.');
     }
 
@@ -77,7 +82,7 @@ class ProfesorPortatilController extends Controller
      */
     public function show(ProfesorPortatil $usufructo)
     {
-    //     return view('usufructos.show', compact('usufructo'));
+        // return view('usufructos.show', compact('usufructo'));
     }
 
     /**
@@ -124,6 +129,13 @@ class ProfesorPortatilController extends Controller
             'fecha_inicio' => $request->fecha_inicio,
             'fecha_fin' => $request->fecha_fin,
         ]);
+
+        // Si se ha modificado una fecha de fin, restarurar el portátil a estado activo
+        if ($request->fecha_fin) {
+            $portatil = Portatil::find($request->portatil_id);
+            $portatil->activo = true;
+            $portatil->save();
+        }
 
         return redirect()->route('usufructos.index')
             ->with('success', 'Usufructo actualizado con éxito.');

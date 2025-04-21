@@ -53,7 +53,7 @@ class AuthController extends Controller
         ]);
 
         // Asignar rol al usuario por defecto
-        $user->assignRole('editor');
+        $user->assignRole('admin');
 
         Auth::login($user);
 

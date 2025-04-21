@@ -19,10 +19,6 @@ class UserController extends Controller
 
     public function updateRole(Request $request, User $user)
     {
-        if (Auth::user()->User::hasRole('admin') == false) {
-            abort(403, 'No tienes permiso para hacer esto.');
-        }
-
         $request->validate([
             'role' => 'required|exists:roles,name',
         ]);

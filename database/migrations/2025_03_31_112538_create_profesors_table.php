@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('apellido_1');
             $table->string('apellido_2')->nullable();
+            $table->boolean('activo')->default(true);
             $table->timestamps();
         });
     }

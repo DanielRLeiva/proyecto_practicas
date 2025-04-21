@@ -48,27 +48,21 @@
                     <tr>
                         <th>Marca y Modelo</th>
                         <th>Comentarios</th>
-                        @role('admin|editor')
-                        <th>Acciones</th>
-                        @endrole
+                        <th>Estado</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($portatiles as $portatil)
-                    <tr>
+                    <tr class="{{ $portatil->activo ? '' : 'table-secondary' }}">
                         <td>{{ $portatil->marca_modelo }}</td>
                         <td>{{ $portatil->comentarios }}</td>
-                        @role('admin|editor')
                         <td>
-                            <a href="{{ route('portatils.edit', $portatil->id) }}" class="btn btn-warning">Editar</a>
-                            @endrole
-                            @role('admin')
-                            <form action="{{ route('portatils.destroy', $portatil->id) }}" method="POST" class="d-inline">
-                                @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar portatil?')">Eliminar</button>
-                            </form>
+                            @if($portatil->activo)
+                            <span class="badge bg-success">Libre</span>
+                            @else
+                            <span class="badge bg-secondary">En Usufructo</span>
+                            @endif
                         </td>
-                        @endrole
                     </tr>
                     @endforeach
                 </tbody>

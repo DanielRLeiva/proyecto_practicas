@@ -48,6 +48,7 @@
                     <th>Nombre</th>
                     <th>Apellido 1</th>
                     <th>Apellido 2</th>
+                    <th>Estado</th>
                     @role('admin|editor')
                     <th>Acciones</th>
                     @endrole
@@ -55,21 +56,35 @@
             </thead>
             <tbody>
                 @foreach ($profesores as $profesor)
-                <tr>
+                <tr class="{{ $profesor->activo ? '' : 'table-secondary' }}">
                     <td>{{ $profesor->nombre }}</td>
                     <td>{{ $profesor->apellido_1 }}</td>
                     <td>{{ $profesor->apellido_2 }}</td>
+                    <td>
+                        @if($profesor->activo)
+                        <span class="badge bg-success">Activo</span>
+                        @else
+                        <span class="badge bg-secondary">Inactivo</span>
+                        @endif
+                    </td>
 
                     @role('admin|editor')
                     <td>
-                        <a href="{{ route('profesors.edit', $profesor->id) }}" class="btn btn-warning">Editar</a>
-                        @endrole
+                        @if($profesor->activo)
+                        <a href="{{ route('profesors.edit', $profesor->id) }}" class="btn btn-warning btn-sm">Editar</a>
 
-                        @role('admin')
                         <form action="{{ route('profesors.destroy', $profesor->id) }}" method="POST" class="d-inline">
                             @csrf @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar profesor?')">Eliminar</button>
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('¿Desactivar profesor?')">Desactivar</button>
                         </form>
+                        @else
+                        <form action="{{ route('profesors.activar', $profesor->id) }}" method="POST" class="d-inline">
+                            @csrf @method('PATCH')
+                            <button type="submit" class="btn btn-success btn-sm"
+                                onclick="return confirm('¿Activar profesor?')">Activar</button>
+                        </form>
+                        @endif
                     </td>
                     @endrole
                 </tr>

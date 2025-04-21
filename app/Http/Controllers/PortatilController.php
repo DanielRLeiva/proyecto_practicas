@@ -89,7 +89,7 @@ class PortatilController extends Controller
                 ->with('error', 'El portatil no puede ser eliminado mientras tenga un usufructo activo.');
         }
 
-        $portatil->delete();
+        $portatil->update(['activo' => false]);
 
         return redirect()->route('portatils.index')
             ->with('success','Portátil eliminado con éxito.');

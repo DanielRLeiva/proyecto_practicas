@@ -49,41 +49,45 @@
         <!-- Tabla de usufructos (préstamos activos) -->
         <h2>Préstamos Activos</h2>
         @if($usufructosActivos->count() > 0)
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Profesor</th>
-                    <th>Portátil</th>
-                    <th>Fecha Inicio</th>
-                    <th>Fecha Fin</th>
-                    @role('admin|editor')
-                    <th>Acciones</th>
-                    @endrole
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($usufructosActivos as $usufructo)
-                <tr>
-                    <td>{{ $usufructo->profesor->nombre }} {{ $usufructo->profesor->apellido_1 }} {{ $usufructo->profesor->apellido_2 }}</td>
-                    <td>{{ $usufructo->portatil->marca_modelo }}</td>
-                    <td>{{ \Carbon\Carbon::parse($usufructo->fecha_inicio)->format('d-m-Y') }}</td>
-                    <td>{{ $usufructo->fecha_fin ?? 'En uso' }}</td>
-                    @role('admin|editor')
-                    <td>
-                        <a href="{{ route('usufructos.edit', $usufructo->id) }}" class="btn btn-warning">Finalizar</a>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Profesor</th>
+                        <th>Portátil</th>
+                        <th>Comentarios</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        @role('admin|editor')
+                        <th>Acciones</th>
                         @endrole
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($usufructosActivos as $usufructo)
+                    <tr>
+                        <td>{{ $usufructo->profesor->nombre }} {{ $usufructo->profesor->apellido_1 }} {{ $usufructo->profesor->apellido_2 }}</td>
+                        <td>{{ $usufructo->portatil->marca_modelo }}</td>
+                        <td>{{ $usufructo->portatil->comentarios }}</td>
+                        <td>{{ \Carbon\Carbon::parse($usufructo->fecha_inicio)->format('d-m-Y') }}</td>
+                        <td>{{ $usufructo->fecha_fin ?? 'En uso' }}</td>
+                        @role('admin|editor')
+                        <td>
+                            <a href="{{ route('usufructos.edit', $usufructo->id) }}" class="btn btn-warning">Finalizar</a>
+                            @endrole
 
-                        @role('admin')
-                        <form action="{{ route('usufructos.destroy', $usufructo->id) }}" method="POST" class="d-inline">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar usufructo?')">Eliminar</button>
-                        </form>
-                    </td>
-                    @endrole
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                            @role('admin')
+                            <form action="{{ route('usufructos.destroy', $usufructo->id) }}" method="POST" class="d-inline">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar usufructo?')">Eliminar</button>
+                            </form>
+                        </td>
+                        @endrole
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
         @else
         <p>No hay usufructos activos.</p>
         @endif
@@ -94,39 +98,43 @@
         <h2>Historial de Préstamos</h2>
 
         @if($usufructosFinalizados->count() > 0)
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Profesor</th>
-                    <th>Portátil</th>
-                    <th>Fecha Inicio</th>
-                    <th>Fecha Fin</th>
-                    @role('admin')
-                    <th>Acciones</th>
-                    @endrole
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($usufructosFinalizados as $usufructo)
-                <tr>
-                    <td>{{ $usufructo->profesor->nombre }} {{ $usufructo->profesor->apellido_1 }} {{ $usufructo->profesor->apellido_2 }}</td>
-                    <td>{{ $usufructo->portatil->marca_modelo }}</td>
-                    <td>{{ \Carbon\Carbon::parse($usufructo->fecha_inicio)->format('d-m-Y') }}</td>
-                    <td>{{ \Carbon\Carbon::parse($usufructo->fecha_fin)->format('d-m-Y') }}</td>
-                    @role('admin')
-                    <td>
-                        <form action="{{ route('usufructos.destroy', $usufructo->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar usufructo?')">Eliminar</button>
-                        </form>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Profesor</th>
+                        <th>Portátil</th>
+                        <th>Comentarios</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        @role('admin')
+                        <th>Acciones</th>
                         @endrole
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($usufructosFinalizados as $usufructo)
+                    <tr>
+                        <td>{{ $usufructo->profesor->nombre }} {{ $usufructo->profesor->apellido_1 }} {{ $usufructo->profesor->apellido_2 }}</td>
+                        <td>{{ $usufructo->portatil->marca_modelo }}</td>
+                        <td>{{ $usufructo->portatil->comentarios }}</td>
+                        <td>{{ \Carbon\Carbon::parse($usufructo->fecha_inicio)->format('d-m-Y') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($usufructo->fecha_fin)->format('d-m-Y') }}</td>
+                        @role('admin')
+                        <td>
+                            <form action="{{ route('usufructos.destroy', $usufructo->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar usufructo?')">Eliminar</button>
+                            </form>
+                            @endrole
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
         @else
         <p>No hay historial de usufructos.</p>
         @endif
