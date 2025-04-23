@@ -17,19 +17,19 @@
 
             <!-- Nombre del Aula -->
             <div class="form-group mb-2">
-                <label for="nombre">Nombre</label>
+                <label class="fw-bold" for="nombre">Nombre</label>
                 <input type="text" class="form-control" id="nombre" name="nombre" required>
             </div>
 
             <!-- Ubicación del Aula -->
             <div class="form-group mb-2">
-                <label for="ubicacion">Ubicación</label>
+                <label class="fw-bold" for="ubicacion">Ubicación</label>
                 <input type="text" class="form-control" id="ubicacion" name="ubicacion" required>
             </div>
 
             <!-- Descripción del Aula -->
             <div class="form-group mb-4">
-                <label for="descripcion">Descripción</label>
+                <label class="fw-bold" for="descripcion">Descripción</label>
                 <textarea class="form-control" id="descripcion" name="descripcion"></textarea>
             </div>
 

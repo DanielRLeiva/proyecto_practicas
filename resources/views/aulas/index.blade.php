@@ -25,6 +25,10 @@
                 <a href="{{ route('users.index') }}" class="btn btn-primary mb-3">
                     Administrar Usuarios
                 </a>
+
+                <a href="{{ route('auditoria.index') }}" class="btn btn-secondary mb-3">
+                    Ver Auditorías
+                </a>
                 @endrole
 
                 <!-- Botón Logout -->

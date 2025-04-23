@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuditoriaController;
 use App\Http\Controllers\AulaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EquipoController;
@@ -166,7 +167,16 @@ Route::middleware(['auth', 'role:admin|editor|viewer', 'nocache'])->group(functi
 // ===========================
 
 // Solo admin puede acceder a esto
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'role:admin', 'nocache'])->group(function () {
     Route::get('users', [UserController::class,'index'])->name('users.index');
     Route::put('users/{user}/role', [UserController::class,'updateRole'])->name('users.updateRole');
+});
+
+// ===========================
+// Rutas para ver auditoria
+// ===========================
+
+// Solo admin puede acceder a esto
+Route::middleware(['auth', 'role:admin', 'nocache'])->group(function () {
+    Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
 });
