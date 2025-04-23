@@ -50,7 +50,7 @@
         @else
 
         <div class="table-responsive mb-4">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped align-middle">
                 <thead>
                     <tr>
                         <th>Etiqueta CPU</th>
@@ -128,7 +128,7 @@
         <p>No hay materiales registrados para esta aula.</p>
         @else
         <div class="table-responsive mb-4">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped align-middle">
                 <thead>
                     <tr>
                         <th>Etiqueta</th>

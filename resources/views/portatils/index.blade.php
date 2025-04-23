@@ -43,7 +43,7 @@
         @endrole
 
         <div class="table-responsive mb-4">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped align-middle">
                 <thead>
                     <tr>
                         <th>Marca y Modelo</th>

@@ -51,7 +51,7 @@
         @endrole
 
         <!-- Tabla de aulas -->
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped align-middle">
             <thead>
                 <tr>
                     <th>Nombre</th>

@@ -42,7 +42,7 @@
         <a href="{{ route('profesors.create') }}" class="btn btn-success mb-3">Nuevo Profesor</a>
         @endrole
 
-        <table class="table table-bordered table-striped mb-5">
+        <table class="table table-bordered table-striped align-middle mb-5">
             <thead>
                 <tr>
                     <th>Nombre</th>

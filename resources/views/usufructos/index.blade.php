@@ -50,7 +50,7 @@
         <h2>Préstamos Activos</h2>
         @if($usufructosActivos->count() > 0)
         <div class="table-responsive">
-            <table class="table table-bordered table-striped ">
+            <table class="table table-bordered table-striped align-middle">
                 <thead>
                     <tr>
                         <th>Profesor</th>
@@ -92,7 +92,7 @@
 
         @if($usufructosFinalizados->count() > 0)
         <div class="table-responsive">
-            <table class="table table-bordered table-striped ">
+            <table class="table table-bordered table-striped align-middle">
                 <thead>
                     <tr>
                         <th>Profesor</th>
