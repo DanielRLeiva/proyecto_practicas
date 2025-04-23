@@ -21,82 +21,82 @@
 
             <div class="form-group mb-2">
                 <label for="etiqueta_cpu">Etiqueta CPU:</label>
-                <input type="text" class="form-control" name="etiqueta_cpu" required>
+                <input type="text" class="form-control" name="etiqueta_cpu">
             </div>
 
             <div class="form-group mb-2">
                 <label for="marca_cpu">Marca CPU:</label>
-                <input type="text" class="form-control" name="marca_cpu" required>
+                <input type="text" class="form-control" name="marca_cpu">
             </div>
 
             <div class="form-group mb-2">
                 <label for="modelo_cpu">Modelo CPU:</label>
-                <input type="text" class="form-control" name="modelo_cpu" required>
+                <input type="text" class="form-control" name="modelo_cpu">
             </div>
 
             <div class="form-group mb-2">
                 <label for="numero_serie_cpu">Número de serie CPU:</label>
-                <input type="text" class="form-control" name="numero_serie_cpu" required>
+                <input type="text" class="form-control" name="numero_serie_cpu">
             </div>
 
             <div class="form-group mb-2">
                 <label for="tipo_cpu">Tipo CPU:</label>
-                <input type="text" class="form-control" name="tipo_cpu" required>
+                <input type="text" class="form-control" name="tipo_cpu">
             </div>
 
             <div class="form-group mb-2">
                 <label for="memoria">Memoria:</label>
-                <input type="text" class="form-control" name="memoria" required>
+                <input type="text" class="form-control" name="memoria">
             </div>
 
             <div class="form-group mb-2">
                 <label for="disco_duro">Disco Duro:</label>
-                <input type="text" class="form-control" name="disco_duro" required>
+                <input type="text" class="form-control" name="disco_duro">
             </div>
 
             <div class="form-group mb-2">
                 <label for="conectores_video">Conectores Video:</label>
-                <input type="text" class="form-control" name="conectores_video" required>
+                <input type="text" class="form-control" name="conectores_video">
             </div>
 
             <div class="form-group mb-2">
                 <label for="etiqueta_monitor">Etiqueta Monitor:</label>
-                <input type="text" class="form-control" name="etiqueta_monitor" required>
+                <input type="text" class="form-control" name="etiqueta_monitor">
             </div>
 
             <div class="form-group mb-2">
                 <label for="marca_monitor">Marca Monitor:</label>
-                <input type="text" class="form-control" name="marca_monitor" required>
+                <input type="text" class="form-control" name="marca_monitor">
             </div>
 
             <div class="form-group mb-2">
                 <label for="modelo_monitor">Modelo Monitor:</label>
-                <input type="text" class="form-control" name="modelo_monitor" required>
+                <input type="text" class="form-control" name="modelo_monitor">
             </div>
 
             <div class="form-group mb-2">
                 <label for="conectores_monitor">Conectores Monitor:</label>
-                <input type="text" class="form-control" name="conectores_monitor" required>
+                <input type="text" class="form-control" name="conectores_monitor">
             </div>
 
             <div class="form-group mb-2">
                 <label for="pulgadas">Pulgadas:</label>
-                <input type="number" class="form-control" name="pulgadas" required>
+                <input type="number" class="form-control" name="pulgadas">
             </div>
 
             <div class="form-group mb-2">
                 <label for="numero_serie_monitor">Número de serie Monitor:</label>
-                <input type="text" class="form-control" name="numero_serie_monitor" required>
+                <input type="text" class="form-control" name="numero_serie_monitor">
             </div>
 
             <div class="form-group mb-2">
                 <label for="etiqueta_teclado">Etiqueta Teclado:</label>
-                <input type="text" class="form-control" name="etiqueta_teclado" required>
+                <input type="text" class="form-control" name="etiqueta_teclado">
             </div>
 
             <div class="form-group mb-3">
                 <label for="etiqueta_raton">Etiqueta Ratón:</label>
-                <input type="text" class="form-control" name="etiqueta_raton" required>
+                <input type="text" class="form-control" name="etiqueta_raton">
             </div>
 
             <div class="form-group mb-4">

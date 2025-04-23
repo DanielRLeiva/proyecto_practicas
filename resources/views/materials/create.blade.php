@@ -30,27 +30,27 @@
 
             <div class="form-group mb-3">
                 <label for="etiqueta" class="fw-bold">Etiqueta</label>
-                <input type="text" name="etiqueta" class="form-control" id="etiqueta" value="{{ old('etiqueta') }}" required>
+                <input type="text" name="etiqueta" class="form-control" id="etiqueta" value="{{ old('etiqueta') }}">
             </div>
 
             <div class="form-group mb-3">
                 <label for="descripcion" class="fw-bold">Descripción</label>
-                <input type="text" name="descripcion" class="form-control" id="descripcion" value="{{ old('descripcion') }}" required>
+                <input type="text" name="descripcion" class="form-control" id="descripcion" value="{{ old('descripcion') }}">
             </div>
 
             <div class="form-group mb-3">
                 <label for="marca" class="fw-bold">Marca</label>
-                <input type="text" name="marca" class="form-control" id="marca" value="{{ old('marca') }}" required>
+                <input type="text" name="marca" class="form-control" id="marca" value="{{ old('marca') }}">
             </div>
 
             <div class="form-group mb-3">
                 <label for="modelo" class="fw-bold">Modelo</label>
-                <input type="text" name="modelo" class="form-control" id="modelo" value="{{ old('modelo') }}" required>
+                <input type="text" name="modelo" class="form-control" id="modelo" value="{{ old('modelo') }}">
             </div>
 
             <div class="form-group mb-3">
                 <label for="numero_serie" class="fw-bold">Número de serie</label>
-                <input type="text" name="numero_serie" class="form-control" id="numero_serie" value="{{ old('numero_serie') }}" required>
+                <input type="text" name="numero_serie" class="form-control" id="numero_serie" value="{{ old('numero_serie') }}">
             </div>
 
             <div class="form-group mb-4">

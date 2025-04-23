@@ -34,11 +34,11 @@ class MaterialController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'etiqueta' => 'required|string|max:255',
-            'descripcion' => 'required|string|max:255',
-            'marca' => 'required|string|max:255',
-            'modelo' => 'required|string|max:255',
-            'numero_serie' => 'required|string|max:255',
+            'etiqueta' => 'nullable|string|max:255',
+            'descripcion' => 'nullable|string|max:255',
+            'marca' => 'nullable|string|max:255',
+            'modelo' => 'nullable|string|max:255',
+            'numero_serie' => 'nullable|string|max:255',
             'caracteristicas' => 'nullable|string',
             'aula_id' => 'required|exists:aulas,id',
         ]);
@@ -73,11 +73,11 @@ class MaterialController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'etiqueta' => 'required|string|max:255',
-            'descripcion' => 'required|string|max:255',
-            'marca' => 'required|string|max:255',
-            'modelo' => 'required|string|max:255',
-            'numero_serie' => 'required|string|max:255',
+            'etiqueta' => 'nullable|string|max:255',
+            'descripcion' => 'nullable|string|max:255',
+            'marca' => 'nullable|string|max:255',
+            'modelo' => 'nullable|string|max:255',
+            'numero_serie' => 'nullable|string|max:255',
             'caracteristicas' => 'nullable|string',
             'aula_id' => 'required|exists:aulas,id',
         ]);

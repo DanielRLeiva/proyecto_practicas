@@ -21,7 +21,7 @@
 
             <div class="form-group mb-2">
                 <label for="etiqueta">Etiqueta</label>
-                <input type="text" name="etiqueta" class="form-control" id="etiqueta" value="{{ old('etiqueta', $material->etiqueta) }}" required>
+                <input type="text" name="etiqueta" class="form-control" id="etiqueta" value="{{ old('etiqueta', $material->etiqueta) }}">
                 @error('etiqueta')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -29,7 +29,7 @@
 
             <div class="form-group mb-2">
                 <label for="descripcion">Descripción</label>
-                <input type="text" name="descripcion" class="form-control" id="descripcion" value="{{ old('descripcion', $material->descripcion) }}" required>
+                <input type="text" name="descripcion" class="form-control" id="descripcion" value="{{ old('descripcion', $material->descripcion) }}">
                 @error('descripcion')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -37,7 +37,7 @@
 
             <div class="form-group mb-2">
                 <label for="marca">Marca</label>
-                <input type="text" name="marca" class="form-control" id="marca" value="{{ old('marca', $material->marca) }}" required>
+                <input type="text" name="marca" class="form-control" id="marca" value="{{ old('marca', $material->marca) }}">
                 @error('marca')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -45,7 +45,7 @@
 
             <div class="form-group mb-2">
                 <label for="modelo">Modelo</label>
-                <input type="text" name="modelo" class="form-control" id="modelo" value="{{ old('modelo', $material->modelo) }}" required>
+                <input type="text" name="modelo" class="form-control" id="modelo" value="{{ old('modelo', $material->modelo) }}">
                 @error('modelo')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -53,7 +53,7 @@
 
             <div class="form-group mb-2">
                 <label for="numero_serie">Número de serie</label>
-                <input type="text" name="numero_serie" class="form-control" id="numero_serie" value="{{ old('numero_serie', $material->numero_serie) }}" required>
+                <input type="text" name="numero_serie" class="form-control" id="numero_serie" value="{{ old('numero_serie', $material->numero_serie) }}">
                 @error('numero_serie')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
