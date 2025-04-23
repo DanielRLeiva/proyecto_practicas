@@ -43,26 +43,64 @@
         @endrole
 
         <div class="table-responsive mb-4">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th>Marca y Modelo</th>
                         <th>Comentarios</th>
                         <th>Estado</th>
+                        @role('admin|editor')
+                        <th>Acciones</th>
+                        @endrole
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($portatiles as $portatil)
-                    <tr class="{{ $portatil->activo ? '' : 'table-secondary' }}">
+                    <tr class="{{ $portatil->activo }}">
                         <td>{{ $portatil->marca_modelo }}</td>
                         <td>{{ $portatil->comentarios }}</td>
                         <td>
-                            @if($portatil->activo)
+                            @switch($portatil->estado)
+                            @case('libre')
                             <span class="badge bg-success">Libre</span>
-                            @else
-                            <span class="badge bg-secondary">En Usufructo</span>
+                            @break
+                            @case('en_uso')
+                            <span class="badge bg-warning text-dark">En Usufructo</span>
+                            @break
+                            @case('inactivo')
+                            <span class="badge bg-secondary">Inactivo</span>
+                            @break
+                            @endswitch
+                        </td>
+
+                        @role('admin|editor')
+                        <td>
+                            @if ($portatil->estado === 'libre')
+                            <a href="{{ route('portatils.edit', $portatil->id) }}" class="btn btn-warning">Editar</a>
+
+                            @role('admin')
+                            <form action="{{ route('portatils.destroy', $portatil->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('¿Realmente desea DAR DE BAJA el Portátil?')">Dar de Baja</button>
+                            </form>
+                            @endrole
+
+                            @elseif ($portatil->estado === 'en_uso')
+                            <a href="{{ route('portatils.edit', $portatil->id) }}" class="btn btn-warning">Editar</a>
+
+                            @elseif ($portatil->estado === 'inactivo')
+                            <form action="{{ route('portatils.activar', $portatil->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="btn btn-success btn-sm"
+                                    onclick="return confirm('¿Dar de ALTA el Portátil?')">Dar de Alta</button>
+                            </form>
                             @endif
                         </td>
+                        @endrole
+
                     </tr>
                     @endforeach
                 </tbody>

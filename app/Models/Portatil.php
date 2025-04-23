@@ -14,6 +14,22 @@ class Portatil extends Model
 
     public function usufructo()
     {
-    return $this->hasOne(ProfesorPortatil::class);
-    } 
+        return $this->hasOne(ProfesorPortatil::class);
+    }
+
+    /**
+     * Método para obtener estados de un portátil
+     */
+    public function getEstadoAttribute()
+    {
+        $usufructoActivo = $this->usufructo()->whereNull('fecha_fin')->exists();
+
+        if ($this->activo && !$usufructoActivo) {
+            return 'libre';
+        } elseif (!$this->activo && $usufructoActivo) {
+            return 'en_uso';
+        } else {
+            return 'inactivo';
+        }
+    }
 }

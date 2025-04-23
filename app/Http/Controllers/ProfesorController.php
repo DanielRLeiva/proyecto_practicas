@@ -12,7 +12,7 @@ class ProfesorController extends Controller
      */
     public function index()
     {
-        $profesores = Profesor::all();
+        $profesores = Profesor::orderBy('activo', 'desc')->get();
 
         return view("profesors.index", compact("profesores"));
     }
@@ -99,7 +99,7 @@ class ProfesorController extends Controller
     }
 
     /**
-     * Activar
+     * Activar un profesor
      */
     public function activar($id)
     {
@@ -110,4 +110,6 @@ class ProfesorController extends Controller
         return redirect()->route('profesors.index')
             ->with('success', 'Profesor activado correctamente.');
     }
+
+
 }

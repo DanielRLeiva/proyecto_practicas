@@ -50,7 +50,7 @@
         <h2>Préstamos Activos</h2>
         @if($usufructosActivos->count() > 0)
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-striped ">
                 <thead>
                     <tr>
                         <th>Profesor</th>
@@ -74,13 +74,6 @@
                         @role('admin|editor')
                         <td>
                             <a href="{{ route('usufructos.edit', $usufructo->id) }}" class="btn btn-warning">Finalizar</a>
-                            @endrole
-
-                            @role('admin')
-                            <form action="{{ route('usufructos.destroy', $usufructo->id) }}" method="POST" class="d-inline">
-                                @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar usufructo?')">Eliminar</button>
-                            </form>
                         </td>
                         @endrole
                     </tr>
@@ -99,7 +92,7 @@
 
         @if($usufructosFinalizados->count() > 0)
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-striped ">
                 <thead>
                     <tr>
                         <th>Profesor</th>
@@ -120,6 +113,7 @@
                         <td>{{ $usufructo->portatil->comentarios }}</td>
                         <td>{{ \Carbon\Carbon::parse($usufructo->fecha_inicio)->format('d-m-Y') }}</td>
                         <td>{{ \Carbon\Carbon::parse($usufructo->fecha_fin)->format('d-m-Y') }}</td>
+                        
                         @role('admin')
                         <td>
                             <form action="{{ route('usufructos.destroy', $usufructo->id) }}" method="POST" class="d-inline">

@@ -42,7 +42,7 @@
         <a href="{{ route('profesors.create') }}" class="btn btn-success mb-3">Nuevo Profesor</a>
         @endrole
 
-        <table class="table table-bordered mb-5">
+        <table class="table table-bordered table-striped mb-5">
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -56,7 +56,7 @@
             </thead>
             <tbody>
                 @foreach ($profesores as $profesor)
-                <tr class="{{ $profesor->activo ? '' : 'table-secondary' }}">
+                <tr class="{{ $profesor->activo }}">
                     <td>{{ $profesor->nombre }}</td>
                     <td>{{ $profesor->apellido_1 }}</td>
                     <td>{{ $profesor->apellido_2 }}</td>
@@ -74,15 +74,19 @@
                         <a href="{{ route('profesors.edit', $profesor->id) }}" class="btn btn-warning btn-sm">Editar</a>
 
                         <form action="{{ route('profesors.destroy', $profesor->id) }}" method="POST" class="d-inline">
-                            @csrf @method('DELETE')
+                            @csrf
+                            @method('DELETE')
+
                             <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('¿Desactivar profesor?')">Desactivar</button>
+                                onclick="return confirm('¿Desactivar profesor?')">Dar de Baja</button>
                         </form>
                         @else
                         <form action="{{ route('profesors.activar', $profesor->id) }}" method="POST" class="d-inline">
-                            @csrf @method('PATCH')
+                            @csrf
+                            @method('PATCH')
+
                             <button type="submit" class="btn btn-success btn-sm"
-                                onclick="return confirm('¿Activar profesor?')">Activar</button>
+                                onclick="return confirm('¿Activar profesor?')">Dar de Alta</button>
                         </form>
                         @endif
                     </td>

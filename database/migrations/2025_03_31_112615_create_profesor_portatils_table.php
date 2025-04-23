@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('portatil_id');
             $table->date('fecha_inicio');
             $table->date('fecha_fin')->nullable();
-            $table->text('comentarios')->nullable();
             $table->timestamps();
 
             $table->foreign('profesor_id')->references('id')->on('profesors')->onDelete('cascade');

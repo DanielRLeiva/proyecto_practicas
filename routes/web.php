@@ -108,7 +108,7 @@ Route::middleware(['auth', 'role:admin', 'nocache'])->group(function () {
 
 // Editor - crear y editar
 Route::middleware(['auth', 'role:admin|editor', 'nocache'])->group(function () {
-    Route::resource('profesors', ProfesorController::class)->only(['create', 'edit', 'store', 'update']);
+    Route::resource('profesors', ProfesorController::class)->only(['create', 'edit', 'store', 'update', 'destroy']);
 
     // Ruta para activar profesor (soft delete reverso)
     Route::patch('profesors/{id}/activar', [ProfesorController::class, 'activar'])->name('profesors.activar');    
@@ -130,9 +130,9 @@ Route::middleware(['auth', 'role:admin', 'nocache'])->group(function () {
 
 // Editor - crear y editar
 Route::middleware(['auth', 'role:admin|editor', 'nocache'])->group(function () {
-    Route::resource('portatils', PortatilController::class)->only(['create', 'edit', 'store', 'update']);
+    Route::resource('portatils', PortatilController::class)->only(['create', 'edit', 'store', 'update', 'destroy']);
 
-    // Ruta para activar portatiles (soft delete reverso)
+    // Ruta para activar portátil (soft delete reverso)
     Route::patch('portatils/{id}/activar', [PortatilController::class, 'activar'])->name('portatils.activar');    
 });
 

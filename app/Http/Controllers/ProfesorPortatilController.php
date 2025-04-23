@@ -7,7 +7,6 @@ use App\Models\Profesor;
 use App\Models\ProfesorPortatil;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class ProfesorPortatilController extends Controller
 {
