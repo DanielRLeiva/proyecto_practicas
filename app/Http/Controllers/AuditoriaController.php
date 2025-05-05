@@ -18,9 +18,15 @@ class AuditoriaController extends Controller
 
         // Filtrar por nombre de usuario
         if ($request->filled('usuario')) {
-            $query->whereHas('user', function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->usuario . '%');
-            });
+            // Si se selecciona "Sistema", filtramos por auditorías sin un usuario asignado
+            if ($request->usuario === 'Sistema') {
+                $query->whereNull('user_id');
+            } else {
+                // Si se selecciona un usuario específico, filtramos por su nombre
+                $query->whereHas('user', function ($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->usuario . '%');
+                });
+            }
         }
 
         // Filtrar por fecha de inicio
@@ -39,7 +45,8 @@ class AuditoriaController extends Controller
         }
 
         // Realizar la paginación y mantener los filtros en la URL
-        $auditorias = $query->paginate(5)->appends($request->query());
+        $perPage = $request->input('per_page', 5); // Por defecto 5
+        $auditorias = $query->paginate($perPage)->appends($request->query());
 
         // Pasar la lista de usuarios y los resultados filtrados a la vista
         return view('auditoria.index', compact('auditorias', 'usuarios'));

@@ -55,9 +55,13 @@ class AuthController extends Controller
         // Asignar rol al usuario por defecto
         $user->assignRole('admin');
 
+        // Forzar auditoría para la asignación de rol
+        $user->auditEvent = 'updated';
+        $user->save();
+
         Auth::login($user);
 
-        $request->session()->flash('success','Usuario registrado correctamente.');
+        $request->session()->flash('success', 'Usuario registrado correctamente.');
 
         return redirect()->route('login');
     }

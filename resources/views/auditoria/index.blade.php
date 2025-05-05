@@ -41,16 +41,30 @@
         <h3 class="mb-3">Filtrar Auditoría</h3>
 
         <!-- Botón para mostrar/ocultar el formulario -->
-        <button type="button" class="btn btn-info mb-4" id="toggleFilterForm">Filtrar</button>
+        <button type="button" class="btn btn-info mb-4" id="toggleFilterForm">Desplegar Filtrado</button>
 
         <!-- Formulario de filtrado (inicialmente oculto) -->
         <form method="GET" action="{{ route('auditoria.index') }}" class="mb-5" id="filterForm" style="display:none;">
+
+            <!-- Registros por página -->
+            <div class="mb-3">
+                <label class="fw-bold" for="per_page" class="form-label">Registros por página</label>
+                <select name="per_page" id="per_page" class="form-select">
+                    @foreach([5, 10, 15, 20] as $cantidad)
+                    <option value="{{ $cantidad }}" {{ request('per_page', 5) == $cantidad ? 'selected' : '' }}>
+                        {{ $cantidad }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+
             <div class="row g-3 align-items-end">
                 <!-- Usuario -->
                 <div class="form-group mb-2">
                     <label class="fw-bold" for="usuario" class="form-label">Usuario</label>
                     <select name="usuario" id="usuario" class="form-control">
                         <option value="">Todos</option>
+                        <option value="Sistema" {{ request('usuario') == 'Sistema' ? 'selected' : '' }}>Sistema</option>
                         @foreach($usuarios as $usuario)
                         <option value="{{ $usuario->name }}" {{ request('usuario') == $usuario->name ? 'selected' : '' }}>
                             {{ $usuario->name }}
@@ -81,6 +95,8 @@
                         <option value="Material" {{ request('modelo') == 'Material' ? 'selected' : '' }}>Material</option>
                         <option value="Portatil" {{ request('modelo') == 'Portatil' ? 'selected' : '' }}>Portátil</option>
                         <option value="Profesor" {{ request('modelo') == 'Profesor' ? 'selected' : '' }}>Profesor</option>
+                        <option value="ProfesorPortatil" {{ request('modelo') == 'ProfesorPortatil' ? 'selected' : '' }}>ProfesorPortatil</option>
+                        <option value="User" {{ request('modelo') == 'User' ? 'selected' : '' }}>Usuario</option>
                     </select>
                 </div>
 
@@ -127,27 +143,57 @@
 
                         switch($modelName) {
                         case 'Aula':
-                        $label = $attributes['nombre'] ?? $old['nombre'] ?? 'Aula';
+                        $label = $attributes['nombre'] ?? $old['nombre'] ?? optional(\App\Models\Aula::find($audit->auditable_id))->nombre ?? 'Aula';
                         break;
                         case 'Equipo':
-                        $label = $attributes['etiqueta_cpu'] ?? $old['etiqueta_cpu'] ?? 'Equipo';
+                        $label = $attributes['etiqueta_cpu'] ?? $old['etiqueta_cpu'] ?? optional(\App\Models\Equipo::find($audit->auditable_id))->etiqueta_cpu ?? 'Equipo';
                         break;
                         case 'Material':
-                        $label = $attributes['etiqueta'] ?? $old['etiqueta'] ?? 'Material';
+                        $label = $attributes['etiqueta'] ?? $old['etiqueta'] ?? optional(\App\Models\Material::find($audit->auditable_id))->etiqueta ?? 'Material';
                         break;
                         case 'Portatil':
-                        $label = $attributes['marca_modelo'] ?? $old['marca_modelo'] ?? 'Portátil';
+                        $label = $attributes['marca_modelo'] ?? $old['marca_modelo'] ?? optional(\App\Models\Portatil::find($audit->auditable_id))->marca_modelo ?? 'Portátil';
                         break;
                         case 'Profesor':
-                        $label = trim(($attributes['nombre'] ?? $old['nombre'] ?? '') . ' ' .
-                        ($attributes['apellido_1'] ?? $old['apellido_1'] ?? '') . ' ' .
-                        ($attributes['apellido_2'] ?? $old['apellido_2'] ?? ''));
+                        $profesor = optional(\App\Models\Profesor::find($audit->auditable_id));
+                        $label = trim(
+                        ($attributes['nombre'] ?? $old['nombre'] ?? $profesor->nombre ?? '') . ' ' .
+                        ($attributes['apellido_1'] ?? $old['apellido_1'] ?? $profesor->apellido_1 ?? '') . ' ' .
+                        ($attributes['apellido_2'] ?? $old['apellido_2'] ?? $profesor->apellido_2 ?? '')
+                        );
                         break;
                         case 'ProfesorPortatil':
-                        $label = 'Usufructo (' . ($attributes['fecha_inicio'] ?? $old['fecha_inicio'] ?? '') . ')';
+                        // Intentar obtener el profesor_id desde attributes, old o directamente desde el modelo
+                        $profesorId = $attributes['profesor_id'] ?? $old['profesor_id'] ?? $audit->auditable->profesor_id ?? null;
+
+                        $profesor = optional(\App\Models\Profesor::find($profesorId));
+                        $nombreProfesor = trim(
+                        ($profesor->nombre ?? '') . ' ' .
+                        ($profesor->apellido_1 ?? '') . ' ' .
+                        ($profesor->apellido_2 ?? '')
+                        );
+
+                        $fechaRaw = $attributes['fecha_inicio'] ?? $old['fecha_inicio'] ?? $audit->auditable->fecha_inicio ?? '';
+                        $fechaInicio = $fechaRaw ? \Carbon\Carbon::parse($fechaRaw)->format('d/m/Y') : '';
+
+                        $label = $nombreProfesor ? "Usufructo de $nombreProfesor ($fechaInicio)" : "Usufructo ($fechaInicio)";
                         break;
-                        default:
-                        $label = 'Elemento';
+                        case 'User':
+                        // Para un nuevo usuario (evento 'created'), mostramos su nombre.
+                        if (isset($old['roles'])) {
+                        // Si hay un valor 'old' (actualización de un rol), comparamos el rol anterior y el nuevo
+                        $oldRole = is_array($old['roles'] ?? null) ? implode(', ', $old['roles']) : $old['roles'] ?? '';
+                        $newRole = is_array($attributes['roles'] ?? null) ? implode(', ', $attributes['roles']) : $attributes['roles'] ?? '';
+                        $userName = optional(\App\Models\User::find($audit->auditable_id))->name; // Obtener el nombre del usuario
+                        $label = $oldRole === $newRole
+                        ? "Rol asignado a $userName: $newRole"
+                        : "Rol cambiado para $userName: $oldRole → $newRole";
+                        } else {
+                        // Si es un nuevo usuario, mostramos solo su nombre
+                        $userName = optional(\App\Models\User::find($audit->auditable_id))->name; // Obtener el nombre del usuario
+                        $label = "Nuevo usuario creado: $userName";
+                        }
+                        break;
                         }
                         @endphp
                         {{ $label }}

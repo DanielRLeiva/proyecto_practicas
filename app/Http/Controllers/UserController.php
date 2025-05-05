@@ -24,9 +24,10 @@ class UserController extends Controller
             'role' => 'required|exists:roles,name',
         ]);
 
-        $oldRoles = $user->getRoleNames()->toArray();
+        $oldRoles = implode(', ', $user->getRoleNames()->toArray());
         $user->syncRoles($request->role);
-        $newRoles = $user->getRoleNames()->toArray();
+        $newRoles = implode(', ', $user->getRoleNames()->toArray());
+
 
         // Solo si hubo cambio
         if ($oldRoles !== $newRoles) {
@@ -41,7 +42,7 @@ class UserController extends Controller
                 'url'             => request()->fullUrl(),
                 'ip_address'      => request()->ip(),
                 'user_agent'      => request()->userAgent(),
-                'tags'            => ['role-change'],
+                'tags'            => 'role-change',
             ]);
         }
 

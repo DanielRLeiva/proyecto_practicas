@@ -13,7 +13,6 @@ class User extends Authenticatable implements Auditable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles, \OwenIt\Auditing\Auditable;
-    
     /**
      * The attributes that are mass assignable.
      *
