@@ -27,4 +27,21 @@ class ProfesorPortatil extends Model implements Auditable
     {
         return $this->belongsTo(Portatil::class);
     }
+
+    public function getAuditLabel(array $attributes = [], array $old = []): string
+    {
+        $profesorId = $attributes['profesor_id'] ?? $old['profesor_id'] ?? $this->profesor_id;
+        $profesor = \App\Models\Profesor::find($profesorId);
+
+        $nombreProfesor = $profesor
+            ? trim("{$profesor->nombre} {$profesor->apellido_1} {$profesor->apellido_2}")
+            : '';
+
+        $fechaRaw = $attributes['fecha_inicio'] ?? $old['fecha_inicio'] ?? $this->fecha_inicio;
+        $fechaInicio = $fechaRaw ? \Carbon\Carbon::parse($fechaRaw)->format('d/m/Y') : '';
+
+        return $nombreProfesor
+            ? "Usufructo de $nombreProfesor (Inicio: $fechaInicio)"
+            : "Usufructo ($fechaInicio)";
+    }
 }

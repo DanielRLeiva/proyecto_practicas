@@ -31,7 +31,16 @@ class Equipo extends Model implements Auditable
         'aula_id',
     ];
 
-    public function aula() {
+    public function aula()
+    {
         return $this->belongsTo(Aula::class);
+    }
+
+    public function getAuditLabel(array $attributes = [], array $old = []): string
+    {
+        return $attributes['etiqueta_cpu']
+            ?? $old['etiqueta_cpu']
+            ?? $this->etiqueta_cpu
+            ?? 'Equipo';
     }
 }

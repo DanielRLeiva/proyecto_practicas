@@ -33,4 +33,12 @@ class Portatil extends Model implements Auditable
             return 'inactivo';
         }
     }
+
+    public function getAuditLabel(array $attributes = [], array $old = []): string
+    {
+        return $attributes['marca_modelo']
+            ?? $old['marca_modelo']
+            ?? $this->marca_modelo
+            ?? 'Portátil';
+    }
 }

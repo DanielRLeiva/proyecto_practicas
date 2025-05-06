@@ -46,4 +46,20 @@ class User extends Authenticatable implements Auditable
             'password' => 'hashed',
         ];
     }
+
+    public function getAuditLabel(array $attributes = [], array $old = []): string
+    {
+        $userName = $this->name ?? 'Usuario';
+
+        if (isset($old['roles'])) {
+            $oldRole = is_array($old['roles']) ? implode(', ', $old['roles']) : $old['roles'];
+            $newRole = is_array($attributes['roles']) ? implode(', ', $attributes['roles']) : $attributes['roles'];
+
+            return $oldRole === $newRole
+                ? "Rol asignado a $userName: $newRole"
+                : "Rol cambiado para $userName: $oldRole → $newRole";
+        }
+
+        return "Nuevo usuario creado: $userName";
+    }
 }

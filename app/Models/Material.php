@@ -20,7 +20,16 @@ class Material extends Model implements Auditable
         'aula_id',
     ];
 
-    public function aula() {
+    public function aula()
+    {
         return $this->belongsTo(Aula::class);
+    }
+
+    public function getAuditLabel(array $attributes = [], array $old = []): string
+    {
+        return $attributes['etiqueta']
+            ?? $old['etiqueta']
+            ?? $this->etiqueta
+            ?? 'Material';
     }
 }
