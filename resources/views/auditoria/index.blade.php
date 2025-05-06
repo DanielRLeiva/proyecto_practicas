@@ -176,7 +176,7 @@
                         $fechaRaw = $attributes['fecha_inicio'] ?? $old['fecha_inicio'] ?? $audit->auditable->fecha_inicio ?? '';
                         $fechaInicio = $fechaRaw ? \Carbon\Carbon::parse($fechaRaw)->format('d/m/Y') : '';
 
-                        $label = $nombreProfesor ? "Usufructo de $nombreProfesor ($fechaInicio)" : "Usufructo ($fechaInicio)";
+                        $label = $nombreProfesor ? "Usufructo de $nombreProfesor (Inicio: $fechaInicio)" : "Usufructo ($fechaInicio)";
                         break;
                         case 'User':
                         // Para un nuevo usuario (evento 'created'), mostramos su nombre.
