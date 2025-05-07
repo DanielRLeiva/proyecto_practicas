@@ -14,15 +14,6 @@ class Profesor extends Model implements Auditable
 
     public function usufructo()
     {
-        return $this->hasMany(ProfesorPortatil::class);
-    }
-
-    public function getAuditLabel(array $attributes = [], array $old = []): string
-    {
-        $nombre = $attributes['nombre'] ?? $old['nombre'] ?? $this->nombre ?? '';
-        $apellido1 = $attributes['apellido_1'] ?? $old['apellido_1'] ?? $this->apellido_1 ?? '';
-        $apellido2 = $attributes['apellido_2'] ?? $old['apellido_2'] ?? $this->apellido_2 ?? '';
-
-        return trim("$nombre $apellido1 $apellido2");
+       return $this->hasMany(ProfesorPortatil::class);
     }
 }

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('marca_modelo');
             $table->string('comentarios')->nullable();
+            $table->enum('estado', ['Libre', 'Asignado', 'Baja'])->default('Libre'); // Valores controlados
             $table->boolean('activo')->default(true);
             $table->timestamps();
         });

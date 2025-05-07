@@ -17,28 +17,4 @@ class Portatil extends Model implements Auditable
     {
         return $this->hasOne(ProfesorPortatil::class);
     }
-
-    /**
-     * Método para obtener estados de un portátil
-     */
-    public function getEstadoAttribute()
-    {
-        $usufructoActivo = $this->usufructo()->whereNull('fecha_fin')->exists();
-
-        if ($this->activo && !$usufructoActivo) {
-            return 'libre';
-        } elseif (!$this->activo && $usufructoActivo) {
-            return 'en_uso';
-        } else {
-            return 'inactivo';
-        }
-    }
-
-    public function getAuditLabel(array $attributes = [], array $old = []): string
-    {
-        return $attributes['marca_modelo']
-            ?? $old['marca_modelo']
-            ?? $this->marca_modelo
-            ?? 'Portátil';
-    }
 }

@@ -14,14 +14,12 @@ class PortatilController extends Controller
     {
         $portatiles = Portatil::with('usufructo')
             ->get()
-            ->sortBy(function($portatil) {
-                if ($portatil->estado === 'en_uso') {
-                    return 0; // En Usufuructo primero
-                } elseif ($portatil->estado === 'libre') {
-                    return 1; // Libre después
-                } else {
-                    return 2; // Inactivo al final
-                }  
+            ->sortBy(function ($portatil) {
+                return match ($portatil->estado) {
+                    'Asignado' => 0,
+                    'Libre' => 1,
+                    default => 2, // Baja u otros
+                };
             });
 
         return view("portatils.index", compact("portatiles"));
@@ -45,7 +43,12 @@ class PortatilController extends Controller
             "comentarios" => "nullable|string|max:255",
         ]);
 
-        Portatil::create($request->all());
+        $portatil = new Portatil();
+        $portatil->marca_modelo = $request->marca_modelo;
+        $portatil->comentarios = $request->comentarios;
+        $portatil->estado = 'Libre';
+        $portatil->activo = true;
+        $portatil->save();
 
         return redirect()->route("portatils.index")
             ->with("success", "Portátil creado con éxito.");
@@ -99,6 +102,7 @@ class PortatilController extends Controller
         }
 
         $portatil->activo = false;
+        $portatil->estado = 'Baja';
         $portatil->save();
 
         return redirect()->route('portatils.index')
@@ -121,6 +125,7 @@ class PortatilController extends Controller
         }
 
         $portatil->activo = true;
+        $portatil->estado = 'Libre';
         $portatil->save();
 
         return redirect()->route('portatils.index')

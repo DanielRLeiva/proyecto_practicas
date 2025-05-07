@@ -61,13 +61,13 @@
                         <td>{{ $portatil->comentarios }}</td>
                         <td>
                             @switch($portatil->estado)
-                            @case('libre')
+                            @case('Libre')
                             <span class="badge bg-success">Libre</span>
                             @break
-                            @case('en_uso')
+                            @case('Asignado')
                             <span class="badge bg-warning text-dark">En Usufructo</span>
                             @break
-                            @case('inactivo')
+                            @case('Baja')
                             <span class="badge bg-secondary">Inactivo</span>
                             @break
                             @endswitch
@@ -75,7 +75,7 @@
 
                         @role('admin|editor')
                         <td>
-                            @if ($portatil->estado === 'libre')
+                            @if ($portatil->estado === 'Libre')
                             <a href="{{ route('portatils.edit', $portatil->id) }}" class="btn btn-warning">Editar</a>
 
                             @role('admin')
@@ -87,10 +87,10 @@
                             </form>
                             @endrole
 
-                            @elseif ($portatil->estado === 'en_uso')
+                            @elseif ($portatil->estado === 'Asignado')
                             <a href="{{ route('portatils.edit', $portatil->id) }}" class="btn btn-warning">Editar</a>
 
-                            @elseif ($portatil->estado === 'inactivo')
+                            @elseif ($portatil->estado === 'Baja')
                             <form action="{{ route('portatils.activar', $portatil->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('PATCH')
@@ -100,7 +100,6 @@
                             @endif
                         </td>
                         @endrole
-
                     </tr>
                     @endforeach
                 </tbody>

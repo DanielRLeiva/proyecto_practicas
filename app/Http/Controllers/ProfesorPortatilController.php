@@ -53,13 +53,13 @@ class ProfesorPortatilController extends Controller
         ]);
 
         if ($request->fecha_fin && $request->fecha_inicio > $request->fecha_fin) {
-            $validator->errors()->add('fecha_inicio','La fecha de inicio no puede ser posterior a la fecha de fin.');
+            $validator->errors()->add('fecha_inicio', 'La fecha de inicio no puede ser posterior a la fecha de fin.');
             return redirect()->back()->withErrors($validator)->withInput();
-        } 
+        }
 
         $portatilEnUso = ProfesorPortatil::where('portatil_id', $request->portatil_id)
-        ->whereNull('fecha_fin') // Solo verificar los que no tienen fecha de finalización
-        ->exists();
+            ->whereNull('fecha_fin') // Solo verificar los que no tienen fecha de finalización
+            ->exists();
 
         if ($portatilEnUso) {
             $validator->errors()->add('portatil_id', 'El portátil ya está en uso.');
@@ -70,6 +70,7 @@ class ProfesorPortatilController extends Controller
 
         // Marcar el portátil como inactivo
         $portatil = Portatil::find($request->portatil_id);
+        $portatil->estado = 'Asignado';
         $portatil->activo = false;
         $portatil->save();
 
@@ -108,13 +109,13 @@ class ProfesorPortatilController extends Controller
         ]);
 
         if ($request->fecha_fin && $request->fecha_inicio > $request->fecha_fin) {
-            $validator->errors()->add('fecha_inicio','La fecha de inicio no puede ser posterior a la fecha de fin.');
+            $validator->errors()->add('fecha_inicio', 'La fecha de inicio no puede ser posterior a la fecha de fin.');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $portatilEnUso = ProfesorPortatil::where('portatil_id', $request->portatil_id)
             ->whereNull('fecha_fin')
-            ->where('id', '!=',$usufructo->id)
+            ->where('id', '!=', $usufructo->id)
             ->exists();
 
         if ($portatilEnUso) {
@@ -132,6 +133,7 @@ class ProfesorPortatilController extends Controller
         // Si se ha modificado una fecha de fin, restarurar el portátil a estado activo
         if ($request->fecha_fin) {
             $portatil = Portatil::find($request->portatil_id);
+            $portatil->estado = 'Libre';
             $portatil->activo = true;
             $portatil->save();
         }
@@ -145,6 +147,15 @@ class ProfesorPortatilController extends Controller
      */
     public function destroy(ProfesorPortatil $usufructo)
     {
+        $portatil = $usufructo->portatil;
+
+        // Si el usufructo estaba activo
+        if (is_null($usufructo->fecha_fin)) {
+            $portatil->estado = 'Libre';
+            $portatil->activo = true;
+            $portatil->save();
+        }
+        
         $usufructo->delete();
 
         return redirect()->route('usufructos.index')
