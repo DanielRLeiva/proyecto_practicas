@@ -53,7 +53,7 @@ class AuthController extends Controller
         ]);
 
         // Asignar rol al usuario por defecto
-        $user->assignRole('admin');
+        $user->assignRole('viewer');
 
         // Forzar auditoría para la asignación de rol
         $user->auditEvent = 'updated';
