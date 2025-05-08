@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use OwenIt\Auditing\Models\Audit;
+use App\Models\Audit;
 
 class AuditoriaController extends Controller
 {
@@ -110,10 +110,11 @@ class AuditoriaController extends Controller
                     }
                     break;
             }
-
+            
             // Añadir campos personalizados al objeto auditado
             $audit->modelName = $modelName;
             $audit->label = $label;
+            $audit->modificaciones_formateadas = $audit->getFormattedModifications();
 
             return $audit;
         });

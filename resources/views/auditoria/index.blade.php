@@ -161,46 +161,11 @@
                         </button>
                         <div class="collapse mt-2" id="detalles-{{ $audit->id }}">
                             <ul class="mb-0">
-                                @foreach($audit->getModified() as $field => $newValue)
-                                @php
-                                // Obtener valores old y new
-                                $oldRaw = $audit->old_values[$field] ?? null;
-                                $newRaw = is_array($newValue) && isset($newValue['new']) ? $newValue['new'] : $newValue;
-
-                                // Verificar si los valores son null y reemplazarlos con "Sin dato"
-                                $oldRaw = $oldRaw === null ? 'Sin dato' : $oldRaw;
-                                $newRaw = $newRaw === null ? 'Sin dato' : $newRaw;
-
-                                // Verificar si hay algún valor que sea array, y lo tratamos adecuadamente
-                                if (is_array($oldRaw)) {
-                                $oldRaw = 'Sin dato';
-                                }
-                                if (is_array($newRaw)) {
-                                $newRaw = 'Sin dato';
-                                }
-
-                                // Función para formatear valores booleanos a "Sí" o "No"
-                                $formatBoolean = fn($val) => $val === true || $val === 1 || $val === '1' ? 'Sí' : ($val === false || $val === 0 || $val === '0' ? 'No' : $val);
-
-                                // Formatear valores booleanos
-                                $oldValue = $formatBoolean($oldRaw);
-                                $newValue = $formatBoolean($newRaw);
-
-                                // Función para verificar si es una fecha y formatearla
-                                $isDate = fn($val) => $val && \Illuminate\Support\Str::isMatch('/^\d{4}-\d{2}-\d{2}$/', $val);
-
-                                // Formatear las fechas si parecen serlo
-                                $oldValue = $oldValue !== 'Sin dato' && $isDate($oldValue) ? \Carbon\Carbon::parse($oldValue)->format('d/m/Y') : $oldValue;
-                                $newValue = $newValue !== 'Sin dato' && $isDate($newValue) ? \Carbon\Carbon::parse($newValue)->format('d/m/Y') : $newValue;
-
-                                // Si el valor es nulo o vacío, reemplazar con "Sin dato"
-                                $oldValue = $oldValue ?: 'Sin dato';
-                                $newValue = $newValue ?: 'Sin dato';
-                                @endphp
+                                @foreach($audit->modificaciones_formateadas as $mod)
                                 <li>
-                                    <strong>{{ ucfirst(str_replace('_', ' ', $field)) }}:</strong>
-                                    <span class="text-danger">{{ $oldValue }}</span> →
-                                    <span class="text-success">{{ $newValue }}</span>
+                                    <strong>{{ $mod['field'] }}:</strong>
+                                    <span class="text-danger">{{ $mod['old'] }}</span> →
+                                    <span class="text-success">{{ $mod['new'] }}</span>
                                 </li>
                                 @endforeach
                             </ul>
