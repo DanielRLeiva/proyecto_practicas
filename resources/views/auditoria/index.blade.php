@@ -146,70 +146,9 @@
                         @default <span class="badge bg-secondary">{{ $audit->event }}</span>
                         @endswitch
                     </td>
-                    <td>
-                        @php
-                        $modelName = class_basename($audit->auditable_type);
-                        $attributes = $audit->new_values ?? [];
-                        $old = $audit->old_values ?? [];
+                    <td>{{ $audit->label }}</td>
+                    <td>{{ $audit->modelName }}</td>
 
-                        switch($modelName) {
-                        case 'Aula':
-                        $label = $attributes['nombre'] ?? $old['nombre'] ?? optional(\App\Models\Aula::find($audit->auditable_id))->nombre ?? 'Aula';
-                        break;
-                        case 'Equipo':
-                        $label = $attributes['etiqueta_cpu'] ?? $old['etiqueta_cpu'] ?? optional(\App\Models\Equipo::find($audit->auditable_id))->etiqueta_cpu ?? 'Equipo';
-                        break;
-                        case 'Material':
-                        $label = $attributes['etiqueta'] ?? $old['etiqueta'] ?? optional(\App\Models\Material::find($audit->auditable_id))->etiqueta ?? 'Material';
-                        break;
-                        case 'Portatil':
-                        $label = $attributes['marca_modelo'] ?? $old['marca_modelo'] ?? optional(\App\Models\Portatil::find($audit->auditable_id))->marca_modelo ?? 'Portátil';
-                        break;
-                        case 'Profesor':
-                        $profesor = optional(\App\Models\Profesor::find($audit->auditable_id));
-                        $label = trim(
-                        ($attributes['nombre'] ?? $old['nombre'] ?? $profesor->nombre ?? '') . ' ' .
-                        ($attributes['apellido_1'] ?? $old['apellido_1'] ?? $profesor->apellido_1 ?? '') . ' ' .
-                        ($attributes['apellido_2'] ?? $old['apellido_2'] ?? $profesor->apellido_2 ?? '')
-                        );
-                        break;
-                        case 'ProfesorPortatil':
-                        // Intentar obtener el profesor_id desde attributes, old o directamente desde el modelo
-                        $profesorId = $attributes['profesor_id'] ?? $old['profesor_id'] ?? $audit->auditable->profesor_id ?? null;
-
-                        $profesor = optional(\App\Models\Profesor::find($profesorId));
-                        $nombreProfesor = trim(
-                        ($profesor->nombre ?? '') . ' ' .
-                        ($profesor->apellido_1 ?? '') . ' ' .
-                        ($profesor->apellido_2 ?? '')
-                        );
-
-                        $fechaRaw = $attributes['fecha_inicio'] ?? $old['fecha_inicio'] ?? $audit->auditable->fecha_inicio ?? '';
-                        $fechaInicio = $fechaRaw ? \Carbon\Carbon::parse($fechaRaw)->format('d/m/Y') : '';
-
-                        $label = $nombreProfesor ? "Usufructo de $nombreProfesor ($fechaInicio)" : "Usufructo ($fechaInicio)";
-                        break;
-                        case 'User':
-                        // Para un nuevo usuario (evento 'created'), mostramos su nombre.
-                        if (isset($old['roles'])) {
-                        // Si hay un valor 'old' (actualización de un rol), comparamos el rol anterior y el nuevo
-                        $oldRole = is_array($old['roles'] ?? null) ? implode(', ', $old['roles']) : $old['roles'] ?? '';
-                        $newRole = is_array($attributes['roles'] ?? null) ? implode(', ', $attributes['roles']) : $attributes['roles'] ?? '';
-                        $userName = optional(\App\Models\User::find($audit->auditable_id))->name; // Obtener el nombre del usuario
-                        $label = $oldRole === $newRole
-                        ? "Rol asignado a $userName: $newRole"
-                        : "Rol cambiado para $userName: $oldRole → $newRole";
-                        } else {
-                        // Si es un nuevo usuario, mostramos solo su nombre
-                        $userName = optional(\App\Models\User::find($audit->auditable_id))->name; // Obtener el nombre del usuario
-                        $label = "Nuevo usuario creado: $userName";
-                        }
-                        break;
-                        }
-                        @endphp
-                        {{ $label }}
-                    </td>
-                    <td>{{ $modelName }}</td>
                     <td>{{ $audit->created_at->format('d/m/Y H:i') }}</td>
                 </tr>
 
