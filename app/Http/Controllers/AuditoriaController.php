@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Audit;
+use App\Models\Aula;
+use App\Models\Equipo;
+use App\Models\Material;
+use App\Models\Portatil;
+use App\Models\Profesor;
+use Carbon\Carbon;
 
 class AuditoriaController extends Controller
 {
@@ -66,20 +72,20 @@ class AuditoriaController extends Controller
             // Determinar etiqueta descriptiva según el tipo de modelo
             switch ($modelName) {
                 case 'Aula':
-                    $label = $attributes['nombre'] ?? $old['nombre'] ?? optional(\App\Models\Aula::find($audit->auditable_id))->nombre ?? 'Aula';
+                    $label = $attributes['nombre'] ?? $old['nombre'] ?? optional(Aula::find($audit->auditable_id))->nombre ?? 'Aula';
                     break;
                 case 'Equipo':
-                    $label = $attributes['etiqueta_cpu'] ?? $old['etiqueta_cpu'] ?? optional(\App\Models\Equipo::find($audit->auditable_id))->etiqueta_cpu ?? 'Equipo';
+                    $label = $attributes['etiqueta_cpu'] ?? $old['etiqueta_cpu'] ?? optional(Equipo::find($audit->auditable_id))->etiqueta_cpu ?? 'Equipo';
                     break;
                 case 'Material':
-                    $label = $attributes['etiqueta'] ?? $old['etiqueta'] ?? optional(\App\Models\Material::find($audit->auditable_id))->etiqueta ?? 'Material';
+                    $label = $attributes['etiqueta'] ?? $old['etiqueta'] ?? optional(Material::find($audit->auditable_id))->etiqueta ?? 'Material';
                     break;
                 case 'Portatil':
-                    $label = $attributes['marca_modelo'] ?? $old['marca_modelo'] ?? optional(\App\Models\Portatil::find($audit->auditable_id))->marca_modelo ?? 'Portátil';
+                    $label = $attributes['marca_modelo'] ?? $old['marca_modelo'] ?? optional(Portatil::find($audit->auditable_id))->marca_modelo ?? 'Portátil';
                     break;
                 case 'Profesor':
                     // Construir nombre completo del profesor
-                    $profesor = optional(\App\Models\Profesor::find($audit->auditable_id));
+                    $profesor = optional(Profesor::find($audit->auditable_id));
                     $label = trim(
                         ($attributes['nombre'] ?? $old['nombre'] ?? $profesor->nombre ?? '') . ' ' .
                             ($attributes['apellido_1'] ?? $old['apellido_1'] ?? $profesor->apellido_1 ?? '') . ' ' .
@@ -89,10 +95,10 @@ class AuditoriaController extends Controller
                 case 'ProfesorPortatil':
                     // Mostrar usufructo con nombre del profesor y fecha
                     $profesorId = $attributes['profesor_id'] ?? $old['profesor_id'] ?? $audit->auditable->profesor_id ?? null;
-                    $profesor = optional(\App\Models\Profesor::find($profesorId));
+                    $profesor = optional(Profesor::find($profesorId));
                     $nombreProfesor = trim(($profesor->nombre ?? '') . ' ' . ($profesor->apellido_1 ?? '') . ' ' . ($profesor->apellido_2 ?? ''));
                     $fechaRaw = $attributes['fecha_inicio'] ?? $old['fecha_inicio'] ?? $audit->auditable->fecha_inicio ?? '';
-                    $fechaInicio = $fechaRaw ? \Carbon\Carbon::parse($fechaRaw)->format('d/m/Y') : '';
+                    $fechaInicio = $fechaRaw ? Carbon::parse($fechaRaw)->format('d/m/Y') : '';
                     $label = $nombreProfesor ? "Usufructo de $nombreProfesor ($fechaInicio)" : "Usufructo ($fechaInicio)";
                     break;
                 case 'User':
@@ -100,17 +106,17 @@ class AuditoriaController extends Controller
                     if (isset($old['roles'])) {
                         $oldRole = is_array($old['roles'] ?? null) ? implode(', ', $old['roles']) : $old['roles'] ?? '';
                         $newRole = is_array($attributes['roles'] ?? null) ? implode(', ', $attributes['roles']) : $attributes['roles'] ?? '';
-                        $userName = optional(\App\Models\User::find($audit->auditable_id))->name;
+                        $userName = optional(User::find($audit->auditable_id))->name;
                         $label = $oldRole === $newRole
                             ? "Rol asignado a $userName: $newRole"
                             : "Rol cambiado para $userName: $oldRole → $newRole";
                     } else {
-                        $userName = optional(\App\Models\User::find($audit->auditable_id))->name;
+                        $userName = optional(User::find($audit->auditable_id))->name;
                         $label = "Nuevo usuario creado: $userName";
                     }
                     break;
             }
-            
+
             // Añadir campos personalizados al objeto auditado
             $audit->modelName = $modelName;
             $audit->label = $label;
