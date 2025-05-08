@@ -44,6 +44,11 @@ class AuditoriaController extends Controller
             $query->where('auditable_type', 'like', '%\\' . $request->modelo);
         }
 
+        // Filtrar por acción (created, updated, deleted)
+        if ($request->filled('accion')) {
+            $query->where('event', $request->accion);
+        }
+
         // Realizar la paginación y mantener los filtros en la URL
         $perPage = $request->input('per_page', 5); // Por defecto 5
         $auditorias = $query->paginate($perPage)->appends($request->query());
