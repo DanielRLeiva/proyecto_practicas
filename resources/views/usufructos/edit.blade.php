@@ -52,14 +52,19 @@
                 </select>
             </div>
 
-            <div class="mb-3">
-                <label for="fecha_inicio" class="form-label">Fecha Inicio</label>
-                <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" value="{{ $usufructo->fecha_inicio }}" required>
-            </div>
+            <!-- Fecha de inicio del usufructo, Fecha de fin del usufructo (opcional) -->
+            <div class="mb-5">
+                <div class="d-flex gap-3">
+                    <div class="flex-fill d-flex flex-column">
+                        <label for="fecha_inicio" class="fw-bold">Fecha Inicio</label>
+                        <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" value="{{ $usufructo->fecha_inicio }}" required>
+                    </div>
 
-            <div class="mb-3">
-                <label for="fecha_fin" class="form-label">Fecha Fin</label>
-                <input type="date" name="fecha_fin" id="fecha_fin" class="form-control" value="{{ $usufructo->fecha_fin }}">
+                    <div class="flex-fill d-flex flex-column">
+                        <label for="fecha_fin" class="fw-bold">Fecha Fin</label>
+                        <input type="date" name="fecha_fin" id="fecha_fin" class="form-control" value="{{ $usufructo->fecha_fin }}" required>
+                    </div>
+                </div>
             </div>
 
             <button type="submit" class="btn btn-success">Actualizar Usufructo</button>
@@ -67,6 +72,9 @@
 
         <a href="{{ route('usufructos.index') }}" class="btn btn-primary mt-3">Volver a la lista de Usufructos</a>
     </div>
+
+    <!-- Script para restricción de Fechas -->
+    <script src="{{ asset('js/fechasForm.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>

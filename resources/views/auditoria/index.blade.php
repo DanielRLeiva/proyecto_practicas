@@ -194,12 +194,13 @@
 
     <!-- Script para mostrar filtro de Búsquesa -->
     <script src="{{ asset('js/filtroForm.js') }}"></script>
-</body>
 
+    <!-- Script para restricción de Fechas -->
+    <script src="{{ asset('js/fechasForm.js') }}"></script>
 
-<!-- Incluir Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Incluir Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
