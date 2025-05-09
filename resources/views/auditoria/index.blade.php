@@ -73,16 +73,18 @@
                     </select>
                 </div>
 
-                <!-- Fecha inicio -->
-                <div class="form-group mb-2">
-                    <label class="fw-bold" for="fecha_inicio" class="form-label">Desde</label>
-                    <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" value="{{ request('fecha_inicio') }}">
-                </div>
-
-                <!-- Fecha fin -->
-                <div class="form-group mb-2">
-                    <label class="fw-bold" for="fecha_fin" class="form-label">Hasta</label>
-                    <input type="date" name="fecha_fin" id="fecha_fin" class="form-control" value="{{ request('fecha_fin') }}">
+                <!-- Fecha inicio Fecha fin -->
+                <div class="form-group mb-2 w-100">
+                    <div class="d-flex gap-3">
+                        <div class="flex-fill d-flex flex-column">
+                            <label for="fecha_inicio" class="fw-bold form-label mb-0">Desde</label>
+                            <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" value="{{ request('fecha_inicio') }}">
+                        </div>
+                        <div class="flex-fill d-flex flex-column">
+                            <label for="fecha_fin" class="fw-bold form-label mb-0">Hasta</label>
+                            <input type="date" name="fecha_fin" id="fecha_fin" class="form-control" value="{{ request('fecha_fin') }}">
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Modelo -->
