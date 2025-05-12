@@ -37,7 +37,7 @@
                         <form action="{{ route('users.updateRole', $user->id) }}" method="POST">
                             @csrf
                             @method('PUT')
-                            <select name="role" class="form-select">
+                            <select name="role" class="form-select" {{ ($user->id === Auth::id() && $user->hasRole('admin')) ? 'disabled' : '' }}>
                                 @foreach($roles as $role)
                                 <option value="{{ $role->name }}" {{ $user->hasRole($role->name) ? 'selected' : '' }}>
                                     {{ ucfirst($role->name) }}

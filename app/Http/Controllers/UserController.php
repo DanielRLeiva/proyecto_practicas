@@ -12,7 +12,9 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::with('roles')->get();
+        $users = User::with('roles')
+            ->where('email', '!=', 'admin@admin.com')
+            ->get();
         $roles = Role::all();
 
         return view('users.index', compact('users', 'roles'));

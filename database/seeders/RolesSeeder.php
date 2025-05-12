@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class RolesSeeder extends Seeder
@@ -13,9 +14,26 @@ class RolesSeeder extends Seeder
      */
     public function run(): void
     {
-         // Crear roles
-         Role::create(['name' => 'admin']);
-         Role::create(['name' => 'editor']);
-         Role::create(['name' => 'viewer']);
+        // Crear roles si no existen
+        $roles = ['admin', 'editor', 'viewer'];
+        foreach ($roles as $role) {
+            Role::firstOrCreate(['name' => $role]);
+        }
+
+        // Crear usuario admin si no existe
+        $adminEmail = 'admin@admin.com';
+
+        $admin = User::firstOrCreate(
+            ['email' => $adminEmail],
+            [
+                'name' => 'Administrador',
+                'password' => Hash::make('admin123'), // Cambiá la contraseña si querés
+            ]
+        );
+
+        // Asignar rol admin si no lo tiene
+        if (!$admin->hasRole('admin')) {
+            $admin->syncRoles('admin');
+        }
     }
 }
