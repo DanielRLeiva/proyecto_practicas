@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
-            $table->string('etiqueta');
-            $table->text('descripcion');
-            $table->string('marca');
-            $table->string('modelo');
-            $table->string('numero_serie');
+            $table->string('etiqueta')->nullable();
+            $table->text('descripcion')->nullable();
+            $table->string('marca')->nullable();
+            $table->string('modelo')->nullable();
+            $table->string('numero_serie')->nullable();
             $table->text('caracteristicas')->nullable();
             $table->foreignId('aula_id')->constrained()->onDelete('cascade');
             $table->timestamps();

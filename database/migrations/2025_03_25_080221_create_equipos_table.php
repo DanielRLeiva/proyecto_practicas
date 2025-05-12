@@ -13,22 +13,22 @@ return new class extends Migration
     {
         Schema::create('equipos', function (Blueprint $table) {
             $table->id();
-            $table->string('etiqueta_cpu');
-            $table->string('marca_cpu');
-            $table->string('modelo_cpu');
-            $table->string('numero_serie_cpu');
-            $table->string('tipo_cpu');
-            $table->string('memoria');
-            $table->string('disco_duro');
-            $table->string('conectores_video');
-            $table->string('etiqueta_monitor');
-            $table->string('marca_monitor');
-            $table->string('modelo_monitor');
-            $table->string('conectores_monitor');
-            $table->unsignedInteger('pulgadas');
-            $table->string('numero_serie_monitor');
-            $table->string('etiqueta_teclado');
-            $table->string('etiqueta_raton');
+            $table->string('etiqueta_cpu')->nullable();
+            $table->string('marca_cpu')->nullable();
+            $table->string('modelo_cpu')->nullable();
+            $table->string('numero_serie_cpu')->nullable();
+            $table->string('tipo_cpu')->nullable();
+            $table->string('memoria')->nullable();
+            $table->string('disco_duro')->nullable();
+            $table->string('conectores_video')->nullable();
+            $table->string('etiqueta_monitor')->nullable();
+            $table->string('marca_monitor')->nullable();
+            $table->string('modelo_monitor')->nullable();
+            $table->string('conectores_monitor')->nullable();
+            $table->unsignedInteger('pulgadas')->nullable();
+            $table->string('numero_serie_monitor')->nullable();
+            $table->string('etiqueta_teclado')->nullable();
+            $table->string('etiqueta_raton')->nullable();
             $table->text('observaciones')->nullable();
             $table->foreignId('aula_id')->constrained()->onDelete('cascade');
             $table->timestamps();
