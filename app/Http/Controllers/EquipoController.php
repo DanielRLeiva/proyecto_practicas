@@ -21,11 +21,16 @@ class EquipoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create($aula_id)
+    public function create(Request $request, $aula_id)
     {
         $aula = Aula::findOrFail($aula_id);
+        $equipoDuplicado = null;
+    
+        if ($request->has('duplicar')) {
+            $equipoDuplicado = Equipo::find($request->input('duplicar'));
+        }
 
-        return view("equipos.create", compact('aula','aula_id'));
+        return view("equipos.create", compact('aula','aula_id', 'equipoDuplicado'));
     }
 
     /**

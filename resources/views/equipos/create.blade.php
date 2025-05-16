@@ -21,87 +21,87 @@
 
             <div class="form-group mb-2">
                 <label for="etiqueta_cpu">Etiqueta CPU:</label>
-                <input type="text" class="form-control" name="etiqueta_cpu">
+                <input type="text" class="form-control" name="etiqueta_cpu" value="{{ old('etiqueta_cpu', $equipoDuplicado->etiqueta_cpu ?? '') }}">
             </div>
 
             <div class="form-group mb-2">
                 <label for="marca_cpu">Marca CPU:</label>
-                <input type="text" class="form-control" name="marca_cpu">
+                <input type="text" class="form-control" name="marca_cpu" value="{{ old('marca_cpu', $equipoDuplicado->marca_cpu ?? '') }}">
             </div>
 
             <div class="form-group mb-2">
                 <label for="modelo_cpu">Modelo CPU:</label>
-                <input type="text" class="form-control" name="modelo_cpu">
+                <input type="text" class="form-control" name="modelo_cpu" value="{{ old('modelo_cpu', $equipoDuplicado->modelo_cpu ?? '') }}">
             </div>
 
             <div class="form-group mb-2">
                 <label for="numero_serie_cpu">Número de serie CPU:</label>
-                <input type="text" class="form-control" name="numero_serie_cpu">
+                <input type="text" class="form-control" name="numero_serie_cpu" value="{{ old('numero_serie_cpu', $equipoDuplicado->numero_serie_cpu ?? '') }}">
             </div>
 
             <div class="form-group mb-2">
                 <label for="tipo_cpu">Tipo CPU:</label>
-                <input type="text" class="form-control" name="tipo_cpu">
+                <input type="text" class="form-control" name="tipo_cpu" value="{{ old('tipo_cpu', $equipoDuplicado->tipo_cpu ?? '') }}">
             </div>
 
             <div class="form-group mb-2">
                 <label for="memoria">Memoria:</label>
-                <input type="text" class="form-control" name="memoria">
+                <input type="text" class="form-control" name="memoria" value="{{ old('memoria', $equipoDuplicado->memoria ?? '') }}">
             </div>
 
             <div class="form-group mb-2">
                 <label for="disco_duro">Disco Duro:</label>
-                <input type="text" class="form-control" name="disco_duro">
+                <input type="text" class="form-control" name="disco_duro" value="{{ old('disco_duro', $equipoDuplicado->disco_duro ?? '') }}">
             </div>
 
             <div class="form-group mb-2">
                 <label for="conectores_video">Conectores Video:</label>
-                <input type="text" class="form-control" name="conectores_video">
+                <input type="text" class="form-control" name="conectores_video" value="{{ old('conectores_video', $equipoDuplicado->conectores_video ?? '') }}">
             </div>
 
             <div class="form-group mb-2">
                 <label for="etiqueta_monitor">Etiqueta Monitor:</label>
-                <input type="text" class="form-control" name="etiqueta_monitor">
+                <input type="text" class="form-control" name="etiqueta_monitor" value="{{ old('etiqueta_monitor', $equipoDuplicado->etiqueta_monitor ?? '') }}">
             </div>
 
             <div class="form-group mb-2">
                 <label for="marca_monitor">Marca Monitor:</label>
-                <input type="text" class="form-control" name="marca_monitor">
+                <input type="text" class="form-control" name="marca_monitor" value="{{ old('marca_monitor', $equipoDuplicado->marca_monitor ?? '') }}">
             </div>
 
             <div class="form-group mb-2">
                 <label for="modelo_monitor">Modelo Monitor:</label>
-                <input type="text" class="form-control" name="modelo_monitor">
+                <input type="text" class="form-control" name="modelo_monitor" value="{{ old('modelo_monitor', $equipoDuplicado->modelo_monitor ?? '') }}">
             </div>
 
             <div class="form-group mb-2">
                 <label for="conectores_monitor">Conectores Monitor:</label>
-                <input type="text" class="form-control" name="conectores_monitor">
+                <input type="text" class="form-control" name="conectores_monitor" value="{{ old('conectores_monitor', $equipoDuplicado->conectores_monitor ?? '') }}">
             </div>
 
             <div class="form-group mb-2">
                 <label for="pulgadas">Pulgadas:</label>
-                <input type="number" class="form-control" name="pulgadas">
+                <input type="number" class="form-control" name="pulgadas" value="{{ old('pulgadas', $equipoDuplicado->pulgadas ?? '') }}">
             </div>
 
             <div class="form-group mb-2">
                 <label for="numero_serie_monitor">Número de serie Monitor:</label>
-                <input type="text" class="form-control" name="numero_serie_monitor">
+                <input type="text" class="form-control" name="numero_serie_monitor" value="{{ old('numero_serie_monitor', $equipoDuplicado->numero_serie_monitor ?? '') }}">
             </div>
 
             <div class="form-group mb-2">
                 <label for="etiqueta_teclado">Etiqueta Teclado:</label>
-                <input type="text" class="form-control" name="etiqueta_teclado">
+                <input type="text" class="form-control" name="etiqueta_teclado" value="{{ old('etiqueta_teclado', $equipoDuplicado->etiqueta_teclado ?? '') }}">
             </div>
 
             <div class="form-group mb-3">
                 <label for="etiqueta_raton">Etiqueta Ratón:</label>
-                <input type="text" class="form-control" name="etiqueta_raton">
+                <input type="text" class="form-control" name="etiqueta_raton" value="{{ old('etiqueta_raton', $equipoDuplicado->etiqueta_raton ?? '') }}">
             </div>
 
             <div class="form-group mb-3">
                 <label for="numero_inventario">Número de Inventario:</label>
-                <input type="text" class="form-control" name="numero_inventario">
+                <input type="text" class="form-control" name="numero_inventario" value="{{ old('numero_inventario', $equipoDuplicado->numero_inventario ?? '') }}">
             </div>
 
             <div class="form-group mb-4">

@@ -101,6 +101,7 @@
                         <td>
                             <a href="{{ route('equipos.edit', ['equipo' => $equipo->id, 'aula_id' => $aula->id]) }}" class="btn btn-warning">Editar</a>
 
+                            <a href="{{ route('equipos.create', ['aula_id' => $aula->id]) }}? duplicar={{ $equipo->id }}" class="btn btn-info">Duplicar</a>
                             @role('admin')
                             <form action="{{ route('equipos.destroy', $equipo->id) }}" method="POST" style="display:inline;">
                                 @csrf
@@ -155,7 +156,7 @@
                         <td>{{ $material->caracteristicas }}</td>
                         @role('admin|editor')
                         <td>
-                            <a href="{{ route('materials.edit', ['material' => $material->id, 'aula_id' => $aula->id]) }}" class="btn btn-warning">Editar</a>
+                            <a href="{{ route('materials.edit', ['material' => $material->id, 'aula_id' => $aula->id]) }}" class="btn btn-warning">Editar</a
 
                             @role('admin')
                             <form action="{{ route('materials.destroy', $material->id) }}" method="POST" style="display:inline;">

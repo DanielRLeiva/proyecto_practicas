@@ -148,6 +148,7 @@
                         <td>
                             <a href="{{ route('equipos.edit', ['equipo' => $equipo->id, 'aula_id' => $equipo->aula->id ?? 0]) }}" class="btn btn-warning btn-sm">Editar</a>
 
+                            <a href="{{ route('equipos.create', ['aula_id' => $aula->id]) }}? duplicar={{ $equipo->id }}" class="btn btn-info">Duplicar</a>
                             @role('admin')
                             <form action="{{ route('equipos.destroy', $equipo->id) }}" method="POST" class="d-inline">
                                 @csrf
