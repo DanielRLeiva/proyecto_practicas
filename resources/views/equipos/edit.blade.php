@@ -145,6 +145,11 @@
                 @enderror
             </div>
 
+            <div class="form-group mb-3">
+                <label class="fw-bold" for="numero_inventario">Número de Inventario:</label>
+                <input type="text" id="numero_inventario" name="numero_inventario" class="form-control" value="{{ old('numero_inventario', $equipo->numero_inventario) }}">
+            </div>
+
             <div class="form-group mb-4">
                 <label for="observaciones" class="fw-bold">Observaciones</label>
                 <textarea id="observaciones" name="observaciones" class="form-control">{{ old('observaciones', $equipo->observaciones) }}</textarea>

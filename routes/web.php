@@ -44,6 +44,11 @@ Route::middleware(['auth', 'role:admin|editor|viewer', 'nocache'])->group(functi
 // Rutas para Equipos
 // =======================
 
+// Todos los roles pueden ver todos los equipos
+Route::middleware(['auth', 'role:viewer|editor|admin', 'nocache'])->group(function () {
+    Route::get('equipos/todos', [EquipoController::class, 'all'])->name('equipos.all');
+});
+
 // Admin - acceso total
 Route::middleware(['auth', 'role:admin', 'nocache'])->group(function () {
     Route::resource('equipos', EquipoController::class)->except(['create', 'edit']);
@@ -75,7 +80,7 @@ Route::middleware(['auth', 'role:viewer|editor|admin', 'nocache'])->group(functi
 Route::middleware(['auth', 'role:admin', 'nocache'])->group(function () {
     Route::resource('materials', MaterialController::class)
         ->except(['create', 'edit']);
-    
+
     Route::get('materials/create/{aula_id}', [MaterialController::class, 'create'])->name('materials.create');
     Route::get('materials/{material}/edit/{aula_id}', [MaterialController::class, 'edit'])->name('materials.edit');
     Route::put('materials/{material}', [MaterialController::class, 'update'])->name('materials.update');
@@ -85,7 +90,7 @@ Route::middleware(['auth', 'role:admin', 'nocache'])->group(function () {
 Route::middleware(['auth', 'role:admin|editor', 'nocache'])->group(function () {
     Route::get('materials', [MaterialController::class, 'index'])->name('materials.index');
     Route::get('materials/{material}', [MaterialController::class, 'show'])->name('materials.show');
-    
+
     Route::get('materials/create/{aula_id}', [MaterialController::class, 'create'])->name('materials.create');
     Route::get('materials/{material}/edit/{aula_id}', [MaterialController::class, 'edit'])->name('materials.edit');
     Route::post('materials', [MaterialController::class, 'store'])->name('materials.store');
@@ -112,7 +117,7 @@ Route::middleware(['auth', 'role:admin|editor', 'nocache'])->group(function () {
     Route::resource('profesors', ProfesorController::class)->only(['create', 'edit', 'store', 'update', 'destroy']);
 
     // Ruta para activar profesor (soft delete reverso)
-    Route::patch('profesors/{id}/activar', [ProfesorController::class, 'activar'])->name('profesors.activar');    
+    Route::patch('profesors/{id}/activar', [ProfesorController::class, 'activar'])->name('profesors.activar');
 });
 
 // Viewer - solo ver
@@ -134,7 +139,7 @@ Route::middleware(['auth', 'role:admin|editor', 'nocache'])->group(function () {
     Route::resource('portatils', PortatilController::class)->only(['create', 'edit', 'store', 'update', 'destroy']);
 
     // Ruta para activar portátil (soft delete reverso)
-    Route::patch('portatils/{id}/activar', [PortatilController::class, 'activar'])->name('portatils.activar');    
+    Route::patch('portatils/{id}/activar', [PortatilController::class, 'activar'])->name('portatils.activar');
 });
 
 // Viewer - solo ver
@@ -168,8 +173,8 @@ Route::middleware(['auth', 'role:admin|editor|viewer', 'nocache'])->group(functi
 
 // Solo admin puede acceder a esto
 Route::middleware(['auth', 'role:admin', 'nocache'])->group(function () {
-    Route::get('users', [UserController::class,'index'])->name('users.index');
-    Route::put('users/{user}/role', [UserController::class,'updateRole'])->name('users.updateRole');
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::put('users/{user}/role', [UserController::class, 'updateRole'])->name('users.updateRole');
 });
 
 // ===========================

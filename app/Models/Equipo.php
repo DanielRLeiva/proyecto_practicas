@@ -29,6 +29,7 @@ class Equipo extends Model implements Auditable
         'etiqueta_raton',
         'observaciones',
         'aula_id',
+        'numero_inventario',
     ];
 
     public function aula() {

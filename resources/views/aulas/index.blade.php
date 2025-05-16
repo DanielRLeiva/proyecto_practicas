@@ -40,6 +40,15 @@
 
         </div>
 
+        <!-- Botón es -->
+        <div class="mb-4 d-flex justify-content-center gap-3 flex-wrap">
+            <!-- Enlace para redirigir a usufructos -->
+            <a href="{{ route('usufructos.index') }}" class="btn btn-dark">Ver Lista de Usufrutos</a>
+
+            <!-- Enlace para redirigir a Todos los Equipos -->
+            <a href="{{ route('equipos.all') }}" class="btn btn-dark">Ver Todos los Equipos</a>
+        </div>
+
         <!-- Mostrar mensaje de éxito -->
         @if(session()->has('success'))
         <div class="alert alert-success" role="alert">
@@ -53,6 +62,11 @@
 
         <hr>
         @endrole
+
+
+        @if ($aulas->isEmpty())
+        <p>No hay aulas registradas aún.</p>
+        @else
 
         <!-- Tabla de aulas -->
         <table class="table table-bordered table-striped align-middle">
@@ -85,6 +99,8 @@
                 @endforeach
             </tbody>
         </table>
+
+        @endif
 
         <hr>
 

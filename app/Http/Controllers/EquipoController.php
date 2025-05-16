@@ -34,24 +34,26 @@ class EquipoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'etiqueta_cpu' => 'nullable|string|max:255',
-            'marca_cpu' => 'nullable|string|max:255',
-            'modelo_cpu' => 'nullable|string|max:255',
-            'numero_serie_cpu' => 'nullable|string|max:255',
-            'tipo_cpu' => 'nullable|string|max:255',
-            'memoria' => 'nullable|string|max:255',
-            'disco_duro' => 'nullable|string|max:255',
-            'conectores_video' => 'nullable|string|max:255',
-            'etiqueta_monitor' => 'nullable|string|max:255',
-            'marca_monitor' => 'nullable|string|max:255',
-            'modelo_monitor' => 'nullable|string|max:255',
-            'conectores_monitor' => 'nullable|string|max:255',
+            'etiqueta_cpu' => 'nullable|string|max:60',
+            'marca_cpu' => 'nullable|string|max:60',
+            'modelo_cpu' => 'nullable|string|max:60',
+            'numero_serie_cpu' => 'nullable|string|max:60',
+            'tipo_cpu' => 'nullable|string|max:60',
+            'memoria' => 'nullable|string|max:60',
+            'disco_duro' => 'nullable|string|max:60',
+            'conectores_video' => 'nullable|string|max:60',
+            'etiqueta_monitor' => 'nullable|string|max:60',
+            'marca_monitor' => 'nullable|string|max:60',
+            'modelo_monitor' => 'nullable|string|max:60',
+            'conectores_monitor' => 'nullable|string|max:60',
             'pulgadas' => 'nullable|integer',
-            'numero_serie_monitor' => 'nullable|string|max:255',
-            'etiqueta_teclado' => 'nullable|string|max:255',
-            'etiqueta_raton' => 'nullable|string|max:255',
+            'numero_serie_monitor' => 'nullable|string|max:60',
+            'etiqueta_teclado' => 'nullable|string|max:60',
+            'etiqueta_raton' => 'nullable|string|max:60',
             'observaciones' => 'nullable|string',
             'aula_id' => 'required|exists:aulas,id',
+            'numero_inventario' => 'nullable|string|max:60',
+            
         ]);
 
         Equipo::create($request->all());
@@ -84,24 +86,25 @@ class EquipoController extends Controller
     public function update(Request $request, $id)
     { 
         $request->validate([
-            'etiqueta_cpu' => 'nullable|string|max:255',
-            'marca_cpu' => 'nullable|string|max:255',
-            'modelo_cpu' => 'nullable|string|max:255',
-            'numero_serie_cpu' => 'nullable|string|max:255',
-            'tipo_cpu' => 'nullable|string|max:255',
-            'memoria' => 'nullable|string|max:255',
-            'disco_duro' => 'nullable|string|max:255',
-            'conectores_video' => 'nullable|string|max:255',
-            'etiqueta_monitor' => 'nullable|string|max:255',
-            'marca_monitor' => 'nullable|string|max:255',
-            'modelo_monitor' => 'nullable|string|max:255',
-            'conectores_monitor' => 'nullable|string|max:255',
+            'etiqueta_cpu' => 'nullable|string|max:60',
+            'marca_cpu' => 'nullable|string|max:60',
+            'modelo_cpu' => 'nullable|string|max:60',
+            'numero_serie_cpu' => 'nullable|string|max:60',
+            'tipo_cpu' => 'nullable|string|max:60',
+            'memoria' => 'nullable|string|max:60',
+            'disco_duro' => 'nullable|string|max:60',
+            'conectores_video' => 'nullable|string|max:60',
+            'etiqueta_monitor' => 'nullable|string|max:60',
+            'marca_monitor' => 'nullable|string|max:60',
+            'modelo_monitor' => 'nullable|string|max:60',
+            'conectores_monitor' => 'nullable|string|max:60',
             'pulgadas' => 'nullable|integer',
-            'numero_serie_monitor' => 'nullable|string|max:255',
-            'etiqueta_teclado' => 'nullable|string|max:255',
-            'etiqueta_raton' => 'nullable|string|max:255',
+            'numero_serie_monitor' => 'nullable|string|max:60',
+            'etiqueta_teclado' => 'nullable|string|max:60',
+            'etiqueta_raton' => 'nullable|string|max:60',
             'observaciones' => 'nullable|string',
             'aula_id' => 'required|exists:aulas,id',
+            'numero_inventario' => 'nullable|string|max:60',
         ]);
 
         $equipo = Equipo::findOrFail($id);
@@ -125,6 +128,7 @@ class EquipoController extends Controller
             'etiqueta_raton' => $request->etiqueta_raton,
             'observaciones' => $request->observaciones,
             'aula_id' => $request->aula_id,
+            'numero_inventario' => $request->numero_inventario,
         ]);
         
         return redirect()->route('aulas.show', ['aula' => $equipo->aula_id])
@@ -141,5 +145,40 @@ class EquipoController extends Controller
 
         return redirect()->route('aulas.show', ['aula' => $equipo->aula_id])
             ->with('success', 'Equipo eliminado con éxito.');
+    }
+
+    /**
+     * Muestra todos los equipos de todas las aulas.
+     */
+    public function all(Request $request)
+    {
+        $query = Equipo::with('aula');
+
+        if ($request->filled('marca_cpu')) {
+            $query->where('marca_cpu', 'like', '%' . $request->marca_cpu . '%');
+        }
+
+        if ($request->filled('tipo_cpu')) {
+            $query->where('tipo_cpu', 'like', '%' . $request->tipo_cpu . '%');
+        }
+
+        if ($request->filled('memoria')) {
+            $query->where('memoria', 'like', '%' . $request->memoria . '%');
+        }
+
+        if ($request->filled('aula_id')) {
+            $query->where('aula_id', $request->aula_id);
+        }
+
+        if ($request->filled('numero_inventario')) {
+            $query->where('numero_inventario', 'like', '%' . $request->numero_inventario . '%');
+        }
+
+        $perPage = $request->input('per_page', 10); // valor por defecto: 10
+        $equipos = $query->paginate($perPage)->appends($request->query());
+
+        $aulas = Aula::all(); // Para mostrar en el select de aulas
+
+        return view('equipos.all', compact('equipos', 'aulas'));
     }
 }

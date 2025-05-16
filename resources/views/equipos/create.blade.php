@@ -104,6 +104,11 @@
                 <textarea class="form-control" name="observaciones"></textarea>
             </div>
 
+            <div class="form-group mb-3">
+                <label class="fw-bold" for="numero_inventario">Número de Inventario:</label>
+                <input type="text" class="form-control" name="numero_inventario">
+            </div>
+
             <div class="form-group mb-5">
                 <button type="submit" class="btn btn-success">Crear Equipo</button>
 

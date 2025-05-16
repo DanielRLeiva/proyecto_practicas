@@ -69,6 +69,7 @@
                         <th>Nº de serie Monitor</th>
                         <th>Etiqueta Teclado</th>
                         <th>Etiqueta Ratón</th>
+                        <th>Nº de Inventario</th>
                         <th>Observaciones</th>
                         @role('admin|editor')
                         <th>Acciones</th>
@@ -94,6 +95,7 @@
                         <td>{{ $equipo->numero_serie_monitor }}</td>
                         <td>{{ $equipo->etiqueta_teclado }}</td>
                         <td>{{ $equipo->etiqueta_raton }}</td>
+                        <td>{{ $equipo->numero_inventario }}</td>
                         <td>{{ $equipo->observaciones }}</td>
                         @role('admin|editor')
                         <td>
