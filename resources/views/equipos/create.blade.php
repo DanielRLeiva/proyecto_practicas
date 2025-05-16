@@ -99,14 +99,14 @@
                 <input type="text" class="form-control" name="etiqueta_raton">
             </div>
 
+            <div class="form-group mb-3">
+                <label for="numero_inventario">Número de Inventario:</label>
+                <input type="text" class="form-control" name="numero_inventario">
+            </div>
+
             <div class="form-group mb-4">
                 <label for="observaciones">Observaciones:</label>
                 <textarea class="form-control" name="observaciones"></textarea>
-            </div>
-
-            <div class="form-group mb-3">
-                <label class="fw-bold" for="numero_inventario">Número de Inventario:</label>
-                <input type="text" class="form-control" name="numero_inventario">
             </div>
 
             <div class="form-group mb-5">

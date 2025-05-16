@@ -74,18 +74,6 @@
 
                 <div class="form-group mb-3">
 
-                    <label class="fw-bold form-label" for="tipo_cpu">Tipo de CPU</label>
-                    <input type="text" name="tipo_cpu" class="form-control" placeholder="Tipo CPU" value="{{ request('tipo_cpu') }}">
-                </div>
-
-                <div class="form-group mb-3">
-
-                    <label class="fw-bold form-label" for="memoria">Memoria</label>
-                    <input type="text" name="memoria" class="form-control" placeholder="Memoria" value="{{ request('memoria') }}">
-                </div>
-
-                <div class="form-group mb-3">
-
                     <label class="fw-bold form-label" for="numero_inventario">Número de Inventario</label>
                     <input type="text" name="numero_inventario" class="form-control" placeholder="N° Inventario" value="{{ request('numero_inventario') }}">
                 </div>

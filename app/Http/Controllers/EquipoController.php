@@ -158,14 +158,6 @@ class EquipoController extends Controller
             $query->where('marca_cpu', 'like', '%' . $request->marca_cpu . '%');
         }
 
-        if ($request->filled('tipo_cpu')) {
-            $query->where('tipo_cpu', 'like', '%' . $request->tipo_cpu . '%');
-        }
-
-        if ($request->filled('memoria')) {
-            $query->where('memoria', 'like', '%' . $request->memoria . '%');
-        }
-
         if ($request->filled('aula_id')) {
             $query->where('aula_id', $request->aula_id);
         }
