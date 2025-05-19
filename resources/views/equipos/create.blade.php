@@ -81,7 +81,7 @@
 
             <div class="form-group mb-2">
                 <label for="pulgadas">Pulgadas:</label>
-                <input type="number" class="form-control" name="pulgadas" value="{{ old('pulgadas', $equipoDuplicado->pulgadas ?? '') }}">
+                <input type="number" step="0.1" class="form-control" name="pulgadas" value="{{ old('pulgadas', $equipoDuplicado->pulgadas ?? '') }}">
             </div>
 
             <div class="form-group mb-2">

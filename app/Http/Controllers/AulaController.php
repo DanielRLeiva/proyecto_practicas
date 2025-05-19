@@ -12,7 +12,9 @@ class AulaController extends Controller
      */
     public function index()
     {
-        $aulas = Aula::with(['equipos', 'materiales'])->get();
+        $aulas = Aula::with(['equipos', 'materiales'])
+            ->orderBy('nombre', 'asc')
+            ->get();
 
         return view("aulas.index", compact("aulas"));
     }

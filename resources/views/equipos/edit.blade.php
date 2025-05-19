@@ -115,7 +115,7 @@
 
             <div class="form-group mb-3">
                 <label for="pulgadas" class="fw-bold">Pulgadas</label>
-                <input type="number" id="pulgadas" name="pulgadas" class="form-control" value="{{ old('pulgadas', $equipo->pulgadas) }}">
+                <input type="number" step="0.1" id="pulgadas" name="pulgadas" class="form-control" value="{{ old('pulgadas', $equipo->pulgadas) }}">
                 @error('pulgadas')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror

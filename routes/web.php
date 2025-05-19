@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 // Rutas de usuarios
 // ======================
 
+// Redireccionar al login
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
 // Rutas para login
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('login', [AuthController::class, 'login']);

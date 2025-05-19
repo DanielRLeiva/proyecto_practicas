@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('marca_monitor')->nullable();
             $table->string('modelo_monitor')->nullable();
             $table->string('conectores_monitor')->nullable();
-            $table->unsignedInteger('pulgadas')->nullable();
+            $table->decimal('pulgadas', 4, 1)->nullable();
             $table->string('numero_serie_monitor')->nullable();
             $table->string('etiqueta_teclado')->nullable();
             $table->string('etiqueta_raton')->nullable();
