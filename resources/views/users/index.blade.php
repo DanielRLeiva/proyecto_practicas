@@ -17,6 +17,10 @@
         <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
+        @if ($users->isEmpty())
+        <p>No hay Usuarios registradas aún.</p>
+
+        @else
         <table class="table table-bordered table-striped align-middle mb-5">
             <thead>
                 <tr>
@@ -53,6 +57,7 @@
                 @endforeach
             </tbody>
         </table>
+        @endif
 
         <a href="{{ route('aulas.index') }}" class="btn btn-primary">Volver a la Lista de Aulas</a>
     </div>
