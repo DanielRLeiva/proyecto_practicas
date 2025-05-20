@@ -1,47 +1,40 @@
-<!DOCTYPE html>
-<html lang="es">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Aula</title>
-    <!-- Incluir Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+@section('title', 'Lista de Aulas')
 
-<body>
-    <div class="container mt-5">
-        <h1>Crear Aula</h1>
+@section('content')
+
+<div class="container d-flex justify-content-center align-items-center mt-5" style="max-height: 800 px;">
+    <div class="w-100 mb-5" style="max-width: 500px;">
+        <h1 class="text-center mb-5">Crear Aula</h1>
         <form action="{{ route('aulas.store') }}" method="POST">
             @csrf
 
             <!-- Nombre del Aula -->
-            <div class="form-group mb-2">
-                <label class="fw-bold" for="nombre">Nombre</label>
+            <div class="form-group mb-4">
+                <label class="fw-bold mb-2" for="nombre">Nombre</label>
                 <input type="text" class="form-control" id="nombre" name="nombre" required>
             </div>
 
             <!-- Ubicación del Aula -->
-            <div class="form-group mb-2">
-                <label class="fw-bold" for="ubicacion">Ubicación</label>
+            <div class="form-group mb-4">
+                <label class="fw-bold mb-2" for="ubicacion">Ubicación</label>
                 <input type="text" class="form-control" id="ubicacion" name="ubicacion" required>
             </div>
 
             <!-- Descripción del Aula -->
-            <div class="form-group mb-4">
-                <label class="fw-bold" for="descripcion">Descripción</label>
+            <div class="form-group mb-5">
+                <label class="fw-bold mb-2" for="descripcion">Descripción</label>
                 <textarea class="form-control" id="descripcion" name="descripcion"></textarea>
             </div>
 
             <!-- Botón de Guardar -->
-            <button type="submit" class="btn btn-success">Guardar</button>
-            <a href="{{ route('aulas.index') }}" class="btn btn-primary ml-2">Cancelar</a>
+            <div class="d-flex justify-content-between mb-5">
+                <button type="submit" class="btn btn-success">Guardar</button>
+                <a href="{{ route('aulas.index') }}" class="btn btn-primary ml-2">Cancelar</a>
+            </div>
         </form>
     </div>
+</div>
 
-    <!-- Incluir Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-</body>
-
-</html>
+@endsection

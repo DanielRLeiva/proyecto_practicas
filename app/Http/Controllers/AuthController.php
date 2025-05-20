@@ -19,6 +19,8 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+        ], [
+            'email.email' => 'Por favor, introduce un correo electrónico válido.',
         ]);
 
         $credentials = $request->only('email', 'password');
@@ -63,7 +65,7 @@ class AuthController extends Controller
 
         $request->session()->flash('success', 'Usuario registrado correctamente.');
 
-        return redirect()->route('login');
+        return redirect()->route('aulas.index');
     }
 
     public function logout(Request $request)
