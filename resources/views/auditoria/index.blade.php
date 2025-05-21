@@ -17,7 +17,7 @@
 
         <div class="mt-4">
             <!-- Botón para mostrar/ocultar el formulario -->
-            <button type="button" class="btn btn-info mb-4" data-bs-toggle="collapse" data-bs-target="#filterFormCollapse">Desplegar Filtrado</button>
+            <button type="button" class="btn btn-primary mb-4" data-bs-toggle="collapse" data-bs-target="#filterFormCollapse">Desplegar Filtrado</button>
         </div>
     </div>
 
@@ -25,86 +25,88 @@
     </hr>
 
     <div class="collapse mt-4" id="filterFormCollapse">
-        <!-- Formulario de filtrado (inicialmente oculto) -->
-        <form method="GET" action="{{ route('auditoria.index') }}" class="mb-5">
+        <div class="mx-auto" style="max-width: 500px;">
+            <!-- Formulario de filtrado (inicialmente oculto) -->
+            <form method="GET" action="{{ route('auditoria.index') }}" class="mb-5">
 
-            <!-- Registros por página -->
-            <div class="mb-3">
-                <label class="fw-bold mb-2" for="per_page" class="form-label">Registros por página</label>
-                <select name="per_page" id="per_page" class="form-select">
-                    @foreach([5, 10, 15, 20] as $cantidad)
-                    <option value="{{ $cantidad }}" {{ request('per_page', 5) == $cantidad ? 'selected' : '' }}>
-                        {{ $cantidad }}
-                    </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="row g-3 align-items-end">
-                <!-- Usuario -->
-                <div class="form-group mb-2">
-                    <label class="fw-bold mb-2" for="usuario" class="form-label">Usuario</label>
-                    <select name="usuario" id="usuario" class="form-control">
-                        <option value="">Todos</option>
-                        <option value="Sistema" {{ request('usuario') == 'Sistema' ? 'selected' : '' }}>Sistema</option>
-                        @foreach($usuarios as $usuario)
-                        <option value="{{ $usuario->name }}" {{ request('usuario') == $usuario->name ? 'selected' : '' }}>
-                            {{ $usuario->name }}
+                <!-- Registros por página -->
+                <div class="mb-3">
+                    <label class="fw-bold mb-2" for="per_page" class="form-label">Registros por página</label>
+                    <select name="per_page" id="per_page" class="form-select">
+                        @foreach([5, 10, 15, 20] as $cantidad)
+                        <option value="{{ $cantidad }}" {{ request('per_page', 5) == $cantidad ? 'selected' : '' }}>
+                            {{ $cantidad }}
                         </option>
                         @endforeach
                     </select>
                 </div>
 
-                <!-- Fecha inicio Fecha fin -->
-                <div class="form-group mb-2 w-100">
-                    <div class="d-flex gap-3">
-                        <div class="flex-fill d-flex flex-column">
-                            <label for="fecha_inicio" class="fw-bold mb-2 form-label mb-0">Desde</label>
-                            <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" value="{{ request('fecha_inicio') }}">
-                        </div>
-                        <div class="flex-fill d-flex flex-column">
-                            <label for="fecha_fin" class="fw-bold mb-2 form-label mb-0">Hasta</label>
-                            <input type="date" name="fecha_fin" id="fecha_fin" class="form-control" value="{{ request('fecha_fin') }}">
+                <div class="row g-3 align-items-end">
+                    <!-- Usuario -->
+                    <div class="form-group mb-2">
+                        <label class="fw-bold mb-2" for="usuario" class="form-label">Usuario</label>
+                        <select name="usuario" id="usuario" class="form-control">
+                            <option value="">Todos</option>
+                            <option value="Sistema" {{ request('usuario') == 'Sistema' ? 'selected' : '' }}>Sistema</option>
+                            @foreach($usuarios as $usuario)
+                            <option value="{{ $usuario->name }}" {{ request('usuario') == $usuario->name ? 'selected' : '' }}>
+                                {{ $usuario->name }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Fecha inicio Fecha fin -->
+                    <div class="form-group mb-2 w-100">
+                        <div class="d-flex gap-3">
+                            <div class="flex-fill d-flex flex-column">
+                                <label for="fecha_inicio" class="fw-bold mb-2 form-label mb-0">Desde</label>
+                                <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" value="{{ request('fecha_inicio') }}">
+                            </div>
+                            <div class="flex-fill d-flex flex-column">
+                                <label for="fecha_fin" class="fw-bold mb-2 form-label mb-0">Hasta</label>
+                                <input type="date" name="fecha_fin" id="fecha_fin" class="form-control" value="{{ request('fecha_fin') }}">
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Modelo -->
-                <div class="form-group mb-3">
-                    <label class="fw-bold mb-2" for="modelo" class="form-label">Modelo</label>
-                    <select name="modelo" id="modelo" class="form-control">
-                        <option value="">Todos</option>
-                        <option value="Aula" {{ request('modelo') == 'Aula' ? 'selected' : '' }}>Aula</option>
-                        <option value="Equipo" {{ request('modelo') == 'Equipo' ? 'selected' : '' }}>Equipo</option>
-                        <option value="Material" {{ request('modelo') == 'Material' ? 'selected' : '' }}>Material</option>
-                        <option value="Portatil" {{ request('modelo') == 'Portatil' ? 'selected' : '' }}>Portátil</option>
-                        <option value="Profesor" {{ request('modelo') == 'Profesor' ? 'selected' : '' }}>Profesor</option>
-                        <option value="ProfesorPortatil" {{ request('modelo') == 'ProfesorPortatil' ? 'selected' : '' }}>ProfesorPortatil</option>
-                        <option value="User" {{ request('modelo') == 'User' ? 'selected' : '' }}>Usuario</option>
-                    </select>
-                </div>
+                    <!-- Modelo -->
+                    <div class="form-group mb-3">
+                        <label class="fw-bold mb-2" for="modelo" class="form-label">Modelo</label>
+                        <select name="modelo" id="modelo" class="form-control">
+                            <option value="">Todos</option>
+                            <option value="Aula" {{ request('modelo') == 'Aula' ? 'selected' : '' }}>Aula</option>
+                            <option value="Equipo" {{ request('modelo') == 'Equipo' ? 'selected' : '' }}>Equipo</option>
+                            <option value="Material" {{ request('modelo') == 'Material' ? 'selected' : '' }}>Material</option>
+                            <option value="Portatil" {{ request('modelo') == 'Portatil' ? 'selected' : '' }}>Portátil</option>
+                            <option value="Profesor" {{ request('modelo') == 'Profesor' ? 'selected' : '' }}>Profesor</option>
+                            <option value="ProfesorPortatil" {{ request('modelo') == 'ProfesorPortatil' ? 'selected' : '' }}>ProfesorPortatil</option>
+                            <option value="User" {{ request('modelo') == 'User' ? 'selected' : '' }}>Usuario</option>
+                        </select>
+                    </div>
 
-                <!-- Acción -->
-                <div class="form-group mb-2">
-                    <label class="fw-bold mb-2" for="accion" class="form-label">Acción</label>
-                    <select name="accion" id="accion" class="form-control">
-                        <option value="">Todas</option>
-                        <option value="created" {{ request('accion') == 'created' ? 'selected' : '' }}>Creado</option>
-                        <option value="updated" {{ request('accion') == 'updated' ? 'selected' : '' }}>Actualizado</option>
-                        <option value="deleted" {{ request('accion') == 'deleted' ? 'selected' : '' }}>Eliminado</option>
-                    </select>
-                </div>
+                    <!-- Acción -->
+                    <div class="form-group mb-2">
+                        <label class="fw-bold mb-2" for="accion" class="form-label">Acción</label>
+                        <select name="accion" id="accion" class="form-control">
+                            <option value="">Todas</option>
+                            <option value="created" {{ request('accion') == 'created' ? 'selected' : '' }}>Creado</option>
+                            <option value="updated" {{ request('accion') == 'updated' ? 'selected' : '' }}>Actualizado</option>
+                            <option value="deleted" {{ request('accion') == 'deleted' ? 'selected' : '' }}>Eliminado</option>
+                        </select>
+                    </div>
 
-                <!-- Botones -->
-                <div class="mb-3 d-flex gap-2">
-                    <button type="submit" class="btn btn-primary mt-3">Filtrar</button>
-                    <a href="{{ route('auditoria.index') }}" class="btn btn-secondary mt-3">Limpiar</a>
+                    <!-- Botones -->
+                    <div class="mb-3 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary mt-3">Filtrar</button>
+                        <a href="{{ route('auditoria.index') }}" class="btn btn-secondary mt-3">Limpiar</a>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
 
-        <hr>
-        </hr>
+            <hr>
+            </hr>
+        </div>
     </div>
 
     <h3 class="mt-3 mb-4">Modificaciónes</h3>
@@ -167,12 +169,13 @@
         </tbody>
     </table>
 
-    <div class="d-flex justify-content-center mb-5">
+    <div class="d-flex justify-content-center mb-4">
         {{ $auditorias->links('pagination::bootstrap-4') }}
     </div>
 
-    <a href="{{ route('aulas.index') }}" class="btn btn-primary mb-5">Volver a la lista de aulas</a>
-
+    <div class="text-center">
+        <a href="{{ route('aulas.index') }}" class="btn btn-primary mb-3">Volver a la lista de aulas</a>
+    </div>
 </div>
 
 <!-- Script para mostrar filtro de Búsquesa -->

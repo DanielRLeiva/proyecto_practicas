@@ -53,7 +53,9 @@
     </table>
     @endif
 
-    <a href="{{ route('aulas.index') }}" class="btn btn-primary">Volver a la Lista de Aulas</a>
+    <div class="text-center">
+        <a href="{{ route('aulas.index') }}" class="btn btn-primary mb-4">Volver a la Lista de Aulas</a>
+    </div>
 </div>
 
 @endsection

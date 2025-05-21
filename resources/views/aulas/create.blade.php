@@ -7,6 +7,7 @@
 <div class="container d-flex justify-content-center align-items-center mt-5" style="max-height: 800 px;">
     <div class="w-100 mb-5" style="max-width: 500px;">
         <h1 class="text-center mb-5">Crear Aula</h1>
+        
         <form action="{{ route('aulas.store') }}" method="POST">
             @csrf
 

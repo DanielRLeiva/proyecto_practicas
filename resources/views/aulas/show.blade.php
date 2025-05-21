@@ -4,6 +4,19 @@
 
 @section('content')
 
+@push('styles')
+<style>
+    .sticky-header {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        padding: 1rem !important;
+        border: 1px solid #dee2e6;
+        white-space: nowrap;
+    }
+</style>
+@endpush
+
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="d-flex flex-column">
@@ -24,13 +37,6 @@
         </div>
     </div>
 
-    <!-- Mostrar mensaje de éxito -->
-    @if(session()->has('success'))
-    <div class="alert alert-success" role="alert">
-        {{ session('success') }}
-    </div>
-    @endif
-
     <hr>
     </hr>
 
@@ -46,30 +52,30 @@
     <p>No hay equipos registrados para esta aula.</p>
     @else
 
-    <div class="table-responsive mb-5">
+    <div class="table-responsive mb-5" style="max-height: 600px; overflow-y: auto;">
         <table class="table table-bordered table-striped align-middle mb-5">
             <thead>
                 <tr>
-                    <th>Etiqueta CPU</th>
-                    <th>Marca CPU</th>
-                    <th>Modelo CPU</th>
-                    <th>Nº de serie CPU</th>
-                    <th>Tipo CPU</th>
-                    <th>Memoria</th>
-                    <th>Disco Duro</th>
-                    <th>Conectores de Vídeo</th>
-                    <th>Etiqueta Monitor</th>
-                    <th>Marca Monitor</th>
-                    <th>Modelo Monitor</th>
-                    <th>Conectores Monitor</th>
-                    <th>Pulgadas</th>
-                    <th>Nº de serie Monitor</th>
-                    <th>Etiqueta Teclado</th>
-                    <th>Etiqueta Ratón</th>
-                    <th>Nº de Inventario</th>
-                    <th>Observaciones</th>
+                    <th class="sticky-header">Etiqueta CPU</th>
+                    <th class="sticky-header">Marca CPU</th>
+                    <th class="sticky-header">Modelo CPU</th>
+                    <th class="sticky-header">Nº de serie CPU</th>
+                    <th class="sticky-header">Tipo CPU</th>
+                    <th class="sticky-header">Memoria</th>
+                    <th class="sticky-header">Disco Duro</th>
+                    <th class="sticky-header">Conectores de Vídeo</th>
+                    <th class="sticky-header">Etiqueta Monitor</th>
+                    <th class="sticky-header">Marca Monitor</th>
+                    <th class="sticky-header">Modelo Monitor</th>
+                    <th class="sticky-header">Conectores Monitor</th>
+                    <th class="sticky-header">Pulgadas</th>
+                    <th class="sticky-header">Nº de serie Monitor</th>
+                    <th class="sticky-header">Etiqueta Teclado</th>
+                    <th class="sticky-header">Etiqueta Ratón</th>
+                    <th class="sticky-header">Nº de Inventario</th>
+                    <th class="sticky-header">Observaciones</th>
                     @role('admin|editor')
-                    <th>Acciones</th>
+                    <th class="sticky-header">Acciones</th>
                     @endrole
                 </tr>
             </thead>
@@ -136,14 +142,14 @@
         <table class="table table-bordered table-striped align-middle mb-5">
             <thead>
                 <tr>
-                    <th>Etiqueta</th>
-                    <th>Descripción</th>
-                    <th>Marca</th>
-                    <th>Modelo</th>
-                    <th>Nº de serie</th>
-                    <th>Características</th>
+                    <th class="sticky-header">Etiqueta</th>
+                    <th class="sticky-header">Descripción</th>
+                    <th class="sticky-header">Marca</th>
+                    <th class="sticky-header">Modelo</th>
+                    <th class="sticky-header">Nº de serie</th>
+                    <th class="sticky-header">Características</th>
                     @role('admin|editor')
-                    <th>Acciones</th>
+                    <th class="sticky-header">Acciones</th>
                     @endrole
                 </tr>
             </thead>
