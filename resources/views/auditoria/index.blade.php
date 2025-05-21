@@ -1,8 +1,21 @@
 @extends('layouts.app')
 
-@section('title', 'Lista de Aulas')
+@section('title', 'Auditoría')
 
 @section('content')
+
+@push('styles')
+<style>
+    .sticky-header {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        padding: 1rem !important;
+        border: 1px solid #dee2e6;
+        white-space: nowrap;
+    }
+</style>
+@endpush
 
 <div class="container mt-5 mb-5">
 
@@ -15,17 +28,24 @@
             <h1>Auditorías</h1>
         </div>
 
-        <div class="mt-4">
-            <!-- Botón para mostrar/ocultar el formulario -->
-            <button type="button" class="btn btn-primary mb-4" data-bs-toggle="collapse" data-bs-target="#filterFormCollapse">Desplegar Filtrado</button>
+        <div class="text-center">
+            <a href="{{ route('aulas.index') }}" class="btn btn-primary mb-3">Volver a la lista de aulas</a>
         </div>
     </div>
 
     <hr>
     </hr>
 
-    <div class="collapse mt-4" id="filterFormCollapse">
+    <div class="d-flex justify-content-between align-items-center">
+        <h3 class="mt-3">Modificaciones</h3>
+
+        <!-- Botón para mostrar/ocultar el formulario -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#filterFormCollapse">Desplegar Filtrado</button>
+    </div>
+
+    <div class="collapse mb-4" id="filterFormCollapse">
         <div class="mx-auto" style="max-width: 500px;">
+
             <!-- Formulario de filtrado (inicialmente oculto) -->
             <form method="GET" action="{{ route('auditoria.index') }}" class="mb-5">
 
@@ -97,7 +117,7 @@
                     </div>
 
                     <!-- Botones -->
-                    <div class="mb-3 d-flex gap-2">
+                    <div class="d-flex justify-content-between">
                         <button type="submit" class="btn btn-primary mt-3">Filtrar</button>
                         <a href="{{ route('auditoria.index') }}" class="btn btn-secondary mt-3">Limpiar</a>
                     </div>
@@ -109,65 +129,65 @@
         </div>
     </div>
 
-    <h3 class="mt-3 mb-4">Modificaciónes</h3>
+    <div class="table-responsive mt-4 mb-5" style="max-height: 600px; overflow-y: auto;">
+        <table class="table table-bordered table-striped align-middle mb-5">
+            <thead>
+                <tr>
+                    <th class="sticky-header">Usuario</th>
+                    <th class="sticky-header">Acción</th>
+                    <th class="sticky-header">Elemento</th>
+                    <th class="sticky-header">Modelo</th>
+                    <th class="sticky-header">Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($auditorias as $audit)
+                <tr>
+                    <td>{{ optional($audit->user)->name ?? 'Sistema' }}</td>
+                    <td>
+                        @switch($audit->event)
+                        @case('created') <span class="badge bg-success">Creado</span> @break
+                        @case('updated') <span class="badge bg-warning text-dark">Actualizado</span> @break
+                        @case('deleted') <span class="badge bg-danger">Eliminado</span> @break
+                        @default <span class="badge bg-secondary">{{ $audit->event }}</span>
+                        @endswitch
+                    </td>
+                    <td>{{ $audit->label }}</td>
+                    <td>{{ $audit->modelName }}</td>
 
-    <table class="table table-bordered table-striped align-middle mb-5">
-        <thead>
-            <tr>
-                <th>Usuario</th>
-                <th>Acción</th>
-                <th>Elemento</th>
-                <th>Modelo</th>
-                <th>Fecha</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($auditorias as $audit)
-            <tr>
-                <td>{{ optional($audit->user)->name ?? 'Sistema' }}</td>
-                <td>
-                    @switch($audit->event)
-                    @case('created') <span class="badge bg-success">Creado</span> @break
-                    @case('updated') <span class="badge bg-warning text-dark">Actualizado</span> @break
-                    @case('deleted') <span class="badge bg-danger">Eliminado</span> @break
-                    @default <span class="badge bg-secondary">{{ $audit->event }}</span>
-                    @endswitch
-                </td>
-                <td>{{ $audit->label }}</td>
-                <td>{{ $audit->modelName }}</td>
+                    <td>{{ $audit->created_at->format('d/m/Y H:i') }}</td>
+                </tr>
 
-                <td>{{ $audit->created_at->format('d/m/Y H:i') }}</td>
-            </tr>
+                {{-- Mostrar diferencias si fue update --}}
+                @if($audit->event === 'updated')
+                <tr>
+                    <td colspan="5">
+                        <button class="btn btn-link p-0" type="button" data-bs-toggle="collapse" data-bs-target="#detalles-{{ $audit->id }}">
+                            Ver cambios
+                        </button>
+                        <div class="collapse mt-2" id="detalles-{{ $audit->id }}">
+                            <ul class="mb-0">
+                                @foreach($audit->modificaciones_formateadas as $mod)
+                                <li>
+                                    <strong>{{ $mod['field'] }}:</strong>
+                                    <span class="text-danger">{{ $mod['old'] }}</span> →
+                                    <span class="text-success">{{ $mod['new'] }}</span>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                @endif
 
-            {{-- Mostrar diferencias si fue update --}}
-            @if($audit->event === 'updated')
-            <tr>
-                <td colspan="5">
-                    <button class="btn btn-link p-0" type="button" data-bs-toggle="collapse" data-bs-target="#detalles-{{ $audit->id }}">
-                        Ver cambios
-                    </button>
-                    <div class="collapse mt-2" id="detalles-{{ $audit->id }}">
-                        <ul class="mb-0">
-                            @foreach($audit->modificaciones_formateadas as $mod)
-                            <li>
-                                <strong>{{ $mod['field'] }}:</strong>
-                                <span class="text-danger">{{ $mod['old'] }}</span> →
-                                <span class="text-success">{{ $mod['new'] }}</span>
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            @endif
-
-            @empty
-            <tr>
-                <td colspan="5" class="text-center">No hay registros de auditoría aún.</td>
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
+                @empty
+                <tr>
+                    <td colspan="5" class="text-center">No hay registros de auditoría aún.</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 
     <div class="d-flex justify-content-center mb-4">
         {{ $auditorias->links('pagination::bootstrap-4') }}

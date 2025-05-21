@@ -88,7 +88,7 @@ class ProfesorController extends Controller
 
         if ($activo) {
             return redirect()->route('profesors.index')
-                ->with('error', 'El profesor no puede ser eliminado mientras tenga un usufructo activo.');
+                ->with('error', 'El profesor no puede ser dado de BAJA mientras tenga un usufructo activo.');
         }
 
         $profesor->activo = false;

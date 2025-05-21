@@ -1,52 +1,37 @@
-<!DOCTYPE html>
-<html lang="es">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Portátil</title>
-    <!-- Incluir Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+@section('title', 'Creación de Aulas')
 
-<body>
-    <div class="container mt-5">
-        <h1>Editar Portátil</h1>
+@section('content')
 
-        <!-- Mostrar errores de validación -->
-        @if($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
+<div class="container d-flex justify-content-center align-items-center mt-5" style="max-height: 800 px;">
+    <div class="w-100 mb-5" style="max-width: 500px;">
+        <h1 class="text-center mb-5">Editar Portátil</h1>
 
         <!-- Formulario para editar un portátil -->
         <form action="{{ route('portatils.update', $portatil->id) }}" method="POST">
             @csrf
             @method('PUT')
 
-            <div class="mb-3">
-                <label for="marca_modelo" class="form-label">Marca y Modelo</label>
+            <div class="form-group mb-4">
+                <label class="fw-bold mb-2" for="marca_modelo">Marca y Modelo</label>
                 <input type="text" class="form-control" name="marca_modelo" id="marca_modelo" value="{{ old('marca_modelo', $portatil->marca_modelo) }}" required>
             </div>
 
-            <div class="mb-3">
-                <label for="comentarios" class="form-label">Comentarios</label>
+            <div class="form-group mb-5">
+                <label class="fw-bold mb-2" for="comentarios">Comentarios</label>
                 <textarea class="form-control" name="comentarios" id="comentarios">{{ old('comentarios', $portatil->comentarios) }}</textarea>
             </div>
 
-            <button type="submit" class="btn btn-success">Actualizar Portátil</button>
+
+            <!-- Botónes -->
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success">Actualizar Portátil</button>
+
+                <a href="{{ route('portatils.index') }}" class="btn btn-primary">Cancelar</a>
+            </div>
         </form>
-
-        <a href="{{ route('portatils.index') }}" class="btn btn-primary mt-3">Volver a la lista de Portátiles</a>
     </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-</body>
-
-</html>
+@endsection

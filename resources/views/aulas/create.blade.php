@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Lista de Aulas')
+@section('title', 'Creación de Aulas')
 
 @section('content')
 
 <div class="container d-flex justify-content-center align-items-center mt-5" style="max-height: 800 px;">
     <div class="w-100 mb-5" style="max-width: 500px;">
         <h1 class="text-center mb-5">Crear Aula</h1>
-        
+
         <form action="{{ route('aulas.store') }}" method="POST">
             @csrf
 
@@ -29,7 +29,7 @@
                 <textarea class="form-control" id="descripcion" name="descripcion"></textarea>
             </div>
 
-            <!-- Botón de Guardar -->
+            <!-- Botónes -->
             <div class="d-flex justify-content-between mb-5">
                 <button type="submit" class="btn btn-success">Guardar</button>
                 <a href="{{ route('aulas.index') }}" class="btn btn-primary ml-2">Cancelar</a>

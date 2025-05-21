@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Lista de Aulas')
+@section('title', 'Equipos y Materiales de Aula')
 
 @section('content')
 
@@ -138,7 +138,7 @@
     <p>No hay materiales registrados para esta aula.</p>
     @else
 
-    <div class="table-responsive mb-5">
+    <div class="table-responsive mb-5" style="max-height: 600px; overflow-y: auto;">
         <table class="table table-bordered table-striped align-middle mb-5">
             <thead>
                 <tr>
