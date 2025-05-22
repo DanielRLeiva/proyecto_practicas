@@ -60,7 +60,11 @@
 
     <!-- Tabla de usufructos (préstamos activos) -->
     <h3 class="mt-4 mb-3">Préstamos Activos</h3>
-    @if($usufructosActivos->count() > 0)
+
+    @if($usufructosActivos->isEmpty())
+    <p>No hay usufructos activos.</p>
+    @else
+
     <div class="table-responsive mb-5" style="max-height: 600px; overflow-y: auto;">
         <table class="table table-bordered table-striped align-middle mb-5">
             <thead>
@@ -84,7 +88,7 @@
                     <td>{{ \Carbon\Carbon::parse($usufructo->fecha_inicio)->format('d-m-Y') }}</td>
                     <td>{{ $usufructo->fecha_fin ?? 'En uso' }}</td>
                     @role('admin|editor')
-                    <td>
+                    <td class="text-center">
                         <a href="{{ route('usufructos.edit', $usufructo->id) }}" class="btn btn-warning">Finalizar</a>
                     </td>
                     @endrole
@@ -93,8 +97,6 @@
             </tbody>
         </table>
     </div>
-    @else
-    <p>No hay usufructos activos.</p>
     @endif
 
     <hr>
@@ -103,7 +105,10 @@
     <!-- Tabla de historial de usufructos (préstamos finalizados) -->
     <h3 class="mt-4 mb-3">Historial de Préstamos</h3>
 
-    @if($usufructosFinalizados->count() > 0)
+    @if ($usufructosFinalizados->isEmpty())
+    <p>No hay historial de usufructos finalizados</p>
+    @else
+
     <div class="table-responsive mb-5" style="max-height: 600px; overflow-y: auto;">
         <table class="table table-bordered table-striped align-middle mb-5">
             <thead>
@@ -142,8 +147,6 @@
             </tbody>
         </table>
     </div>
-    @else
-    <p>No hay historial de usufructos.</p>
     @endif
 
     <div class="text-center">

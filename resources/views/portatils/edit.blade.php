@@ -23,7 +23,6 @@
                 <textarea class="form-control" name="comentarios" id="comentarios">{{ old('comentarios', $portatil->comentarios) }}</textarea>
             </div>
 
-
             <!-- Botónes -->
             <div class="d-flex justify-content-between">
                 <button type="submit" class="btn btn-success">Actualizar Portátil</button>

@@ -12,12 +12,12 @@
         <form action="{{ route('portatils.store') }}" method="POST">
             @csrf
 
-             <div class="form-group mb-4">
+            <div class="form-group mb-4">
                 <label class="fw-bold mb-2" for="marca_modelo">Marca y Modelo</label>
                 <input type="text" class="form-control" name="marca_modelo" id="marca_modelo" value="{{ old('marca_modelo') }}" required>
             </div>
 
-             <div class="form-group mb-5">
+            <div class="form-group mb-5">
                 <label class="fw-bold mb-2" for="comentarios">Comentarios</label>
                 <textarea class="form-control" name="comentarios" id="comentarios">{{ old('comentarios') }}</textarea>
             </div>

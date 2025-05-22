@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title', 'Mi Aplicación')</title>
+    <title>@yield('title', 'Inventariado TIC CPIFP Alan Turing')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {{-- Bootstrap CSS --}}
@@ -18,7 +18,7 @@
     {{-- NAVBAR --}}
     <nav class="navbar navbar-expand-lg navbar-info bg-info mb-">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('aulas.index') }}">Inventariado CPIFP Alan Turing</a>
+            <a class="navbar-brand" href="{{ route('aulas.index') }}">Inventariado TIC CPIFP Alan Turing</a>
 
             {{-- Botón hamburguesa --}}
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContenido" aria-controls="navbarContenido" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,7 +69,7 @@
 
     {{-- FOOTER --}}
     <footer class="text-center mt-4 text-muted mb-4">
-        &copy; {{ date('Y') }} Mi aplicación Laravel
+        &copy; {{ date('Y') }} Inventariado TIC CPIFP Alan Turing
     </footer>
 
     {{-- Bootstrap JS --}}

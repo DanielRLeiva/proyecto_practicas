@@ -11,7 +11,7 @@
         <form action="{{ route('register') }}" method="POST">
             @csrf
 
-            <div class="mb-3">
+            <div class="form-group mb-3">
                 <label for="name" class="fw-bold mb-2">Nombre</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" required>
                 @error('name')
@@ -19,7 +19,7 @@
                 @enderror
             </div>
 
-            <div class="mb-3">
+            <div class="form-group mb-3">
                 <label for="email" class="fw-bold mb-2"">Correo Electrónico</label>
                 <input type="text" class="form-control" id="email" name="email" placeholder="Correo Electrónico" required>
                 @error('email')
@@ -27,7 +27,7 @@
                 @enderror
             </div>
 
-            <div class="mb-3">
+            <div class="form-group mb-3">
                 <label for="password" class="fw-bold mb-2"">Contraseña</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
                 @error('password')
@@ -35,7 +35,7 @@
                 @enderror
             </div>
 
-            <div class="mb-5">
+            <div class="form-group mb-5">
                 <label for="password_confirmation" class="fw-bold mb-2"">Confirmar Contraseña</label>
                 <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirmar Contraseña" required>
             </div>

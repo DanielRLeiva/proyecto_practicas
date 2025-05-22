@@ -62,7 +62,7 @@
                 @enderror
             </div>
 
-            <div class="d-flex justify-content-between mb-3">
+            <div class="d-flex justify-content-between">
                 <button type="submit" class="btn btn-success">Actualizar Material</button>
 
                 <a href="{{ route('aulas.show', $material->aula_id) }}" class="btn btn-primary">Cancelar</a>

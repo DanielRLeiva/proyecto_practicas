@@ -61,4 +61,9 @@
     </div>
 </div>
 
+@push('scripts')
+<script src="{{ asset('js/fechasForm.js') }}"></script>
+@endpush
+
+
 @endsection

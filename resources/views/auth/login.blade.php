@@ -11,7 +11,7 @@
         <form action="{{ route('login') }}" method="POST">
             @csrf
 
-            <div class="mb-4">
+            <div class="form-group mb-3">
                 <label for="email" class="fw-bold mb-2">Correo Electrónico</label>
                 <input type="text" class="form-control" id="email" name="email" placeholder="Correo Electrónico" required>
                 @error('email')
@@ -19,7 +19,7 @@
                 @enderror
             </div>
 
-            <div class="mb-5">
+            <div class="form-group mb-5">
                 <label for="password" class="fw-bold mb-2">Contraseña</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
                 @error('password')

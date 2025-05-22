@@ -27,7 +27,10 @@
             <h1>Todos los Equipos</h1>
         </div>
 
-        <div class="mt-4">
+        <div class="d-flex flex-column gap-2"">
+            <!-- Enlace para volver a la lista de ubicaciones -->
+            <a href=" {{ route('ubicacions.index') }}" class="btn btn-primary">Volver a la Lista de Ubicaciones</a>
+
             <!-- Botón para mostrar/ocultar el formulario -->
             <button type="button" class="btn btn-primary mb-4" data-bs-toggle="collapse" data-bs-target="#filterFormCollapse">Desplegar Filtrado</button>
         </div>
@@ -80,7 +83,7 @@
                         <input type="text" name="numero_inventario" class="form-control" placeholder="N° Inventario" value="{{ request('numero_inventario') }}">
                     </div>
 
-                    <div class="d-flex justify-content-between mb-5">
+                    <div class="d-flex justify-content-between mb-4">
                         <button type="submit" class="btn btn-primary mt-3">Filtrar</button>
                         <a href="{{ route('equipos.all') }}" class="btn btn-secondary mt-3">Limpiar</a>
                     </div>
