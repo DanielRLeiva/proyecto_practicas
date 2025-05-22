@@ -16,8 +16,8 @@
 <h>
 
     {{-- NAVBAR --}}
-    <nav class="navbar navbar-expand-lg navbar-info bg-info mb-">
-        <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-info bg-info pt-3 pb-3">
+        <div class="container">
             <a class="navbar-brand" href="{{ route('aulas.index') }}">Inventariado TIC CPIFP Alan Turing</a>
 
             {{-- Botón hamburguesa --}}
@@ -65,10 +65,8 @@
         @yield('content')
     </div>
 
-    <hr></hr>
-
     {{-- FOOTER --}}
-    <footer class="text-center mt-4 text-muted mb-4">
+    <footer class="text-center bg-dark text-white p-5">
         &copy; {{ date('Y') }} Inventariado TIC CPIFP Alan Turing
     </footer>
 
@@ -78,6 +76,6 @@
 
     {{-- Scripts adicionales --}}
     @stack('scripts')
-</body>
+    </body>
 
 </html>

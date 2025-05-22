@@ -30,7 +30,7 @@
             </div>
 
             <!-- Botónes -->
-            <div class="d-flex justify-content-between mb-5">
+            <div class="d-flex justify-content-between mb-3">
                 <button type="submit" class="btn btn-success">Guardar</button>
                 <a href="{{ route('aulas.index') }}" class="btn btn-primary ml-2">Cancelar</a>
             </div>
