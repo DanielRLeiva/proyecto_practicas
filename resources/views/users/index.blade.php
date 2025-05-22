@@ -16,6 +16,7 @@
     }
 </style>
 @endpush
+
 <div class="container mt-5 mb-5">
     <div class="mb-4">
         <span class="navbar-text">
@@ -29,7 +30,7 @@
     </hr>
 
     @if ($users->isEmpty())
-    <p>No hay Usuarios registradas aún.</p>
+    <p class="mb-5">No hay Usuarios registradas aún.</p>
 
     @else
     <div class="table-responsive mb-5">
@@ -69,11 +70,12 @@
                 @endforeach
             </tbody>
         </table>
-        @endif
-
-        <div class="text-center">
-            <a href="{{ route('aulas.index') }}" class="btn btn-primary mb-4">Volver a la Lista de Aulas</a>
-        </div>
     </div>
+    @endif
 
-    @endsection
+    <div class="text-center">
+        <a href="{{ route('aulas.index') }}" class="btn btn-primary mb-4">Volver a la Lista de Aulas</a>
+    </div>
+</div>
+
+@endsection
