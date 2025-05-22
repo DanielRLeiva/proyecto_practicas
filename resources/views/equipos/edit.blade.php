@@ -8,7 +8,7 @@
 
     <div class="w-100 mb-5" style="max-width: 500px;">
 
-        <h2 class="text-center mb-5">Editar Equipo: {{ $equipo->etiqueta_cpu }}</h2>
+        <h1 class="text-center mb-5">Editar Equipo: {{ $equipo->etiqueta_cpu }}</h1>
 
         <form action="{{ route('equipos.update', $equipo) }}" method="POST">
             @csrf

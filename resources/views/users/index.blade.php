@@ -7,10 +7,6 @@
 <div class="container mt-5 mb-5">
     <h1 class="mb-5">Usuarios</h1>
 
-    @if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
     @if ($users->isEmpty())
     <p>No hay Usuarios registradas aún.</p>
 

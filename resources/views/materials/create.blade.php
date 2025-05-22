@@ -8,7 +8,7 @@
 
     <div class="w-100 mb-5" style="max-width: 500px;">
 
-        <h2 class="text-center mb-5">Crear Material - Aula: {{ $aula->nombre }}</h2>
+        <h1 class="text-center mb-5">Crear Material - Aula: {{ $aula->nombre }}</h1>
 
         <form action="{{ route('materials.store') }}" method="POST">
             @csrf

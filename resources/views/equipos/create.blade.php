@@ -7,7 +7,7 @@
 <div class="container d-flex justify-content-center align-items-center mt-5">
 
     <div class="w-100 mb-5" style="max-width: 500px;">
-        <h2 class="text-center mb-5">Crear Nuevo Equipo</h2>
+        <h1 class="text-center mb-5">Crear Nuevo Equipo</h1>
 
         <form action="{{ route('equipos.store', $aula_id) }}" method="POST">
             @csrf

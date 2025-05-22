@@ -8,7 +8,7 @@
 
     <div class="w-100 mb-5" style="max-width: 500px;">
 
-        <h2 class="text-center mb-5">Editar Material - {{ $material->etiqueta }}</h2>
+        <h1 class="text-center mb-5">Editar Material - {{ $material->etiqueta }}</h1>
 
         <form action="{{ route('materials.update', $material) }}" method="POST">
             @csrf
