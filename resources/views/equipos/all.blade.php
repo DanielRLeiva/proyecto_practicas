@@ -134,7 +134,7 @@
             </thead>
             <tbody>
                 @foreach($equipos as $equipo)
-                <tr>
+                <tr class="main-row" data-id="{{ $equipo->id }}" data-aula-id="{{ $equipo->aula->id ?? 0 }}">
                     <td>{{ $equipo->aula->nombre ?? 'Sin aula' }}</td>
                     <td>{{ $equipo->etiqueta_cpu }}</td>
                     <td>{{ $equipo->marca_cpu }}</td>
@@ -174,6 +174,19 @@
                 @endforeach
             </tbody>
         </table>
+
+        <div id="equipoContextMenu" class="card shadow p-2" style="display: none; position: absolute; z-index: 1000;">
+            <div class="d-flex gap-2">
+                <a id="equipoContextEdit" href="#" class="btn btn-warning btn-sm">Editar</a>
+                <a id="equipoContextDuplicate" href="#" class="btn btn-info btn-sm">Duplicar</a>
+                <form id="equipoContextDeleteForm" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que quieres eliminar este equipo?')">Eliminar</button>
+                </form>
+            </div>
+        </div>
+
     </div>
     @endif
 
@@ -186,5 +199,9 @@
         <a href="{{ route('aulas.index') }}" class="btn btn-primary">Volver a la Lista de Aulas</a>
     </div>
 </div>
+
+@push('scripts')
+<script src="{{ asset('js/aula-detalle.js') }}"></script>
+@endpush
 
 @endsection
