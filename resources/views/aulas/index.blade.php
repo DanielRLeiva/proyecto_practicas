@@ -4,6 +4,19 @@
 
 @section('content')
 
+@push('styles')
+<style>
+    .sticky-header {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        padding: 1rem !important;
+        border: 1px solid #dee2e6;
+        white-space: nowrap;
+    }
+</style>
+@endpush
+
 <div class="container mt-5 mb-4">
     <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex flex-column">
@@ -31,14 +44,14 @@
 @else
 
 <!-- Tabla de aulas -->
-<div class="table-responsive mb-5">
-    <table class="table table-bordered table-striped align-middle mt-5 mb-5">
+    <div class="table-responsive mt-5 mb-5" style="max-height: 600px; overflow-y: auto;">
+        <table class="table table-bordered table-striped align-middle mb-5">
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Ubicación</th>
-                <th>Descripción</th>
-                <th>Acciones</th>
+                <th class="sticky-header">Nombre</th>
+                <th class="sticky-header">Ubicación</th>
+                <th class="sticky-header">Descripción</th>
+                <th class="sticky-header">Acciones</th>
             </tr>
         </thead>
         <tbody>

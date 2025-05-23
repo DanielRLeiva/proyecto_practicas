@@ -18,7 +18,7 @@
 @endpush
 
 <div class="container mt-5 mb-5">
-    <div class="mb-4">
+    <div class="d-flex flex-column mb-4">
         <span class="navbar-text">
             Bienvenido, {{ Auth::user()->name }}
         </span>
