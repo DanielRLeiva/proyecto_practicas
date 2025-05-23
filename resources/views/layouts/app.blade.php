@@ -13,10 +13,9 @@
     @stack('styles')
 </head>
 
-<h>
-
-    {{-- NAVBAR --}}
-    <nav class="navbar navbar-expand-lg navbar-info bg-info pt-3 pb-3">
+{{-- NAVBAR --}}
+<header>
+    <nav class="navbar navbar-expand-lg navbar-info bg-info pt-4 pb-4">
         <div class="container">
             <a class="navbar-brand" href="{{ route('aulas.index') }}">Inventariado TIC CPIFP Alan Turing</a>
 
@@ -51,31 +50,32 @@
             </div>
         </div>
     </nav>
+</header>
 
-    {{-- CONTENIDO PRINCIPAL --}}
-    <div class="container mt-3">
-        @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+{{-- CONTENIDO PRINCIPAL --}}
+<div class="container mt-3">
+    @if (session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
 
-        @if (session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
-        @endif
+    @if (session('error'))
+    <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
 
-        @yield('content')
-    </div>
+    @yield('content')
+</div>
 
-    {{-- FOOTER --}}
-    <footer class="text-center bg-dark text-white p-5">
-        &copy; {{ date('Y') }} Inventariado TIC CPIFP Alan Turing
-    </footer>
+{{-- FOOTER --}}
+<footer class="text-center bg-dark text-white p-5">
+    &copy; {{ date('Y') }} Inventariado TIC CPIFP Alan Turing
+</footer>
 
-    {{-- Bootstrap JS --}}
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+{{-- Bootstrap JS --}}
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
-    {{-- Scripts adicionales --}}
-    @stack('scripts')
-    </body>
+{{-- Scripts adicionales --}}
+@stack('scripts')
+</body>
 
 </html>

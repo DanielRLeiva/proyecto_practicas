@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Todos lo Equipos')
+@section('title', 'Todos los Equipos')
 
 @section('content')
 
@@ -29,7 +29,7 @@
 
         <div class="d-flex flex-column gap-2"">
             <!-- Enlace para volver a la lista de ubicaciones -->
-            <a href=" {{ route('ubicacions.index') }}" class="btn btn-primary">Volver a la Lista de Ubicaciones</a>
+            <a href=" {{ route('aulas.index') }}" class="btn btn-primary">Volver a la Lista de Ubicaciones</a>
 
             <!-- Botón para mostrar/ocultar el formulario -->
             <button type="button" class="btn btn-primary mb-4" data-bs-toggle="collapse" data-bs-target="#filterFormCollapse">Desplegar Filtrado</button>
@@ -174,17 +174,16 @@
                 @endforeach
             </tbody>
         </table>
-        @endif
-
     </div>
+    @endif
 
     <div class="d-flex justify-content-center mb-5">
         {{ $equipos->links('pagination::bootstrap-4') }}
     </div>
 
     <!-- Enlace para volver a la lista de aulaes -->
-    <div class="text-center">
-        <a href="{{ route('aulas.index') }}" class="btn btn-primary mb-5">Volver a la Lista de Aulas</a>
+    <div class="text-center mb-5">
+        <a href="{{ route('aulas.index') }}" class="btn btn-primary">Volver a la Lista de Aulas</a>
     </div>
 </div>
 
