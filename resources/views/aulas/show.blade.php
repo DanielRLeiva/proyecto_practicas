@@ -81,7 +81,7 @@
             </thead>
             <tbody>
                 @foreach($aula->equipos as $equipo)
-                <tr class="main-row" data-id="{{ $equipo->id }}">
+                <tr class="main-row" data-id="{{ $equipo->id }}" data-aula-id="{{ $aula->id }}">
                     <td>{{ $equipo->etiqueta_cpu }}</td>
                     <td>{{ $equipo->marca_cpu }}</td>
                     <td>{{ $equipo->modelo_cpu }}</td>
@@ -219,6 +219,7 @@
     document.getElementById('equiposContextMenu')?.setAttribute('data-aula-id', '{{ $aula->id }}');
     document.getElementById('materialContextMenu')?.setAttribute('data-aula-id', '{{ $aula->id }}');
 </script>
+
 <script src="{{ asset('js/aula-detalle.js') }}"></script>
 
 @endsection

@@ -178,7 +178,9 @@
         <div id="equipoContextMenu" class="card shadow p-2" style="display: none; position: absolute; z-index: 1000;">
             <div class="d-flex gap-2">
                 <a id="equipoContextEdit" href="#" class="btn btn-warning btn-sm">Editar</a>
+
                 <a id="equipoContextDuplicate" href="#" class="btn btn-info btn-sm">Duplicar</a>
+               
                 <form id="equipoContextDeleteForm" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
