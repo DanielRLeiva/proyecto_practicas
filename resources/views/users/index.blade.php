@@ -4,19 +4,6 @@
 
 @section('content')
 
-@push('styles')
-<style>
-    .sticky-header {
-        position: sticky;
-        top: 0;
-        z-index: 2;
-        padding: 1rem !important;
-        border: 1px solid #dee2e6;
-        white-space: nowrap;
-    }
-</style>
-@endpush
-
 <div class="container mt-5 mb-5">
     <div class="d-flex flex-column mb-4">
         <span class="navbar-text">

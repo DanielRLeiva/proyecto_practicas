@@ -13,17 +13,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
     {{-- CSS adicional --}}
-    @stack('styles')
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 
-    <style>
-        .social-icon:hover {
-            color: #343a40 !important;
-            /* color más oscuro (dark gray) */
-        }
-    </style>
 </head>
 
-<body @auth data-role="{{ Auth::user()->getRoleNames()->first() }}" @endauth>
+<body class="bg-light body-fondo" @auth data-role="{{ Auth::user()->getRoleNames()->first() }}" @endauth>
 
     {{-- NAVBAR --}}
     <header class="bg-info">
