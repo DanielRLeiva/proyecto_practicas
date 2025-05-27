@@ -49,6 +49,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="usufructosDropdown">
                                 <li><a class="dropdown-item" href="{{ route('usufructos.index') }}">Usufructos</a></li>
+                                <li><a class="dropdown-item" href="{{ route('usufructos.create') }}">Nuevo Usufructo</a></li>
                                 <li><a class="dropdown-item" href="{{ route('profesors.index') }}">Profesores</a></li>
                                 <li><a class="dropdown-item" href="{{ route('portatils.index') }}">Portátiles</a></li>
                             </ul>
