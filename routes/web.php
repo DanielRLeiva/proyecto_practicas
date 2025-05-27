@@ -21,12 +21,12 @@ Route::get('/', function () {
 });
 
 // Rutas para login
-Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('login', [AuthController::class, 'login']);
+Route::get('login', [AuthController::class, 'showLoginForm'])->middleware('nocache')->name('login');
+Route::post('login', [AuthController::class, 'login'])->middleware('nocache');
 
 // Rutas para registro
-Route::get('register', [AuthController::class, 'showRegisterForm'])->name('register');
-Route::post('register', [AuthController::class, 'register']);
+Route::get('register', [AuthController::class, 'showRegisterForm'])->middleware('nocache')->name('register');
+Route::post('register', [AuthController::class, 'register'])->middleware('nocache');
 
 // Ruta para logout
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
