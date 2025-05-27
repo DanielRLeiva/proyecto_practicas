@@ -94,7 +94,7 @@
     <footer class="bg-dark text-secondary p-4">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-12 col-lg-8 text-light p-4 ps-lg-5">
+                <div class="col-12 col-lg-8 text-light pt-4 pb-4">
                     <p class="mb-1">C.P.I.F.P. Alan Turing</p>
                     <p class="mb-1">Telf: 951.040.449 | C/ Frederick Terman, 3</p>
                     <p class="mb-1">29590 Campanillas (Málaga)</p>
