@@ -189,7 +189,7 @@
 </div>
 
 <div class="d-flex justify-content-center mb-4">
-    {{ $auditorias->links('pagination::default') }}
+    {{ $auditorias->links('pagination::bootstrap-4') }}
 </div>
 
 <div class="text-center">

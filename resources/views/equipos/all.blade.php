@@ -57,7 +57,6 @@
                     </select>
                 </div>
 
-
                 <div class="row g-3 align-items-end">
                     <div class="form-group mb-3">
                         <label class="fw-bold form-label" for="aula_id">Aula</label>
@@ -134,7 +133,7 @@
             </thead>
             <tbody>
                 @foreach($equipos as $equipo)
-                <tr class="main-row" data-id="{{ $equipo->id }}" data-aula-id="{{ $equipo->aula->id ?? 0 }}">
+                <tr class="equipo-row" data-id="{{ $equipo->id }}" data-aula-id="{{ $equipo->aula->id ?? 0 }}">
                     <td>{{ $equipo->aula->nombre ?? 'Sin aula' }}</td>
                     <td>{{ $equipo->etiqueta_cpu }}</td>
                     <td>{{ $equipo->marca_cpu }}</td>

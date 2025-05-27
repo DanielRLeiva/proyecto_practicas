@@ -81,7 +81,7 @@
             </thead>
             <tbody>
                 @foreach($aula->equipos as $equipo)
-                <tr class="main-row" data-id="{{ $equipo->id }}" data-aula-id="{{ $aula->id }}">
+                <tr class="equipo-row" data-id="{{ $equipo->id }}" data-aula-id="{{ $aula->id }}">
                     <td>{{ $equipo->etiqueta_cpu }}</td>
                     <td>{{ $equipo->marca_cpu }}</td>
                     <td>{{ $equipo->modelo_cpu }}</td>

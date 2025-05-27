@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
             formularioEliminarEquipo.style.display = 'none';
         }
 
-        document.querySelectorAll('tbody tr.main-row').forEach(fila => {
+        document.querySelectorAll('tbody tr.equipo-row').forEach(fila => {
             fila.addEventListener('click', function (evento) {
                 const equipoId = this.dataset.id;
                 const aulaId = menuEquipo.dataset.aulaId = this.dataset.aulaId;
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Ocultar menú contextual de equipos si se hace clic fuera
         document.addEventListener('click', function (evento) {
-            if (!menuEquipo.contains(evento.target) && !evento.target.closest('tr.main-row')) {
+            if (!menuEquipo.contains(evento.target) && !evento.target.closest('tr.equipo-row')) {
                 menuEquipo.style.display = 'none';
             }
         });

@@ -25,12 +25,12 @@ class EquipoController extends Controller
     {
         $aula = Aula::findOrFail($aula_id);
         $equipoDuplicado = null;
-    
+
         if ($request->has('duplicar')) {
             $equipoDuplicado = Equipo::find($request->input('duplicar'));
         }
 
-        return view("equipos.create", compact('aula','aula_id', 'equipoDuplicado'));
+        return view("equipos.create", compact('aula', 'aula_id', 'equipoDuplicado'));
     }
 
     /**
@@ -58,7 +58,7 @@ class EquipoController extends Controller
             'observaciones' => 'nullable|string',
             'aula_id' => 'required|exists:aulas,id',
             'numero_inventario' => 'nullable|string|max:60',
-            
+
         ]);
 
         Equipo::create($request->all());
@@ -81,7 +81,7 @@ class EquipoController extends Controller
     public function edit(Equipo $equipo, $aula_id)
     {
         $aula = Aula::findOrFail($aula_id);
-        
+
         return view('equipos.edit', compact('equipo', 'aula'));
     }
 
@@ -89,7 +89,7 @@ class EquipoController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-    { 
+    {
         $request->validate([
             'etiqueta_cpu' => 'nullable|string|max:60',
             'marca_cpu' => 'nullable|string|max:60',
@@ -135,7 +135,7 @@ class EquipoController extends Controller
             'aula_id' => $request->aula_id,
             'numero_inventario' => $request->numero_inventario,
         ]);
-        
+
         return redirect()->route('aulas.show', ['aula' => $equipo->aula_id])
             ->with('success', 'Equipo actualizado con éxito.');
     }
@@ -157,7 +157,9 @@ class EquipoController extends Controller
      */
     public function all(Request $request)
     {
-        $query = Equipo::with('aula');
+        $query = Equipo::join('aulas', 'equipos.aula_id', '=', 'aulas.id')
+            ->select('equipos.*') // Seleccionamos solo los campos de equipos
+            ->with('aula');  // Cargamos la relación para la vista
 
         if ($request->filled('marca_cpu')) {
             $query->where('marca_cpu', 'like', '%' . $request->marca_cpu . '%');
@@ -171,10 +173,15 @@ class EquipoController extends Controller
             $query->where('numero_inventario', 'like', '%' . $request->numero_inventario . '%');
         }
 
+        // Ordenar por nombre de ubicación y luego etiqueta_cpu
+        $query->orderBy('aulas.nombre')
+            ->orderBy('equipos.etiqueta_cpu');
+
+
         $perPage = $request->input('per_page', 10); // valor por defecto: 10
         $equipos = $query->paginate($perPage)->appends($request->query());
 
-        $aulas = Aula::all(); // Para mostrar en el select de aulas
+        $aulas = Aula::orderBy('nombre')->get(); // Para mostrar en el select de aulas
 
         return view('equipos.all', compact('equipos', 'aulas'));
     }
