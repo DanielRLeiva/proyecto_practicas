@@ -8,12 +8,15 @@
     <div class="w-100 mb-5" style="max-width: 500px;">
         <h1 class="text-center mb-5">Editar Portátil</h1>
 
+        <hr>
+        </hr>
+
         <!-- Formulario para editar un portátil -->
         <form action="{{ route('portatils.update', $portatil->id) }}" method="POST">
             @csrf
             @method('PUT')
 
-            <div class="form-group mb-4">
+            <div class="form-group mt-5 mb-4">
                 <label class="fw-bold mb-2" for="marca_modelo">Marca y Modelo</label>
                 <input type="text" class="form-control" name="marca_modelo" id="marca_modelo" value="{{ old('marca_modelo', $portatil->marca_modelo) }}" required>
             </div>

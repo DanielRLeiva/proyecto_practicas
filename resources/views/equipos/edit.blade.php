@@ -8,13 +8,16 @@
 
     <div class="w-100 mb-5" style="max-width: 500px;">
 
-        <h1 class="text-center mb-5">Editar Equipo: {{ $equipo->etiqueta_cpu }}</h1>
+        <h1 class="text-center">Editar Equipo: {{ $equipo->etiqueta_cpu }}</h1>
+
+        <hr>
+        </hr>
 
         <form action="{{ route('equipos.update', $equipo) }}" method="POST">
             @csrf
             @method('PUT') <!-- Esto es necesario para hacer un update en Laravel -->
 
-            <div class="form-group mb-4">
+            <div class="form-group mt-5 mb-4">
                 <label class="fw-bold mb-2" for="etiqueta_cpu">Etiqueta CPU</label>
                 <input type="text" id="etiqueta_cpu" name="etiqueta_cpu" class="form-control" value="{{ old('etiqueta_cpu', $equipo->etiqueta_cpu) }}">
                 @error('etiqueta_cpu')

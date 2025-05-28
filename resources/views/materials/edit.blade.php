@@ -8,13 +8,16 @@
 
     <div class="w-100 mb-5" style="max-width: 500px;">
 
-        <h1 class="text-center mb-5">Editar Material - {{ $material->etiqueta }}</h1>
+        <h1 class="text-center">Editar Material - {{ $material->etiqueta }}</h1>
+
+<hr>
+</hr>
 
         <form action="{{ route('materials.update', $material) }}" method="POST">
             @csrf
             @method('PUT') <!-- Esto es necesario para hacer un update en Laravel -->
 
-            <div class="form-group mb-4">
+            <div class="form-group mt-5 mb-4">
                 <label class="fw-bold mb-2" for="etiqueta">Etiqueta</label>
                 <input type="text" name="etiqueta" class="form-control" id="etiqueta" value="{{ old('etiqueta', $material->etiqueta) }}">
                 @error('etiqueta')

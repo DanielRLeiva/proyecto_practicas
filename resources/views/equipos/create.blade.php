@@ -7,7 +7,10 @@
 <div class="container d-flex justify-content-center align-items-center mt-5">
 
     <div class="w-100 mb-5" style="max-width: 500px;">
-        <h1 class="text-center mb-5">Crear Nuevo Equipo</h1>
+        <h1 class="text-center">Crear Nuevo Equipo</h1>
+
+        <hr>
+        </hr>
 
         <form action="{{ route('equipos.store', $aula_id) }}" method="POST">
             @csrf
@@ -15,7 +18,7 @@
             <!-- Campo oculto para el aula_id -->
             <input type="hidden" name="aula_id" value="{{ $aula_id }}">
 
-            <div class="form-group mb-4">
+            <div class="form-group mt-5 mb-4">
                 <label class="fw-bold mb-2" for="etiqueta_cpu">Etiqueta CPU:</label>
                 <input type="text" class="form-control" name="etiqueta_cpu" value="{{ old('etiqueta_cpu', $equipoDuplicado->etiqueta_cpu ?? '') }}">
             </div>

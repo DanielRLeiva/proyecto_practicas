@@ -6,13 +6,16 @@
 
 <div class="container d-flex justify-content-center align-items-center mt-5" style="max-height: 800 px;">
     <div class="w-100 mb-5" style="max-width: 500px;">
-        <h1 class="text-center mb-5">Crear Aula</h1>
+        <h1 class="text-center">Crear Aula</h1>
+
+        <hr>
+        </hr>
 
         <form action="{{ route('aulas.store') }}" method="POST">
             @csrf
 
             <!-- Nombre del Aula -->
-            <div class="form-group mb-4">
+            <div class="form-group  mt-5 mb-4">
                 <label class="fw-bold mb-2" for="nombre">Nombre</label>
                 <input type="text" class="form-control" id="nombre" name="nombre" required>
             </div>

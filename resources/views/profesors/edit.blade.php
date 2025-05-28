@@ -8,12 +8,15 @@
     <div class="w-100 mb-5" style="max-width: 500px;">
         <h1 class="text-center mb-5">Editar Profesor</h1>
 
+<hr>
+</hr>
+
         <!-- Formulario de edición del profesor -->
         <form action=" {{ route('profesors.update', $profesor->id) }}" method="POST">
             @csrf
             @method('PUT')
 
-            <div class="form-group mb-4">
+            <div class="form-group mt-5 mb-4">
                 <label class="fw-bold mb-2" for="nombre">Nombre</label>
                 <input type="text" class="form-control" name="nombre" id="nombre" value="{{ old('nombre', $profesor->nombre) }}" required>
                 @error('nombre')

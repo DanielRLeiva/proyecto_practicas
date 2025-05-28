@@ -4,11 +4,11 @@
 
 @section('content')
 
-<div class="container mt-5 mb-5">
+<div class="container-fluid my-5 px-1 px-md-2 px-lg-3 px-xl-4">
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="d-flex flex-column">
-            <span class="navbar-text">
+            <span class="navbar-text fw-bold">
                 Bienvenido, {{ Auth::user()->name }}
             </span>
 
@@ -16,7 +16,7 @@
         </div>
 
         <div class="d-flex flex-column gap-2">
-            <a href="{{ route('aulas.index') }}" class="btn btn-primary mb-3">Volver a la lista de aulas</a>
+            <a href="{{ route('aulas.index') }}" class="btn btn-primary mb-3">Volver a la lista de Aulas</a>
 
             <!-- Botón para mostrar/ocultar el formulario -->
             <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#filterFormCollapse">Desplegar Filtrado</button>
@@ -112,9 +112,9 @@
     </hr>
 </div>
 
-<h3>Modificaciones</h3>
+<h3 class="container-fluid my-4 px-1 px-md-2 px-lg-3 px-xl-4">Modificaciones</h3>
 
-<div class="table-responsive mt-5 mb-5" style="max-height: 600px; overflow-y: auto;">
+<div class="table-responsivemb-5" style="max-height: 600px; overflow-y: auto;">
     <table class="table table-bordered table-striped align-middle mb-5">
         <thead>
             <tr>
@@ -178,12 +178,12 @@
     {{ $auditorias->links('pagination::bootstrap-4') }}
 </div>
 
-<div class="text-center">
-    <a href="{{ route('aulas.index') }}" class="btn btn-primary mb-3">Volver a la lista de aulas</a>
+<div class="text-center mb-5">
+    <a href="{{ route('aulas.index') }}" class="btn btn-primary">Volver a la lista de aulas</a>
 </div>
 </div>
 
-<!-- Script para mostrar filtro de Búsquesa -->
+<!-- Script para mostrar filtro de Búsqueda -->
 @push('scripts')
 <script src="{{ asset('js/fechasForm.js') }}"></script>
 @endpush

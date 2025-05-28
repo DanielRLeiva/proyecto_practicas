@@ -4,10 +4,10 @@
 
 @section('content')
 
-<div class="container mt-5 mb-4">
+<div class="container-fluid my-4 px-1 px-md-2 px-lg-3 px-xl-4">
     <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex flex-column">
-            <span class="navbar-text">
+            <span class="navbar-text fw-bold">
                 Bienvenido, {{ Auth::user()->name }}
             </span>
 
@@ -31,8 +31,8 @@
 @else
 
 <!-- Tabla de aulas -->
-    <div class="table-responsive mt-5 mb-5" style="max-height: 600px; overflow-y: auto;">
-        <table class="table table-bordered table-striped align-middle mb-5">
+<div class="table-responsive mt-5 mb-5" style="max-height: 600px; overflow-y: auto;">
+    <table class="table table-bordered table-striped align-middle mb-5">
         <thead>
             <tr>
                 <th class="sticky-header">Nombre</th>

@@ -8,13 +8,16 @@
 
     <div class="w-100 mb-5" style="max-width: 500px;">
 
-        <h1 class="text-center mb-5">Crear Material - Aula: {{ $aula->nombre }}</h1>
+        <h1 class="text-center">Crear Material - Aula: {{ $aula->nombre }}</h1>
+
+        <hr>
+        </hr>
 
         <form action="{{ route('materials.store') }}" method="POST">
             @csrf
             <input type="hidden" name="aula_id" value="{{ $aula->id }}">
 
-            <div class="form-group mb-4">
+            <div class="form-group mt-5 mb-4">
                 <label class="fw-bold mb-2" for="etiqueta">Etiqueta</label>
                 <input type="text" name="etiqueta" class="form-control" id="etiqueta" value="{{ old('etiqueta') }}">
             </div>

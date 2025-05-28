@@ -22,9 +22,9 @@
     {{-- NAVBAR --}}
     <header class="bg-info">
         <nav class="navbar navbar-expand-lg pt-0 pb-0">
-            <div class="container d-flex align-items-center py-3">
-                <a class="navbar-brand bg-white px-3 py-2 rounded shadow-sm" href="{{ route('aulas.index') }}">
-                    <img decoding="async" class=" lazyloaded" width="150" src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_150/https://fpalanturing.es/wp-content/uploads/2024/01/CPIFPAT_logotipo_color.webp" data-src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_150/https://fpalanturing.es/wp-content/uploads/2024/01/CPIFPAT_logotipo_color.webp" alt="" title="Centro Público Integrado de Formación Profesional Alan Turing" style="vertical-align: middle;">
+            <div class="container-fluid d-flex align-items-center py-3 px-2 px-md-3 px-lg-4 px-xl-5">
+                <a class="navbar-brand" href="{{ route('aulas.index') }}">
+                    <img decoding="async" width="150" src="https://private-user-images.githubusercontent.com/94998377/448342504-c324c919-7636-42be-aac0-0b15cd61ffee.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDg0MzAxMTgsIm5iZiI6MTc0ODQyOTgxOCwicGF0aCI6Ii85NDk5ODM3Ny80NDgzNDI1MDQtYzMyNGM5MTktNzYzNi00MmJlLWFhYzAtMGIxNWNkNjFmZmVlLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA1MjglMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNTI4VDEwNTY1OFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWI0Yzc1YTQwNTZiZTNjYjEwNmQ0NTU5YjY0MWJlM2M2NGQ4YzYyOGYxOTBiYzM1MTQ2YTE2NWI4YTg1OTA1ZDYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.kTMDnd15QgslYKuEoocEyXFxgJkggijZHWnY7QSF0wA" alt="Logo" style="vertical-align: middle;">
                 </a>
 
                 <h5>Inventariado TIC</h5>
@@ -73,7 +73,7 @@
     </header>
 
     {{-- CONTENIDO PRINCIPAL --}}
-    <div class="container mt-3">
+    <div class="container-fluid px-2 px-md-3 px-lg-4 mt-3">
         @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
         @endif
@@ -86,14 +86,14 @@
     </div>
 
     {{-- FOOTER --}}
-    <footer class="bg-dark text-secondary p-4">
-        <div class="container">
+    <footer class="bg-dark text-secondary py-4">
+        <div class="container-fluid  py-4 px-2 px-md-3 px-lg-4 px-xl-5">
             <div class="row align-items-center">
-                <div class="col-12 col-lg-8 text-light pt-4 pb-4">
+                <div class="col-12 col-lg-8 text-light py-4 ">
                     <p class="mb-1">C.P.I.F.P. Alan Turing</p>
                     <p class="mb-1">Telf: 951.040.449 | C/ Frederick Terman, 3</p>
                     <p class="mb-1">29590 Campanillas (Málaga)</p>
-                    <p class="">2920231.info@g.educaand.es</>
+                    <p class="">29020231.info@g.educaand.es</p>
                 </div>
 
                 <div class="col-12 col-lg-4 text-center">
