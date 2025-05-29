@@ -26,7 +26,7 @@
             </div>
 
             <!-- Botónes -->
-            <div class="d-flex justify-content-between mb-5">
+            <div class="d-flex justify-content-between">
                 <button type="submit" class="btn btn-success">Crear Portátil</button>
                 <a href="{{ route('portatils.index') }}" class="btn btn-primary ml-2">Cancelar</a>
             </div>

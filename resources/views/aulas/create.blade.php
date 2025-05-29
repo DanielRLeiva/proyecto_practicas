@@ -15,7 +15,7 @@
             @csrf
 
             <!-- Nombre del Aula -->
-            <div class="form-group  mt-5 mb-4">
+            <div class="form-group mt-5 mb-4">
                 <label class="fw-bold mb-2" for="nombre">Nombre</label>
                 <input type="text" class="form-control" id="nombre" name="nombre" required>
             </div>

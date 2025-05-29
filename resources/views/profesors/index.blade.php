@@ -26,7 +26,7 @@
 </hr>
 
 <!-- Tabla de Profesores -->
-<div class="table-responsive mt-5 mb-5" style="max-height: 600px; overflow-y: auto;">
+<div class="table-responsive my-5" style="max-height: 600px; overflow-y: auto;">
     <table class="table table-bordered table-striped align-middle mb-5">
         <thead>
             <tr>

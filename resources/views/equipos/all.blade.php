@@ -14,7 +14,7 @@
             <h1>Todos los Equipos</h1>
         </div>
 
-        <div class="d-flex flex-column gap-2"">
+        <div class="d-flex flex-column gap-2">
             <!-- Enlace para volver a la lista de ubicaciones -->
             <a href=" {{ route('aulas.index') }}" class="btn btn-primary">Volver a la Lista de Ubicaciones</a>
 

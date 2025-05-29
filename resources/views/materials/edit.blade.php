@@ -10,8 +10,8 @@
 
         <h1 class="text-center">Editar Material - {{ $material->etiqueta }}</h1>
 
-<hr>
-</hr>
+        <hr>
+        </hr>
 
         <form action="{{ route('materials.update', $material) }}" method="POST">
             @csrf

@@ -8,8 +8,8 @@
     <div class="w-100 mb-5" style="max-width: 500px;">
         <h1 class="text-center mb-5">Editar Profesor</h1>
 
-<hr>
-</hr>
+        <hr>
+        </hr>
 
         <!-- Formulario de edición del profesor -->
         <form action=" {{ route('profesors.update', $profesor->id) }}" method="POST">
