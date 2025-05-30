@@ -5,7 +5,6 @@
 @section('content')
 
 <div class="container-fluid my-5 px-1 px-md-2 px-lg-3 px-xl-4">
-
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="d-flex flex-column">
             <span class="navbar-text fw-bold">
@@ -37,7 +36,7 @@
             <div class="mb-3">
                 <label class="fw-bold mb-2" for="per_page" class="form-label">Registros por página</label>
                 <select name="per_page" id="per_page" class="form-select">
-                    @foreach([5, 10, 15, 20] as $cantidad)
+                    @foreach([10, 20, 30, 50] as $cantidad)
                     <option value="{{ $cantidad }}" {{ request('per_page', 5) == $cantidad ? 'selected' : '' }}>
                         {{ $cantidad }}
                     </option>
@@ -107,12 +106,31 @@
                 </div>
             </div>
         </form>
+
     </div>
     <hr>
     </hr>
 </div>
 
-<h3 class="container-fluid my-4 px-1 px-md-2 px-lg-3 px-xl-4">Modificaciones</h3>
+<div class="container-fluid my-4 px-1 px-md-2 px-lg-3 px-xl-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h3>Modificaciones</h3>
+
+        <!-- Formulario de eliminación -->
+        <form action="{{ route('auditoria.confirmarBorrado') }}" method="POST">
+            @csrf
+            <input type="hidden" name="usuario" value="{{ request('usuario') }}">
+            <input type="hidden" name="fecha_inicio" value="{{ request('fecha_inicio') }}">
+            <input type="hidden" name="fecha_fin" value="{{ request('fecha_fin') }}">
+            <input type="hidden" name="modelo" value="{{ request('modelo') }}">
+            <input type="hidden" name="accion" value="{{ request('accion') }}">
+
+            <button type="submit" class="btn btn-danger">
+                Borrar registros filtrados
+            </button>
+        </form>
+    </div>
+</div>
 
 <div class="table-responsivemb-5" style="max-height: 600px; overflow-y: auto;">
     <table class="table table-bordered table-striped align-middle mb-5">
@@ -131,10 +149,13 @@
                 <td>{{ optional($audit->user)->name ?? 'Sistema' }}</td>
                 <td>
                     @switch($audit->event)
-                    @case('created') <span class="badge bg-success">Creado</span> @break
-                    @case('updated') <span class="badge bg-warning text-dark">Actualizado</span> @break
+                    @case('created') <span class="badge bg-success">Creado</span>
+                    @break
+                    @case('updated') <span class="badge bg-warning text-dark">Actualizado</span>
+                    @break
                     @case('deleted') <span class="badge bg-danger">Eliminado</span> @break
-                    @default <span class="badge bg-secondary">{{ $audit->event }}</span>
+                    @default
+                    <span class="badge bg-secondary">{{ $audit->event }}</span>
                     @endswitch
                 </td>
                 <td>{{ $audit->label }}</td>
@@ -180,7 +201,6 @@
 
 <div class="text-center mb-5">
     <a href="{{ route('aulas.index') }}" class="btn btn-primary">Volver a la lista de aulas</a>
-</div>
 </div>
 
 <!-- Script para mostrar filtro de Búsqueda -->

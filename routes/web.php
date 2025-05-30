@@ -189,4 +189,6 @@ Route::middleware(['auth', 'role:admin', 'nocache'])->group(function () {
 // Solo admin puede acceder a esto
 Route::middleware(['auth', 'role:admin', 'nocache'])->group(function () {
     Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
+    Route::delete('/auditoria/borrar', [AuditoriaController::class, 'destroySelected'])->name('auditoria.destroySelected');
+    Route::match(['get','post'],'/auditoria/confirmar-borrado', [AuditoriaController::class, 'confirmarBorrado'])->name('auditoria.confirmarBorrado');
 });

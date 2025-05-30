@@ -24,7 +24,7 @@
         <nav class="navbar navbar-expand-lg pt-0 pb-0">
             <div class="container-fluid d-flex align-items-center py-3 px-2 px-md-3 px-lg-4 px-xl-5">
                 <a class="navbar-brand" href="{{ route('aulas.index') }}">
-                    <img decoding="async" width="150" src="https://private-user-images.githubusercontent.com/94998377/448342504-c324c919-7636-42be-aac0-0b15cd61ffee.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDg0MzAxMTgsIm5iZiI6MTc0ODQyOTgxOCwicGF0aCI6Ii85NDk5ODM3Ny80NDgzNDI1MDQtYzMyNGM5MTktNzYzNi00MmJlLWFhYzAtMGIxNWNkNjFmZmVlLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA1MjglMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNTI4VDEwNTY1OFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWI0Yzc1YTQwNTZiZTNjYjEwNmQ0NTU5YjY0MWJlM2M2NGQ4YzYyOGYxOTBiYzM1MTQ2YTE2NWI4YTg1OTA1ZDYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.kTMDnd15QgslYKuEoocEyXFxgJkggijZHWnY7QSF0wA" alt="Logo" style="vertical-align: middle;">
+                    <img decoding="async" width="150" src="{{ asset('/images/logo.png') }}" alt="Logo" style="vertical-align: middle;">
                 </a>
 
                 <h5>Inventariado TIC</h5>
@@ -36,7 +36,8 @@
 
                 {{-- Contenido colapsable --}}
                 <div class="collapse navbar-collapse justify-content-end mt-3" id="navbarContenido">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav ">
+                    <ul class="navbar-nav align">
                         @auth
                         {{-- Enlaces visibles directamente en pantallas grandes --}}
                         @role('admin')
@@ -49,7 +50,9 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="usufructosDropdown">
                                 <li><a class="dropdown-item" href="{{ route('usufructos.index') }}">Usufructos</a></li>
+                                @role('admin|editor')
                                 <li><a class="dropdown-item" href="{{ route('usufructos.create') }}">Nuevo Usufructo</a></li>
+                                @endrole
                                 <li><a class="dropdown-item" href="{{ route('profesors.index') }}">Profesores</a></li>
                                 <li><a class="dropdown-item" href="{{ route('portatils.index') }}">Portátiles</a></li>
                             </ul>
@@ -80,6 +83,10 @@
 
         @if (session('error'))
         <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+
+        @if(session('warning'))
+        <div class="alert alert-warning">{{ session('warning') }}</div>
         @endif
 
         @yield('content')
