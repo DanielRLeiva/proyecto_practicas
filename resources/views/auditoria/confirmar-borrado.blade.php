@@ -33,15 +33,16 @@
             <h5>Selecciona los registros que deseas eliminar. Esta acción es irreversible.</h5>
         </div>
 
-        <div class="table-responsive mt-5" style="max-height: 600px; overflow-y: auto;">
+        <div class="table-responsive my-5" style="max-height: 600px; overflow-y: auto;">
             <table class="table table-bordered table-striped align-middle mb-5">
                 <thead>
                     <tr>
-                        <th><input type="checkbox" id="select-all"></th>
-                        <th>Usuario</th>
-                        <th>Acción</th>
-                        <th>Modelo</th>
-                        <th>Fecha</th>
+                        <th class="sticky-header"><input type="checkbox" id="select-all"></th>
+                        <th class="sticky-header">Usuario</th>
+                        <th class="sticky-header">Acción</th>
+                        <th class="sticky-header">Elemento</th>
+                        <th class="sticky-header">Modelo</th>
+                        <th class="sticky-header">Fecha</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,6 +59,7 @@
                             @case('deleted') <span class="badge bg-danger">Eliminado</span> @break
                             @default <span class="badge bg-secondary">{{ $audit->event }}</span> @endswitch
                         </td>
+                        <td>{{ $audit->label }}</td>
                         <td>{{ $audit->modelName }}</td>
                         <td>{{ $audit->created_at->format('d/m/Y H:i') }}</td>
                     </tr>

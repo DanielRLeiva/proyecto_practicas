@@ -37,39 +37,39 @@
                 {{-- Contenido colapsable --}}
                 <div class="collapse navbar-collapse justify-content-end mt-3" id="navbarContenido">
                     <ul class="navbar-nav ">
-                    <ul class="navbar-nav align">
-                        @auth
-                        {{-- Enlaces visibles directamente en pantallas grandes --}}
-                        @role('admin')
-                        <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Usuarios</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('auditoria.index') }}">Auditorías</a></li>
-                        @endrole
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="usufructosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Usufructos
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="usufructosDropdown">
-                                <li><a class="dropdown-item" href="{{ route('usufructos.index') }}">Usufructos</a></li>
-                                @role('admin|editor')
-                                <li><a class="dropdown-item" href="{{ route('usufructos.create') }}">Nuevo Usufructo</a></li>
-                                @endrole
-                                <li><a class="dropdown-item" href="{{ route('profesors.index') }}">Profesores</a></li>
-                                <li><a class="dropdown-item" href="{{ route('portatils.index') }}">Portátiles</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('equipos.all') }}">Todos los Equipos</a></li>
+                        <ul class="navbar-nav align">
+                            @auth
+                            {{-- Enlaces visibles directamente en pantallas grandes --}}
+                            @role('admin')
+                            <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Usuarios</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('auditoria.index') }}">Auditorías</a></li>
+                            @endrole
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="usufructosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Usufructos
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="usufructosDropdown">
+                                    <li><a class="dropdown-item" href="{{ route('usufructos.index') }}">Usufructos</a></li>
+                                    @role('admin|editor')
+                                    <li><a class="dropdown-item" href="{{ route('usufructos.create') }}">Nuevo Usufructo</a></li>
+                                    @endrole
+                                    <li><a class="dropdown-item" href="{{ route('profesors.index') }}">Profesores</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('portatils.index') }}">Portátiles</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('equipos.all') }}">Todos los Equipos</a></li>
 
-                        <li class="nav-item">
-                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                                @csrf
-                                <button class="btn btn-link nav-link text-danger" type="submit">Cerrar sesión</button>
-                            </form>
-                        </li>
-                        @else
-                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Iniciar sesión</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Registrarse</a></li>
-                        @endauth
-                    </ul>
+                            <li class="nav-item">
+                                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button class="btn btn-link nav-link text-danger" type="submit">Cerrar sesión</button>
+                                </form>
+                            </li>
+                            @else
+                            <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Iniciar sesión</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Registrarse</a></li>
+                            @endauth
+                        </ul>
                 </div>
             </div>
         </nav>
@@ -87,6 +87,10 @@
 
         @if(session('warning'))
         <div class="alert alert-warning">{{ session('warning') }}</div>
+        @endif
+
+        @if($errors->any())
+        <div class="alert alert-danger">{{ $errors->first() }}</div>
         @endif
 
         @yield('content')

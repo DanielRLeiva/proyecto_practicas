@@ -1,36 +1,41 @@
 @extends('layouts.app')
 
-@section('title', 'Lista de Aulas')
+@section('title', 'Gestión de Usuarios')
 
 @section('content')
 
 <div class="container-fluid my-5 px-1 px-md-2 px-lg-3 px-xl-4">
-    <div class="d-flex flex-column mb-4">
-        <span class="navbar-text fw-bold">
-            Bienvenido, {{ Auth::user()->name }}
-        </span>
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex flex-column mb-4">
+            <span class="navbar-text fw-bold">
+                Bienvenido, {{ Auth::user()->name }}
+            </span>
 
-        <h1>Usuarios Registrados</h1>
+            <h1>Usuarios Registrados</h1>
+        </div>
+
+        <div>
+            <a href="{{ route('users.create') }}" class="btn btn-success">Nuevo usuario</a>
+        </div>
     </div>
 </div>
 
 <hr>
 </hr>
 
+<h3>Lista de Usuarios</h3>
+
 @if ($users->isEmpty())
 <p class="mb-5">No hay Usuarios registradas aún.</p>
 
 @else
 <div class="table-responsive mb-5">
-    <table class="table table-bordered table-striped align-middle mb-5">
-        <h3 class="my-3">Lista de Usuarios</h3>
-
+    <table class="table table-bordered table-striped align-middle mt-2 mb-5">
         <thead>
             <tr>
                 <th class="sticky-header">Nombre</th>
                 <th class="sticky-header">Email</th>
                 <th class="sticky-header">Rol</th>
-                <th class="sticky-header">Cambiar Rol</th>
                 <th class="sticky-header">Acción</th>
             </tr>
         </thead>
@@ -40,21 +45,18 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->getRoleNames()->first() ?? 'Sin rol' }}</td>
-                <td>
-                    <form action="{{ route('users.updateRole', $user->id) }}" method="POST">
+                <td class="d-flex justify-content-center gap-2">
+                    @if ($user->id !== Auth::id())
+                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Editar</a>
+
+                    <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('¿Eliminar este usuario?')">
                         @csrf
-                        @method('PUT')
-                        <select name="role" class="form-select" {{ ($user->id === Auth::id() && $user->hasRole('admin')) ? 'disabled' : '' }}>
-                            @foreach($roles as $role)
-                            <option value="{{ $role->name }}" {{ $user->hasRole($role->name) ? 'selected' : '' }}>
-                                {{ ucfirst($role->name) }}
-                            </option>
-                            @endforeach
-                        </select>
-                </td>
-                <td class="text-center">
-                    <button type="submit" class="btn btn-success">Actualizar</button>
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
                     </form>
+                    @else
+                    <em>No editable</em>
+                    @endif
                 </td>
             </tr>
             @endforeach
@@ -64,7 +66,7 @@
 @endif
 
 <div class="text-center mb-5">
-    <a href="{{ route('aulas.index') }}" class="btn btn-primary">Volver a la Lista de Aulas</a>
+    <a href="{{ route('aulas.index') }}" class="btn btn-primary">Volver a la Lista de Ubicaciones</a>
 </div>
 </div>
 

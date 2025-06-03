@@ -77,7 +77,8 @@ class AuditoriaController extends Controller
             ->when($request->fecha_inicio, fn($q) => $q->whereDate('created_at', '>=', $request->fecha_inicio))
             ->when($request->fecha_fin, fn($q) => $q->whereDate('created_at', '<=', $request->fecha_fin))
             ->when($request->modelo, fn($q) => $q->where('auditable_type', 'like', '%' . $request->modelo . '%'))
-            ->when($request->accion, fn($q) => $q->where('event', $request->accion))
+            ->when($request->accion, fn($q) => $q->where('event', 'like', '%' . $request->accion))
+            ->orderBy('created_at', 'desc')
             ->get();
 
         // Transformar auditorías antes de mostrar
@@ -152,18 +153,23 @@ class AuditoriaController extends Controller
                     $label = $nombreProfesor ? "Usufructo de $nombreProfesor ($fechaInicio)" : "Usufructo ($fechaInicio)";
                     break;
                 case 'User':
-                    if (isset($old['roles'])) {
-                        // Cambios en roles del usuario
-                        $oldRole = is_array($old['roles']) ? implode(', ', $old['roles']) : $old['roles'] ?? '';
-                        $newRole = is_array($attributes['roles']) ? implode(', ', $attributes['roles']) : $attributes['roles'] ?? '';
-                        $userName = optional(User::find($audit->auditable_id))->name;
-                        $label = $oldRole === $newRole
-                            ? "Rol asignado a $userName: $newRole"
-                            : "Rol cambiado para $userName: $oldRole → $newRole";
-                    } else {
-                        // Nuevo usuario creado
-                        $userName = optional(User::find($audit->auditable_id))->name;
-                        $label = "Nuevo usuario creado: $userName";
+                    // Intentar obtener desde BD
+                    $user = optional(User::find($audit->auditable_id));
+
+                    // Si no existe, usar el nombre desde old_values
+                    $userName = $user->name ?? ($audit->old_values['name'] ?? 'Usuario desconocido');
+
+                    switch ($audit->event) {
+                        case 'created':
+                            $label = "Usuario creado: $userName";
+                            break;
+
+                        case 'deleted':
+                            $label = "Usuario eliminado: $userName";
+                            break;
+
+                        case 'updated':
+                            $label = "Usuario actualizado: $userName";
                     }
                     break;
             }

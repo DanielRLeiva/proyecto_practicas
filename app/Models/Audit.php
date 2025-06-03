@@ -8,24 +8,52 @@ use OwenIt\Auditing\Models\Audit as BaseAudit;
 
 class Audit extends BaseAudit
 {
+    /**
+     * Devuelve un arreglo de campos cambiados, con “old” y “new” formateados.
+     * Ahora no usa getModified(), sino que compara directamente old_values y new_values.
+     */
     public function getFormattedModifications(): array
     {
-        if ($this->event !== 'updated') return [];
+        if ($this->event !== 'updated') {
+            return [];
+        }
 
         $formatted = [];
 
-        foreach ($this->getModified() as $field => $newValue) {
-            $oldRaw = $this->old_values[$field] ?? null;
-            $newRaw = is_array($newValue) && isset($newValue['new']) ? $newValue['new'] : $newValue;
+        // Tomo todas las llaves que aparezcan en old_values o en new_values
+        $oldArray = is_array($this->old_values) ? $this->old_values : [];
+        $newArray = is_array($this->new_values) ? $this->new_values : [];
 
-            $oldRaw = is_array($oldRaw) || $oldRaw === null ? 'Sin dato' : $oldRaw;
-            $newRaw = is_array($newRaw) || $newRaw === null ? 'Sin dato' : $newRaw;
+        $allKeys = array_unique(
+            array_merge(
+                array_keys($oldArray),
+                array_keys($newArray)
+            )
+        );
 
-            $formatBoolean = fn($val) => $val === true || $val === 1 || $val === '1' ? 'Sí' : ($val === false || $val === 0 || $val === '0' ? 'No' : $val);
+        foreach ($allKeys as $field) {
+            $oldRaw = $oldArray[$field] ?? null;
+            $newRaw = $newArray[$field] ?? null;
 
-            $oldVal = $formatBoolean($oldRaw);
-            $newVal = $formatBoolean($newRaw);
+            // Si son exactamente iguales (incluso ambos null), lo omito
+            if ($oldRaw == $newRaw) {
+                continue;
+            }
 
+            // Normalizar a texto (si viene array o null)
+            $oldVal = (is_array($oldRaw) || $oldRaw === null) ? 'Sin dato' : $oldRaw;
+            $newVal = (is_array($newRaw) || $newRaw === null) ? 'Sin dato' : $newRaw;
+
+            // Formateo booleanos
+            $formatBoolean = fn($val) =>
+            $val === true || $val === 1 || $val === '1'
+                ? 'Sí'
+                : (($val === false || $val === 0 || $val === '0') ? 'No' : $val);
+
+            $oldVal = $formatBoolean($oldVal);
+            $newVal = $formatBoolean($newVal);
+
+            // Si parece fecha “YYYY-MM-DD”, la convierto a “DD/MM/YYYY”
             $isDate = fn($val) => is_string($val) && preg_match('/^\d{4}-\d{2}-\d{2}$/', $val);
             if ($oldVal !== 'Sin dato' && $isDate($oldVal)) {
                 $oldVal = Carbon::parse($oldVal)->format('d/m/Y');
@@ -36,8 +64,8 @@ class Audit extends BaseAudit
 
             $formatted[] = [
                 'field' => ucfirst(str_replace('_', ' ', $field)),
-                'old' => $oldVal ?: 'Sin dato',
-                'new' => $newVal ?: 'Sin dato',
+                'old'   => $oldVal ?: 'Sin dato',
+                'new'   => $newVal ?: 'Sin dato',
             ];
         }
 
