@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="container-fluid my-4 px-1 px-md-2 px-lg-3 px-xl-4">
+<div class="container-fluid my-5 px-1 px-md-2 px-lg-3 px-xl-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="d-flex flex-column">
             <span class="navbar-text fw-bold">
