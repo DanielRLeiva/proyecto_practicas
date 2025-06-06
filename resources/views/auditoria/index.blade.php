@@ -131,7 +131,11 @@
     </div>
 </div>
 
-<div class="table-responsive mt-3 mb-5" style="max-height: 600px; overflow-y: auto;">
+<div class="table-responsive mt-3" style="max-height: 600px; overflow-y: auto;">
+    @if (!$auditorias->isNotEmpty())
+    <p class="container alert alert-warning text-center my-5">No hay registros de auditoría aún.</p>
+
+    @else
     <table class="table table-bordered table-striped align-middle mb-5">
         <thead>
             <tr>
@@ -143,7 +147,7 @@
             </tr>
         </thead>
         <tbody>
-            @forelse($auditorias as $audit)
+            @foreach($auditorias as $audit)
             <tr>
                 <td>{{ optional($audit->user)->name ?? 'Sistema' }}</td>
                 <td>
@@ -152,7 +156,7 @@
                     @case('updated') <span class="badge bg-warning text-dark">Actualizado</span> @break
                     @case('deleted') <span class="badge bg-danger">Eliminado</span>
                     @break
-                    @default 
+                    @default
                     <span class="badge bg-secondary">{{ $audit->event }}</span>
                     @endswitch
                 </td>
@@ -183,13 +187,10 @@
             </tr>
             @endif
 
-            @empty
-            <tr>
-                <td colspan="5" class="text-center">No hay registros de auditoría aún.</td>
-            </tr>
-            @endforelse
+            @endforeach
         </tbody>
     </table>
+    @endif
 </div>
 
 <div class="d-flex justify-content-center mb-4">

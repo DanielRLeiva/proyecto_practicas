@@ -27,7 +27,7 @@
 </hr>
 
 @if ($aulas->isEmpty())
-<p>No hay aulas registradas aún.</p>
+<p class="container alert alert-warning text-center my-5">No hay aulas registradas aún.</p>
 @else
 
 <!-- Tabla de aulas -->

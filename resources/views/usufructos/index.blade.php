@@ -50,7 +50,7 @@
 <h3 class="mt-4 mb-3">Préstamos Activos</h3>
 
 @if($usufructosActivos->isEmpty())
-<p>No hay usufructos activos.</p>
+<p class="container alert alert-warning text-center my-5">No hay usufructos activos.</p>
 @else
 
 <div class="table-responsive mb-5" style="max-height: 600px; overflow-y: auto;">
@@ -94,7 +94,7 @@
 <h3 class="mt-4 mb-3">Historial de Préstamos</h3>
 
 @if ($usufructosFinalizados->isEmpty())
-<p>No hay historial de usufructos finalizados</p>
+<p class="container alert alert-warning text-center my-5">No hay historial de usufructos finalizados.</p>
 @else
 
 <div class="table-responsive mb-5" style="max-height: 600px; overflow-y: auto;">

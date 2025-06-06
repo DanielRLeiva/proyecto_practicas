@@ -25,6 +25,10 @@
 
 <!-- Tabla de Portátiles -->
 <div class="table-responsive my-5" style="max-height: 600px; overflow-y: auto;">
+    @if ($portatiles->isEmpty())
+    <p class="container alert alert-warning text-center my-5">Aún no hay portátiles registrados.</p>
+
+    @else
     <table class="table table-bordered table-striped align-middle mb-5">
         <thead>
             <tr>
@@ -94,6 +98,7 @@
             @endforeach
         </tbody>
     </table>
+    @endif
 </div>
 
 <div class="text-center mb-5">

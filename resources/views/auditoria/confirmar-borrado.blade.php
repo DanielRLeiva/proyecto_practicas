@@ -22,7 +22,7 @@
 </hr>
 
 @if($auditorias->isEmpty())
-<div class="alert alert-warning my-5">No hay registros que coincidan con los filtros seleccionados.</div>
+<p class="container alert alert-warning text-center my-5">No hay registros que coincidan con los filtros seleccionados.</p>
 
 <div class="text-center mb-5">
     <a href="{{ route('auditoria.index') }}" class="btn btn-primary">Volver a Auditorías</a>

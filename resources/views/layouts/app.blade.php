@@ -50,9 +50,6 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="usufructosDropdown">
                                     <li><a class="dropdown-item" href="{{ route('usufructos.index') }}">Usufructos</a></li>
-                                    @role('admin|editor')
-                                    <li><a class="dropdown-item" href="{{ route('usufructos.create') }}">Nuevo Usufructo</a></li>
-                                    @endrole
                                     <li><a class="dropdown-item" href="{{ route('profesors.index') }}">Profesores</a></li>
                                     <li><a class="dropdown-item" href="{{ route('portatils.index') }}">Portátiles</a></li>
                                 </ul>
@@ -78,19 +75,19 @@
     {{-- CONTENIDO PRINCIPAL --}}
     <div class="container-fluid px-2 px-md-3 px-lg-4 mt-3">
         @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+        <p class="container alert alert-success text-center">{{ session('success') }}</p>
         @endif
 
         @if (session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
+        <p class="container alert alert-danger text-center">{{ session('error') }}</p>
         @endif
 
         @if(session('warning'))
-        <div class="alert alert-warning">{{ session('warning') }}</div>
+        <p class="container alert alert-warning text-center">{{ session('warning') }}</p>
         @endif
 
         @if($errors->any())
-        <div class="alert alert-danger">{{ $errors->first() }}</div>
+        <p class="container alert alert-danger text-center">{{ $errors->first() }}</p>
         @endif
 
         @yield('content')

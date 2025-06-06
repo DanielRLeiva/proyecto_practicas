@@ -26,7 +26,7 @@
 <h3>Lista de Usuarios</h3>
 
 @if ($users->isEmpty())
-<p class="mb-5">No hay Usuarios registradas aún.</p>
+<p class="container alert alert-warning text-center my-5">No hay Usuarios registradas aún.</p>
 
 @else
 <div class="table-responsive mb-5">

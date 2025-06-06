@@ -85,13 +85,11 @@
 <div class="table-responsive mt-5 mb-5" style="max-height: 600px; overflow-y: auto;">
 
     @if($equipos->isEmpty())
-    <tr>
-        <td colspan="100%" class="text-center text-muted py-4">
-            No se encontraron equipos con los criterios proporcionados.
-        </td>
-    </tr>
-    @else
+    <p class="container alert alert-warning text-center text-muted my-5">
+        No se encontraron equipos.
+    </p>
 
+    @else
     <table class="table table-bordered table-striped align-middle mb-5">
         <thead>
             <tr>

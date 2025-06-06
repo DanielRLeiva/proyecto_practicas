@@ -37,7 +37,7 @@
 </div>
 
 @if($aula->equipos->isEmpty())
-<p class="mt-5 mb-5">No hay equipos registrados para esta aula.</p>
+<p class="container alert alert-warning text-center my-5">No hay equipos registrados para esta aula.</p>
 @else
 
 <div class="table-responsive mb-5" style="max-height: 600px; overflow-y: auto;">
@@ -118,7 +118,7 @@
 </div>
 
 @if($aula->materiales->isEmpty())
-<p class="mt-5 mb-5">No hay materiales registrados para esta aula.</p>
+<p  class="container alert alert-warning text-center my-5">No hay materiales registrados para esta aula.</p>
 @else
 
 <div class="table-responsive mb-5" style="max-height: 600px; overflow-y: auto;">
