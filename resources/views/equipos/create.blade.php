@@ -16,7 +16,8 @@
             @csrf
 
             <!-- Campo oculto para el aula_id -->
-            <input type="hidden" name="aula_id" value="{{ $aula_id }}">
+            <input type="hidden" name="redirect_to" value="{{ url()->previous() }}">
+            <input type="hidden" name="aula_id" value="{{ $equipo->aula_id ?? $aula_id }}">
 
             <div class="form-group mt-5 mb-4">
                 <label class="fw-bold mb-2" for="etiqueta_cpu">Etiqueta CPU:</label>

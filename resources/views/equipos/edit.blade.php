@@ -164,7 +164,8 @@
                 <a href="{{ route('aulas.show', $equipo->aula_id) }}" class="btn btn-primary">Cancelar</a>
             </div>
 
-            <input type="hidden" name="aula_id" value="{{ $equipo->aula_id }}">
+            <input type="hidden" name="redirect_to" value="{{ url()->previous() }}">
+            <input type="hidden" name="aula_id" value="{{ $equipo->aula_id ?? $aula_id }}">
         </form>
     </div>
 </div>
