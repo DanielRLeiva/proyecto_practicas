@@ -161,7 +161,7 @@
             <div class="d-flex justify-content-between mb-3">
                 <button type="submit" class="btn btn-success">Actualizar Equipo</button>
 
-                <a href="{{ route('aulas.show', $equipo->aula_id) }}" class="btn btn-primary">Cancelar</a>
+                <a href="{{ url()->previous() }}" class="btn btn-primary">Cancelar</a>
             </div>
 
             <input type="hidden" name="redirect_to" value="{{ url()->previous() }}">

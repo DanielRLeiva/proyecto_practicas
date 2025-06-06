@@ -112,7 +112,7 @@
             <div class="d-flex justify-content-between mb-3">
                 <button type="submit" class="btn btn-success">Crear Equipo</button>
 
-                <a href="{{ route('aulas.show', $aula_id) }}" class="btn btn-primary">Cancelar</a>
+                <a href="{{ url()->previous() }}" class="btn btn-primary">Cancelar</a>
             </div>
         </form>
     </div>
