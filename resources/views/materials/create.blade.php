@@ -8,7 +8,7 @@
 
     <div class="w-100 mb-5" style="max-width: 500px;">
 
-        <h1 class="text-center">Crear Material - Aula: {{ $aula->nombre }}</h1>
+        <h1 class="text-center">Crear Nuevo Material en {{ $aula->nombre }}</h1>
 
         <hr>
         </hr>

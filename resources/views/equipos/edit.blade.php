@@ -8,7 +8,7 @@
 
     <div class="w-100 mb-5" style="max-width: 500px;">
 
-        <h1 class="text-center">Editar Equipo: {{ $equipo->etiqueta_cpu }}</h1>
+        <h1 class="text-center">Editar Equipo {{ $equipo->etiqueta_cpu }}</h1>
 
         <hr>
         </hr>

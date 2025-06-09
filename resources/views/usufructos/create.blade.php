@@ -6,7 +6,7 @@
 
 <div class="container d-flex justify-content-center align-items-center mt-5" style="max-height: 800 px;">
     <div class="w-100 mb-5" style="max-width: 500px;">
-        <h1 class="text-center">Asignar Usufructo</h1>
+        <h1 class="text-center">Asignar Nuvo Usufructo</h1>
 
         <hr>
         </hr>
