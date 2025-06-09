@@ -85,7 +85,7 @@
             Borrar seleccionados
         </button>
 
-        <a href="{{ route('auditoria.index') }}" class="btn btn-secondary">Cancelar</a>
+        <a href="{{ route('auditoria.index') }}" class="btn btn-primary">Cancelar</a>
     </div>
 </form>
 
