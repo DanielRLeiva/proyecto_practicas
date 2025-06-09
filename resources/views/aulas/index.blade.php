@@ -49,7 +49,7 @@
                 <td>{{ $aula->descripcion }}</td>
                 <td>
                     <div class="d-flex justify-content-center gap-2">
-                        <a href="{{ route('aulas.show', $aula->id) }}" class="btn btn-info">Ver</a>
+                        <a href="{{ route('aulas.show', $aula->id) }}" class="btn btn-info">Detalles</a>
                         @role('admin')
                         <a href="{{ route('aulas.edit', $aula->id) }}" class="btn btn-warning">Editar</a>
                         <form action="{{ route('aulas.destroy', $aula->id) }}" method="POST" class="d-inline">

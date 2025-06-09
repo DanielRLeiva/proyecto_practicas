@@ -40,10 +40,7 @@
                         <ul class="navbar-nav align">
                             @auth
                             {{-- Enlaces visibles directamente en pantallas grandes --}}
-                            @role('admin')
-                            <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Usuarios</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('auditoria.index') }}">Auditorías</a></li>
-                            @endrole
+                            <li class="nav-item"><a class="nav-link" href="{{ route('aulas.index') }}">Aulas</a></li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="usufructosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Usufructos
@@ -56,12 +53,18 @@
                             </li>
                             <li class="nav-item"><a class="nav-link" href="{{ route('equipos.all') }}">Todos los Equipos</a></li>
 
+                            @role('admin')
+                            <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Usuarios</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('auditoria.index') }}">Auditorías</a></li>
+                            @endrole
+
                             <li class="nav-item">
                                 <form action="{{ route('logout') }}" method="POST" class="d-inline">
                                     @csrf
                                     <button class="btn btn-link nav-link text-danger" type="submit">Cerrar sesión</button>
                                 </form>
                             </li>
+                            
                             @else
                             <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Iniciar sesión</a></li>
                             <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Registrarse</a></li>
