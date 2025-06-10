@@ -19,61 +19,69 @@ class AuditoriaController extends Controller
      */
     public function index(Request $request)
     {
-        // Obtener lista de usuarios para el filtro por nombre
+        // Obtener lista completa de usuarios para desplegar en filtro de búsqueda
         $usuarios = User::orderBy('name')->get();
 
-        // Inicializar la consulta principal de auditorías
+        // Crear la consulta base con relación a usuario y ordenar por fecha descendente
         $query = Audit::with('user')->latest();
 
-        // Filtro por nombre de usuario o 'Sistema'
+        // Aplicar filtro por usuario, incluyendo opción para 'Sistema' (user_id NULL)
         if ($request->filled('usuario')) {
             if ($request->usuario === 'Sistema') {
-                $query->whereNull('user_id'); // Auditorías sin usuario (acciones del sistema)
+                $query->whereNull('user_id'); // Acciones del sistema sin usuario asignado
             } else {
-                // Auditorías hechas por un usuario específico (coincidencia parcial del nombre)
+                // Filtrar auditorías por nombre de usuario con coincidencia parcial
                 $query->whereHas('user', fn($q) => $q->where('name', 'like', '%' . $request->usuario . '%'));
             }
         }
 
-        // Filtro por fecha de inicio
+        // Filtrar auditorías desde una fecha inicial (inclusive)
         if ($request->filled('fecha_inicio')) {
             $query->whereDate('created_at', '>=', $request->fecha_inicio);
         }
 
-        // Filtro por fecha de fin
+        // Filtrar auditorías hasta una fecha final (inclusive)
         if ($request->filled('fecha_fin')) {
             $query->whereDate('created_at', '<=', $request->fecha_fin);
         }
 
-        // Filtro por tipo de modelo (auditable_type)
+        // Filtrar por tipo de modelo auditado (auditable_type)
         if ($request->filled('modelo')) {
+            // Usar like con barra invertida para que coincida con el namespace completo o parcial
             $query->where('auditable_type', 'like', '%\\' . $request->modelo);
         }
 
-        // Filtro por tipo de acción (created, updated, deleted)
+        // Filtrar por tipo de acción: creado, actualizado, eliminado
         if ($request->filled('accion')) {
             $query->where('event', $request->accion);
         }
 
-        // Paginación de los resultados con filtro de cantidad por página
-        $perPage = $request->input('per_page', 10); // Por defecto muestra 5
+        // Definir cantidad de resultados por página, por defecto 10
+        $perPage = $request->input('per_page', 10);
+        // Obtener resultados paginados, manteniendo parámetros en links
         $auditorias = $query->paginate($perPage)->appends($request->query());
 
-        // Transformar las auditorías para mostrar información adicional
+        // Transformar los datos para mostrar información más amigable en la vista
         $auditorias->setCollection($this->transformarAuditorias($auditorias->getCollection()));
 
-        // Retorna la vista con los datos
+        // Retornar vista con auditorías y lista de usuarios para filtro
         return view('auditoria.index', compact('auditorias', 'usuarios'));
     }
 
     /**
-     * Muestra una vista para confirmar el borrado de auditorías filtradas.
+     * Muestra una vista para confirmar el borrado de auditorías según filtros.
      */
     public function confirmarBorrado(Request $request)
     {
-        // Consulta de auditorías filtradas
+        // Construir consulta según filtros recibidos
         $auditorias = Audit::query()
-            ->when($request->usuario, fn($q) => $q->whereHas('user', fn($q) => $q->where('name', $request->usuario)))
+            ->when($request->usuario, function ($q) use ($request) {
+                if ($request->usuario === 'Sistema') {
+                    $q->whereNull('user_id'); // Auditorías sin usuario asignado
+                } else {
+                    $q->whereHas('user', fn($q2) => $q2->where('name', $request->usuario));
+                }
+            })
             ->when($request->fecha_inicio, fn($q) => $q->whereDate('created_at', '>=', $request->fecha_inicio))
             ->when($request->fecha_fin, fn($q) => $q->whereDate('created_at', '<=', $request->fecha_fin))
             ->when($request->modelo, fn($q) => $q->where('auditable_type', 'like', '%' . $request->modelo . '%'))
@@ -81,61 +89,72 @@ class AuditoriaController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        // Transformar auditorías antes de mostrar
+        // Aplicar transformación para mejorar presentación en la vista
         $auditorias = $this->transformarAuditorias($auditorias);
 
-        // Mostrar vista de confirmación de borrado
+        // Retornar vista para que usuario confirme borrado masivo
         return view('auditoria.confirmar-borrado', compact('auditorias', 'request'));
     }
 
     /**
-     * Elimina las auditorías que coincidan con los filtros aplicados.
+     * Elimina las auditorías que coincidan con los IDs seleccionados.
      */
     public function destroySelected(Request $request)
     {
+        // Obtener IDs seleccionados para eliminar
         $selectedIds = $request->input('selected_ids', []);
 
+        // Validar que se haya seleccionado al menos un registro
         if (empty($selectedIds)) {
-            // Volver a la vista de confirmación con mensaje de error
+            // Redirigir con mensaje de advertencia si no hay selección
             return redirect()->back()
                 ->withInput()
                 ->with('warning', 'No seleccionaste ningún registro para eliminar.');
         }
 
+        // Eliminar registros de auditoría por IDs
         $cantidadBorrada = Audit::whereIn('id', $selectedIds)->delete();
 
+        // Redirigir a índice con mensaje de éxito
         return redirect()->route('auditoria.index')
             ->with('success', "Se han eliminado $cantidadBorrada registros de auditoría.");
     }
 
     /**
      * Transforma una colección de auditorías para agregar campos legibles:
-     * - modelName: nombre corto del modelo
-     * - label: una etiqueta descriptiva del objeto auditado
-     * - modificaciones_formateadas: cambios aplicados con formato
+     * - modelName: nombre simple del modelo auditado
+     * - label: descripción amigable del objeto auditado
+     * - modificaciones_formateadas: cambios aplicados con formato legible
      */
     private function transformarAuditorias($auditorias)
     {
         return $auditorias->transform(function ($audit) {
-            $modelName = class_basename($audit->auditable_type); // Eliminar namespace
+            // Extraer nombre corto del modelo (sin namespace)
+            $modelName = class_basename($audit->auditable_type);
+
+            // Obtener nuevos y antiguos valores para construir etiquetas
             $attributes = $audit->new_values ?? [];
             $old = $audit->old_values ?? [];
             $label = 'Sin información';
 
-            // Asignar una etiqueta legible según el tipo de modelo
+            // Construir etiqueta según el tipo de modelo auditado
             switch ($modelName) {
                 case 'Aula':
                     $label = $attributes['nombre'] ?? $old['nombre'] ?? optional(Aula::find($audit->auditable_id))->nombre ?? 'Aula';
                     break;
+
                 case 'Equipo':
                     $label = $attributes['etiqueta_cpu'] ?? $old['etiqueta_cpu'] ?? optional(Equipo::find($audit->auditable_id))->etiqueta_cpu ?? 'Equipo';
                     break;
+
                 case 'Material':
                     $label = $attributes['etiqueta'] ?? $old['etiqueta'] ?? optional(Material::find($audit->auditable_id))->etiqueta ?? 'Material';
                     break;
+
                 case 'Portatil':
                     $label = $attributes['marca_modelo'] ?? $old['marca_modelo'] ?? optional(Portatil::find($audit->auditable_id))->marca_modelo ?? 'Portátil';
                     break;
+
                 case 'Profesor':
                     $profesor = optional(Profesor::find($audit->auditable_id));
                     $label = trim(
@@ -144,7 +163,9 @@ class AuditoriaController extends Controller
                             ($attributes['apellido_2'] ?? $old['apellido_2'] ?? $profesor->apellido_2 ?? '')
                     );
                     break;
+
                 case 'ProfesorPortatil':
+                    // Obtener nombre del profesor y fecha de inicio para la etiqueta
                     $profesorId = $attributes['profesor_id'] ?? $old['profesor_id'] ?? $audit->auditable->profesor_id ?? null;
                     $profesor = optional(Profesor::find($profesorId));
                     $nombreProfesor = trim(($profesor->nombre ?? '') . ' ' . ($profesor->apellido_1 ?? '') . ' ' . ($profesor->apellido_2 ?? ''));
@@ -152,32 +173,31 @@ class AuditoriaController extends Controller
                     $fechaInicio = $fechaRaw ? Carbon::parse($fechaRaw)->format('d/m/Y') : '';
                     $label = $nombreProfesor ? "Usufructo de $nombreProfesor ($fechaInicio)" : "Usufructo ($fechaInicio)";
                     break;
-                case 'User':
-                    // Intentar obtener desde BD
-                    $user = optional(User::find($audit->auditable_id));
 
-                    // Si no existe, usar el nombre desde old_values
+                case 'User':
+                    // Obtener usuario para mostrar nombre o valor antiguo en caso de eliminado
+                    $user = optional(User::find($audit->auditable_id));
                     $userName = $user->name ?? ($audit->old_values['name'] ?? 'Usuario desconocido');
 
+                    // Etiqueta según tipo de evento
                     switch ($audit->event) {
                         case 'created':
                             $label = "Usuario creado: $userName";
                             break;
-
                         case 'deleted':
                             $label = "Usuario eliminado: $userName";
                             break;
-
                         case 'updated':
                             $label = "Usuario actualizado: $userName";
+                            break;
                     }
                     break;
             }
 
-            // Asignar atributos extra al objeto Audit
+            // Añadir atributos legibles al objeto auditoría
             $audit->modelName = $modelName;
             $audit->label = $label;
-            $audit->modificaciones_formateadas = $audit->getFormattedModifications(); // Método personalizado
+            $audit->modificaciones_formateadas = $audit->getFormattedModifications(); // Método propio para mostrar cambios
 
             return $audit;
         });

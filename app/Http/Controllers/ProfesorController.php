@@ -8,17 +8,18 @@ use Illuminate\Http\Request;
 class ProfesorController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra la lista de profesores, ordenados primero por activos.
      */
     public function index()
     {
+        // Ordena por el campo 'activo' descendente (primero activos)
         $profesores = Profesor::orderBy('activo', 'desc')->get();
 
         return view("profesors.index", compact("profesores"));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para crear un nuevo profesor.
      */
     public function create()
     {
@@ -26,7 +27,7 @@ class ProfesorController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Valida y almacena un nuevo profesor en la base de datos.
      */
     public function store(Request $request)
     {
@@ -43,15 +44,7 @@ class ProfesorController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Profesor $profesor)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario para editar un profesor existente.
      */
     public function edit(Profesor $profesor)
     {
@@ -59,7 +52,7 @@ class ProfesorController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Valida y actualiza los datos de un profesor.
      */
     public function update(Request $request, Profesor $profesor)
     {
@@ -80,7 +73,9 @@ class ProfesorController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Baja lógica de un profesor.
+     * Antes de desactivarlo, verifica que no tenga usufructos activos.
+     * Si tiene usufructo activo, impide la baja mostrando un mensaje de error.
      */
     public function destroy(Profesor $profesor)
     {
@@ -91,7 +86,7 @@ class ProfesorController extends Controller
                 ->with('error', 'El profesor no puede ser dado de BAJA mientras tenga un usufructo activo.');
         }
 
-        $profesor->activo = false;
+        $profesor->activo = false;  // Desactiva el profesor
         $profesor->save();
 
         return redirect()->route('profesors.index')
@@ -99,7 +94,7 @@ class ProfesorController extends Controller
     }
 
     /**
-     * Activar un profesor
+     * Reactiva un profesor previamente desactivado.
      */
     public function activar($id)
     {
@@ -110,6 +105,4 @@ class ProfesorController extends Controller
         return redirect()->route('profesors.index')
             ->with('success', 'Profesor activado correctamente.');
     }
-
-
 }

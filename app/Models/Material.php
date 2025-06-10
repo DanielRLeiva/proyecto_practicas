@@ -8,8 +8,10 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Material extends Model implements Auditable
 {
+    // Habilita factories y auditoría automática
     use HasFactory, \OwenIt\Auditing\Auditable;
 
+    // Campos que se pueden asignar masivamente
     protected $fillable = [
         'etiqueta',
         'descripcion',
@@ -17,10 +19,12 @@ class Material extends Model implements Auditable
         'modelo',
         'numero_serie',
         'caracteristicas',
-        'aula_id',
+        'aula_id',  // Clave foránea: relación con un aula
     ];
 
-    public function aula() {
+    // Relación: un material pertenece a un aula
+    public function aula()
+    {
         return $this->belongsTo(Aula::class);
     }
 }

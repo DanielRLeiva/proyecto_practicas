@@ -7,6 +7,7 @@
 <div class="concontainer-fluid my-5 px-1 px-md-2 px-lg-3 px-xl-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="d-flex flex-column">
+            {{-- Nombre usuario autenticado --}}
             <span class="navbar-text fw-bold">
                 Bienvenido, {{ Auth::user()->name }}
             </span>
@@ -15,24 +16,22 @@
         </div>
 
         <div class="d-flex flex-column gap-2">
+            {{-- Link a lista de ubicaciones --}}
             <a href="{{ route('aulas.index') }}" class="btn btn-primary">Volver a la lista de Ubicaciones</a>
 
-            <!-- Botón para mostrar/ocultar el formulario -->
+            {{-- Botón para mostrar/ocultar formulario de filtros --}}
             <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#filterFormCollapse">Desplegar Filtrado</button>
         </div>
     </div>
 </div>
 
 <hr>
-</hr>
 
 <div class="collapse my-4" id="filterFormCollapse">
     <div class="mx-auto" style="max-width: 600px;">
-
-        <!-- Formulario de filtrado (inicialmente oculto) -->
         <form method="GET" action="{{ route('auditoria.index') }}" class="mb-5">
 
-            <!-- Registros por página -->
+            {{-- Selector de cantidad de registros por página --}}
             <div class="mb-3">
                 <label class="fw-bold mb-2" for="per_page">Registros por página</label>
                 <select name="per_page" id="per_page" class="form-select">
@@ -44,8 +43,8 @@
                 </select>
             </div>
 
-            <!-- Usuario -->
             <div class="row g-3 align-items-end">
+                {{-- Filtro usuario --}}
                 <div class="form-group mb-2">
                     <label class="fw-bold mb-2" for="usuario">Usuario</label>
                     <select name="usuario" id="usuario" class="form-control">
@@ -59,7 +58,7 @@
                     </select>
                 </div>
 
-                <!-- Fecha inicio Fecha fin -->
+                {{-- Filtro rango fechas --}}
                 <div class="form-group mb-2 w-100">
                     <div class="d-flex gap-3">
                         <div class="flex-fill d-flex flex-column">
@@ -73,7 +72,7 @@
                     </div>
                 </div>
 
-                <!-- Modelo -->
+                {{-- Filtro modelo --}}
                 <div class="form-group mb-3">
                     <label class="fw-bold mb-2" for="modelo">Modelo</label>
                     <select name="modelo" id="modelo" class="form-control">
@@ -88,7 +87,7 @@
                     </select>
                 </div>
 
-                <!-- Acción -->
+                {{-- Filtro acción --}}
                 <div class="form-group mb-2">
                     <label class="fw-bold mb-2" for="accion">Acción</label>
                     <select name="accion" id="accion" class="form-control">
@@ -99,7 +98,7 @@
                     </select>
                 </div>
 
-                <!-- Botones -->
+                {{-- Botones filtrar y limpiar --}}
                 <div class="d-flex justify-content-between  mt-5">
                     <button type="submit" class="btn btn-primary">Filtrar</button>
                     <a href="{{ route('auditoria.index') }}" class="btn btn-secondary">Limpiar</a>
@@ -108,16 +107,16 @@
         </form>
     </div>
     <hr>
-    </hr>
 </div>
 
 <div class="container-fluid my-4 px-1 px-md-2 px-lg-3 px-xl-4">
     <div class="d-flex justify-content-between align-items-center">
         <h3>Modificaciones</h3>
 
-        <!-- Formulario de eliminación -->
+        {{-- Formulario para borrar registros filtrados --}}
         <form action="{{ route('auditoria.confirmarBorrado') }}" method="POST">
             @csrf
+            {{-- Envío de filtros actuales para borrar --}}
             <input type="hidden" name="usuario" value="{{ request('usuario') }}">
             <input type="hidden" name="fecha_inicio" value="{{ request('fecha_inicio') }}">
             <input type="hidden" name="fecha_fin" value="{{ request('fecha_fin') }}">
@@ -133,6 +132,7 @@
 
 <div class="table-responsive mt-3" style="max-height: 600px; overflow-y: auto;">
     @if (!$auditorias->isNotEmpty())
+    {{-- Mensaje si no hay registros --}}
     <p class="container alert alert-warning text-center my-5">No hay registros de auditoría aún.</p>
 
     @else
@@ -149,7 +149,10 @@
         <tbody>
             @foreach($auditorias as $audit)
             <tr>
+                {{-- Nombre usuario o 'Sistema' --}}
                 <td>{{ optional($audit->user)->name ?? 'Sistema' }}</td>
+
+                {{-- Badge según tipo de acción --}}
                 <td>
                     @switch($audit->event)
                     @case('created') <span class="badge bg-success">Creado</span> @break
@@ -160,12 +163,16 @@
                     <span class="badge bg-secondary">{{ $audit->event }}</span>
                     @endswitch
                 </td>
+
+                {{-- Elemento auditado --}}
                 <td>{{ $audit->label }}</td>
+                {{-- Modelo del registro --}}
                 <td>{{ $audit->modelName }}</td>
+                {{-- Fecha y hora formateada --}}
                 <td>{{ $audit->created_at->format('d/m/Y H:i') }}</td>
             </tr>
 
-            {{-- Mostrar diferencias si fue update --}}
+            {{-- Mostrar detalles de modificaciones si fue actualización --}}
             @if($audit->event === 'updated')
             <tr>
                 <td colspan="5">
@@ -193,15 +200,17 @@
     @endif
 </div>
 
+{{-- Paginación --}}
 <div class="d-flex justify-content-center mb-4">
     {{ $auditorias->links('pagination::bootstrap-4') }}
 </div>
 
+{{-- Botón para volver a lista de ubicaciones --}}
 <div class="text-center mb-5">
     <a href="{{ route('aulas.index') }}" class="btn btn-primary">Volver a la lista de Ubicaciones</a>
 </div>
 
-<!-- Script para mostrar filtro de Búsquesa -->
+{{-- Script para manejo de fechas en formulario --}}
 @push('scripts')
 <script src="{{ asset('js/fechasForm.js') }}"></script>
 @endpush

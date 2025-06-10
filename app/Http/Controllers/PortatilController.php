@@ -8,17 +8,18 @@ use Illuminate\Http\Request;
 class PortatilController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra la lista de todos los portátiles,
+     * ordenados por estado: primero 'Asignado', luego 'Libre' y después otros (ej. 'Baja').
      */
     public function index()
     {
-        $portatiles = Portatil::with('usufructo')
+        $portatiles = Portatil::with('usufructo') // Carga relación usufructo para evitar consultas N+1
             ->get()
             ->sortBy(function ($portatil) {
                 return match ($portatil->estado) {
                     'Asignado' => 0,
                     'Libre' => 1,
-                    default => 2, // Baja u otros
+                    default => 2, // Baja u otros estados
                 };
             });
 
@@ -26,7 +27,7 @@ class PortatilController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para crear un nuevo portátil.
      */
     public function create()
     {
@@ -34,7 +35,8 @@ class PortatilController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Valida y guarda un nuevo portátil.
+     * Se asigna estado 'Libre' y activo por defecto.
      */
     public function store(Request $request)
     {
@@ -46,8 +48,8 @@ class PortatilController extends Controller
         $portatil = new Portatil();
         $portatil->marca_modelo = $request->marca_modelo;
         $portatil->comentarios = $request->comentarios;
-        $portatil->estado = 'Libre';
-        $portatil->activo = true;
+        $portatil->estado = 'Libre';  // Estado inicial
+        $portatil->activo = true;     // Marcado como activo
         $portatil->save();
 
         return redirect()->route("portatils.index")
@@ -55,15 +57,7 @@ class PortatilController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Portatil $portatil)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario para editar un portátil existente.
      */
     public function edit(Portatil $portatil)
     {
@@ -71,7 +65,7 @@ class PortatilController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Valida y actualiza los datos de un portátil.
      */
     public function update(Request $request, Portatil $portatil)
     {
@@ -90,7 +84,9 @@ class PortatilController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Baja lógica de un portátil.
+     * Antes de darlo de baja, verifica que no tenga un usufructo activo.
+     * Si tiene, muestra error; si no, cambia estado a 'Baja' y marca como inactivo.
      */
     public function destroy(Portatil $portatil)
     {
@@ -110,13 +106,13 @@ class PortatilController extends Controller
     }
 
     /**
-     * Activar un portátil dado de baja
+     * Reactivar un portátil dado de baja.
+     * También verifica que no tenga usufructo activo para evitar conflictos.
      */
     public function activar($id)
     {
         $portatil = Portatil::findOrFail($id);
 
-        // Verificar que no tenga un usufructo activo
         $usufructoActivo = $portatil->usufructo()->whereNull('fecha_fin')->exists();
 
         if ($usufructoActivo) {

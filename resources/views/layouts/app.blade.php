@@ -36,40 +36,38 @@
 
                 {{-- Contenido colapsable --}}
                 <div class="collapse navbar-collapse justify-content-end mt-3" id="navbarContenido">
-                    <ul class="navbar-nav ">
-                        <ul class="navbar-nav align">
-                            @auth
-                            {{-- Enlaces visibles directamente en pantallas grandes --}}
-                            <li class="nav-item"><a class="nav-link" href="{{ route('aulas.index') }}">Aulas</a></li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="usufructosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Usufructos
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="usufructosDropdown">
-                                    <li><a class="dropdown-item" href="{{ route('usufructos.index') }}">Usufructos</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('profesors.index') }}">Profesores</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('portatils.index') }}">Portátiles</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('equipos.all') }}">Todos los Equipos</a></li>
+                    <ul class="navbar-nav">
+                        @auth
+                        <li class="nav-item"><a class="nav-link" href="{{ route('aulas.index') }}">Aulas</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="usufructosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Usufructos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="usufructosDropdown">
+                                <li><a class="dropdown-item" href="{{ route('usufructos.index') }}">Usufructos</a></li>
+                                <li><a class="dropdown-item" href="{{ route('profesors.index') }}">Profesores</a></li>
+                                <li><a class="dropdown-item" href="{{ route('portatils.index') }}">Portátiles</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('equipos.all') }}">Todos los Equipos</a></li>
 
-                            @role('admin')
-                            <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Usuarios</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('auditoria.index') }}">Auditorías</a></li>
-                            @endrole
+                        @role('admin')
+                        <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Usuarios</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('auditoria.index') }}">Auditorías</a></li>
+                        @endrole
 
-                            <li class="nav-item">
-                                <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                                    @csrf
-                                    <button class="btn btn-link nav-link text-danger" type="submit">Cerrar sesión</button>
-                                </form>
-                            </li>
-                            
-                            @else
-                            <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Iniciar sesión</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Registrarse</a></li>
-                            @endauth
-                        </ul>
+                        <li class="nav-item">
+                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                @csrf
+                                <button class="btn btn-link nav-link text-danger" type="submit">Cerrar sesión</button>
+                            </form>
+                        </li>
+
+                        @else
+                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Iniciar sesión</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Registrarse</a></li>
+                        @endauth
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -98,13 +96,13 @@
 
     {{-- FOOTER --}}
     <footer class="bg-dark text-secondary py-4">
-        <div class="container-fluid  py-4 px-2 px-md-3 px-lg-4 px-xl-5">
+        <div class="container-fluid py-4 px-2 px-md-3 px-lg-4 px-xl-5">
             <div class="row align-items-center">
-                <div class="col-12 col-lg-8 text-light py-4 ">
+                <div class="col-12 col-lg-8 text-light py-4">
                     <p class="mb-1">C.P.I.F.P. Alan Turing</p>
                     <p class="mb-1">Telf: 951.040.449 | C/ Frederick Terman, 3</p>
                     <p class="mb-1">29590 Campanillas (Málaga)</p>
-                    <p class="">29020231.info@g.educaand.es</p>
+                    <p>29020231.info@g.educaand.es</p>
                 </div>
 
                 <div class="col-12 col-lg-4 text-center">
@@ -116,8 +114,7 @@
             </div>
         </div>
 
-        <hr>
-        </hr>
+        <hr/>
 
         <div class="text-center pt-3">
             <div class="mb-3 d-flex justify-content-center gap-4">
@@ -150,6 +147,7 @@
             <div class="text-center pt-4">
                 <p>&copy; Inventariado TIC CPIFP Alan Turing 2025</p>
             </div>
+        </div>
     </footer>
 
     {{-- Bootstrap JS --}}

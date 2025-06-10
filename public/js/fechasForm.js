@@ -1,31 +1,30 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Obtener los elementos de fecha de inicio y fecha de fin
+    // Obtiene inputs de fecha de inicio y fin
     var fechaInicio = document.getElementById("fecha_inicio");
     var fechaFin = document.getElementById("fecha_fin");
 
-    // Función para actualizar el valor mínimo de la fecha de fin
+    // Actualiza el atributo "min" de fechaFin para que no pueda ser anterior a fechaInicio
     function actualizarMinFechaFin() {
         var fechaInicioValor = fechaInicio.value;
         fechaFin.setAttribute("min", fechaInicioValor);
     }
 
-    // Llamar a la función para establecer el mínimo de la fecha de fin al cargar la página
-    if (fechaInicio.value) { // Solo actualiza si ya hay una fecha de inicio seleccionada
+    // Si ya hay fecha de inicio al cargar, ajusta el mínimo de fechaFin
+    if (fechaInicio.value) {
         actualizarMinFechaFin();
     }
 
-    // Al cambiar la fecha de inicio, actualizar el mínimo de la fecha de fin
+    // Cada vez que cambia fechaInicio, actualiza mínimo permitido para fechaFin
     fechaInicio.addEventListener("change", function() {
         actualizarMinFechaFin();
     });
 
-    // Al cambiar la fecha de fin, asegurarse que no sea anterior a la fecha de inicio
+    // Valida que fechaFin no sea anterior a fechaInicio, si pasa, alerta y borra valor
     fechaFin.addEventListener("change", function() {
         var fechaFinValor = fechaFin.value;
         if (fechaFinValor < fechaInicio.value) {
-            // Si la fecha de fin es menor que la de inicio, se puede alertar al usuario o restablecerla
             alert("La fecha de fin no puede ser anterior a la fecha de inicio.");
-            fechaFin.value = ""; // Esto borra el valor seleccionado
+            fechaFin.value = "";
         }
     });
 });

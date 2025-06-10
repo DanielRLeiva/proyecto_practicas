@@ -11,26 +11,27 @@ use Illuminate\Http\Request;
 class ProfesorPortatilController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra la lista de usufructos activos y el historial de finalizados.
      */
     public function index()
     {
-        // Obtener usufructos activos (sin fecha de finalización)
+        // Usufructos activos: sin fecha de fin (aún en curso)
         $usufructosActivos = ProfesorPortatil::with(['profesor', 'portatil'])
             ->whereNull('fecha_fin')
             ->get();
 
-        // Obtener historial de usufructos finalizados
+        // Usufructos finalizados: con fecha de fin, ordenados de más reciente a más antiguo
         $usufructosFinalizados = ProfesorPortatil::with(['profesor', 'portatil'])
             ->whereNotNull('fecha_fin')
-            ->orderBy('fecha_fin', 'desc') // Ordenar por la fecha de finalización, de más reciente a más antiguo
+            ->orderBy('fecha_fin', 'desc')
             ->get();
 
         return view('usufructos.index', compact('usufructosActivos', 'usufructosFinalizados'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para crear un nuevo usufructo.
+     * Solo muestra profesores y portátiles activos para seleccionar.
      */
     public function create()
     {
@@ -41,7 +42,10 @@ class ProfesorPortatilController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Valida y guarda un nuevo usufructo, verificando que:
+     * - La fecha de inicio no sea posterior a la fecha de fin.
+     * - El portátil seleccionado no esté ya en uso (sin fecha de fin).
+     * Luego marca el portátil como asignado (inactivo).
      */
     public function store(Request $request)
     {
@@ -52,13 +56,15 @@ class ProfesorPortatilController extends Controller
             'fecha_fin' => 'nullable|date',
         ]);
 
+        // Validación adicional: fecha inicio <= fecha fin
         if ($request->fecha_fin && $request->fecha_inicio > $request->fecha_fin) {
             $validator->errors()->add('fecha_inicio', 'La fecha de inicio no puede ser posterior a la fecha de fin.');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        // Comprobar si el portátil ya está asignado (sin fecha fin)
         $portatilEnUso = ProfesorPortatil::where('portatil_id', $request->portatil_id)
-            ->whereNull('fecha_fin') // Solo verificar los que no tienen fecha de finalización
+            ->whereNull('fecha_fin')
             ->exists();
 
         if ($portatilEnUso) {
@@ -66,9 +72,10 @@ class ProfesorPortatilController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        // Crear el usufructo
         ProfesorPortatil::create($request->all());
 
-        // Marcar el portátil como inactivo
+        // Cambiar estado del portátil a 'Asignado' y marcar como inactivo
         $portatil = Portatil::find($request->portatil_id);
         $portatil->estado = 'Asignado';
         $portatil->activo = false;
@@ -78,15 +85,7 @@ class ProfesorPortatilController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(ProfesorPortatil $usufructo)
-    {
-        // return view('usufructos.show', compact('usufructo'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
+     * Formulario para editar un usufructo.
      */
     public function edit(ProfesorPortatil $usufructo)
     {
@@ -97,7 +96,8 @@ class ProfesorPortatilController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza un usufructo validando fechas y disponibilidad del portátil.
+     * Si se pone una fecha de fin (finaliza el usufructo), el portátil vuelve a estar activo y libre.
      */
     public function update(Request $request, ProfesorPortatil $usufructo)
     {
@@ -108,11 +108,13 @@ class ProfesorPortatilController extends Controller
             'fecha_fin' => 'nullable|date',
         ]);
 
+        // Validar que fecha inicio no sea mayor que fecha fin
         if ($request->fecha_fin && $request->fecha_inicio > $request->fecha_fin) {
             $validator->errors()->add('fecha_inicio', 'La fecha de inicio no puede ser posterior a la fecha de fin.');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        // Verificar que el portátil no esté en uso por otro usufructo activo (excluyendo este)
         $portatilEnUso = ProfesorPortatil::where('portatil_id', $request->portatil_id)
             ->whereNull('fecha_fin')
             ->where('id', '!=', $usufructo->id)
@@ -123,6 +125,7 @@ class ProfesorPortatilController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        // Actualizar usufructo
         $usufructo->update([
             'profesor_id' => $request->profesor_id,
             'portatil_id' => $request->portatil_id,
@@ -130,7 +133,7 @@ class ProfesorPortatilController extends Controller
             'fecha_fin' => $request->fecha_fin,
         ]);
 
-        // Si se ha modificado una fecha de fin, restarurar el portátil a estado activo
+        // Si se ha añadido una fecha fin (usufructo finalizado), liberar portátil
         if ($request->fecha_fin) {
             $portatil = Portatil::find($request->portatil_id);
             $portatil->estado = 'Libre';
@@ -143,19 +146,20 @@ class ProfesorPortatilController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina un usufructo.
+     * Si estaba activo (sin fecha fin), libera el portátil asociado.
      */
     public function destroy(ProfesorPortatil $usufructo)
     {
         $portatil = $usufructo->portatil;
 
-        // Si el usufructo estaba activo
+        // Si usufructo activo, liberar portátil
         if (is_null($usufructo->fecha_fin)) {
             $portatil->estado = 'Libre';
             $portatil->activo = true;
             $portatil->save();
         }
-        
+
         $usufructo->delete();
 
         return redirect()->route('usufructos.index')

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class MaterialController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra la lista de todos los materiales.
      */
     public function index()
     {
@@ -19,17 +19,18 @@ class MaterialController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para crear un nuevo material asociado a un aula.
      */
     public function create($aula_id)
     {
-        $aula = Aula::findOrFail($aula_id);
+        $aula = Aula::findOrFail($aula_id); // Verifica que el aula exista
 
         return view('materials.create', compact('aula', 'aula_id'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guarda un nuevo material en la base de datos.
+     * Valida los campos y redirige a la vista del aula correspondiente.
      */
     public function store(Request $request)
     {
@@ -40,7 +41,7 @@ class MaterialController extends Controller
             'modelo' => 'nullable|string|max:255',
             'numero_serie' => 'nullable|string|max:255',
             'caracteristicas' => 'nullable|string',
-            'aula_id' => 'required|exists:aulas,id',
+            'aula_id' => 'required|exists:aulas,id', // Aula debe existir
         ]);
 
         Material::create($request->all());
@@ -50,7 +51,7 @@ class MaterialController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Muestra los detalles de un material específico.
      */
     public function show(Material $material)
     {
@@ -58,17 +59,19 @@ class MaterialController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario para editar un material.
+     * Se pasa también el aula para contexto.
      */
     public function edit(Material $material, $aula_id)
     {
         $aula = Aula::findOrFail($aula_id);
-    
+
         return view('materials.edit', compact('material', 'aula'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza un material existente.
+     * Se valida, busca el material por ID y luego actualiza sus campos.
      */
     public function update(Request $request, $id)
     {
@@ -82,7 +85,7 @@ class MaterialController extends Controller
             'aula_id' => 'required|exists:aulas,id',
         ]);
 
-        $material = Material::findOrFail($id) ;
+        $material = Material::findOrFail($id);
 
         $material->update([
             'etiqueta' => $request->etiqueta,
@@ -99,7 +102,8 @@ class MaterialController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina un material de la base de datos.
+     * Luego redirige a la vista del aula asociada.
      */
     public function destroy($id)
     {

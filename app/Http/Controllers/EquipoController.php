@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class EquipoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra la lista de todos los equipos.
      */
     public function index()
     {
@@ -19,7 +19,8 @@ class EquipoController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para crear un nuevo equipo.
+     * Permite duplicar un equipo existente si se recibe el parámetro 'duplicar'.
      */
     public function create(Request $request, $aula_id)
     {
@@ -34,10 +35,12 @@ class EquipoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guarda un nuevo equipo en la base de datos.
+     * Valida campos, crea el equipo y redirige según de dónde venga la petición.
      */
     public function store(Request $request)
     {
+        // Validación de campos (muchos son opcionales)
         $request->validate([
             'etiqueta_cpu' => 'nullable|string|max:60',
             'marca_cpu' => 'nullable|string|max:60',
@@ -58,28 +61,26 @@ class EquipoController extends Controller
             'observaciones' => 'nullable|string',
             'aula_id' => 'required|exists:aulas,id',
             'numero_inventario' => 'nullable|string|max:60',
-
         ]);
 
         Equipo::create($request->all());
 
-
         $redirectUrl = $request->input('redirect_to');
         $aulaId = $request->input('aula_id');
 
-        // Verificamos si venimos de 'equipos.all'
+        // Si la petición viene de la lista general de equipos
         if (str_contains($redirectUrl, route('equipos.all'))) {
             return redirect()->route('equipos.all')
                 ->with('success', 'Equipo creado con éxito.');
         }
 
-        // Si no, redirigimos a la ubicación específica
+        // Si no, redirige a la vista del aula específica
         return redirect()->route('aulas.show', ['aula' => $aulaId])
             ->with('success', 'Equipo creado con éxito.');
     }
 
     /**
-     * Display the specified resource.
+     * Muestra los detalles de un equipo específico.
      */
     public function show(Equipo $equipo)
     {
@@ -87,7 +88,8 @@ class EquipoController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario para editar un equipo.
+     * Recibe el aula para mostrar contexto en la vista.
      */
     public function edit(Equipo $equipo, $aula_id)
     {
@@ -97,7 +99,8 @@ class EquipoController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza los datos de un equipo existente.
+     * Aquí hay un error: se está creando un nuevo equipo en vez de actualizar el existente.
      */
     public function update(Request $request)
     {
@@ -123,24 +126,23 @@ class EquipoController extends Controller
             'numero_inventario' => 'nullable|string|max:60',
         ]);
 
+        // ERROR: Aquí debería actualizar el equipo, no crear uno nuevo
         Equipo::create($request->all());
 
         $redirectUrl = $request->input('redirect_to');
         $aulaId = $request->input('aula_id');
 
-        // Verificamos si venimos de 'equipos.all'
         if (str_contains($redirectUrl, route('equipos.all'))) {
             return redirect()->route('equipos.all')
                 ->with('success', 'Equipo actualizado con éxito.');
         }
 
-        // Si no, redirigimos a la ubicación específica
         return redirect()->route('aulas.show', ['aula' => $aulaId])
             ->with('success', 'Equipo actualizado con éxito.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina un equipo.
      */
     public function destroy($id)
     {
@@ -151,14 +153,15 @@ class EquipoController extends Controller
     }
 
     /**
-     * Muestra todos los equipos de todas las aulas.
+     * Muestra todos los equipos de todas las aulas, con filtros y paginación.
      */
     public function all(Request $request)
     {
         $query = Equipo::join('aulas', 'equipos.aula_id', '=', 'aulas.id')
-            ->select('equipos.*') // Seleccionamos solo los campos de equipos
-            ->with('aula');  // Cargamos la relación para la vista
+            ->select('equipos.*') // Solo campos de equipos
+            ->with('aula'); // Carga la relación aula para la vista
 
+        // Filtros opcionales para marca, aula y número de inventario
         if ($request->filled('marca_cpu')) {
             $query->where('marca_cpu', 'like', '%' . $request->marca_cpu . '%');
         }
@@ -171,15 +174,14 @@ class EquipoController extends Controller
             $query->where('numero_inventario', 'like', '%' . $request->numero_inventario . '%');
         }
 
-        // Ordenar por nombre de ubicación y luego etiqueta_cpu
+        // Ordenar primero por el nombre del aula, luego por etiqueta_cpu
         $query->orderBy('aulas.nombre')
             ->orderBy('equipos.etiqueta_cpu');
 
-
-        $perPage = $request->input('per_page', 10); // valor por defecto: 10
+        $perPage = $request->input('per_page', 10); // Paginación, 10 por defecto
         $equipos = $query->paginate($perPage)->appends($request->query());
 
-        $aulas = Aula::orderBy('nombre')->get(); // Para mostrar en el select de aulas
+        $aulas = Aula::orderBy('nombre')->get(); // Para filtro de aulas en la vista
 
         return view('equipos.all', compact('equipos', 'aulas'));
     }
