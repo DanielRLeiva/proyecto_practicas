@@ -38,6 +38,13 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 // Rutas para admin
 Route::middleware(['auth', 'role:admin', 'nocache'])->group(function () {
     Route::resource('aulas', AulaController::class);
+
+});
+// Rutas para editor (sin delete)
+Route::middleware(['auth', 'role:admin|editor', 'nocache'])->group(function () {
+    Route::resource('aulas', AulaController::class)->only([
+        'index', 'show', 'create', 'store', 'edit', 'update'
+    ]);
 });
 
 // Rutas para editors y viewers - solo pueden ver el listado y detalles

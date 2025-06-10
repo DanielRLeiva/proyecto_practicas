@@ -11,16 +11,16 @@
                 Bienvenido, {{ Auth::user()->name }}
             </span>
 
-            <a href="{{ route('aulas.index') }}" class="btn btn-primary mt-4 mb-5">Volver a la lista de aulas</a>
-        </div>
-
-        <div>
             <h2>{{ $aula->nombre }}</h2>
             <p><strong>Ubicación:</strong> {{ $aula->ubicacion }}</p>
 
             @if (!empty($aula->descripcion))
             <p><strong>Descripción:</strong> {{ $aula->descripcion }}</p>
             @endif
+        </div>
+
+        <div>
+            <a href="{{ route('aulas.index') }}" class="btn btn-primary">Volver a la lista de aulas</a>
         </div>
     </div>
 </div>
@@ -32,7 +32,7 @@
     <h3>Equipos</h3>
 
     @role('admin|editor')
-    <a href="{{ route('equipos.create', $aula->id) }}" class="btn btn-success mb-3">Crear equipo</a>
+    <a href="{{ route('equipos.create', $aula->id) }}" class="btn btn-success">Crear equipo</a>
     @endrole
 </div>
 
@@ -113,12 +113,12 @@
     <h3>Materiales</h3>
 
     @role('admin|editor')
-    <a href="{{ route('materials.create', $aula->id) }}" class="btn btn-success mb-3">Crear material</a>
+    <a href="{{ route('materials.create', $aula->id) }}" class="btn btn-success">Crear material</a>
     @endrole
 </div>
 
 @if($aula->materiales->isEmpty())
-<p  class="container alert alert-warning text-center my-5">No hay materiales registrados para esta aula.</p>
+<p  class="container alert alert-warning text-center">No hay materiales registrados para esta aula.</p>
 @else
 
 <div class="table-responsive mb-5" style="max-height: 600px; overflow-y: auto;">

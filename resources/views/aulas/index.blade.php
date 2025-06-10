@@ -16,7 +16,7 @@
 
         <!-- Botón para crear un nuevo aula -->
         <div>
-            @role('admin')
+            @role('admin|editor')
             <a href="{{ route('aulas.create') }}" class="btn btn-success">Crear Aula</a>
             @endrole
         </div>
@@ -50,13 +50,15 @@
                 <td>
                     <div class="d-flex justify-content-center gap-2">
                         <a href="{{ route('aulas.show', $aula->id) }}" class="btn btn-info">Detalles</a>
-                        @role('admin')
+                        @role('admin|editor')
                         <a href="{{ route('aulas.edit', $aula->id) }}" class="btn btn-warning">Editar</a>
+                        @role('admin')
                         <form action="{{ route('aulas.destroy', $aula->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar aula?')">Eliminar</button>
                         </form>
+                        @endrole
                         @endrole
                     </div>
                 </td>
