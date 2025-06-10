@@ -102,7 +102,7 @@ class EquipoController extends Controller
      * Actualiza los datos de un equipo existente.
      * Aquí hay un error: se está creando un nuevo equipo en vez de actualizar el existente.
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'etiqueta_cpu' => 'nullable|string|max:60',
@@ -127,16 +127,40 @@ class EquipoController extends Controller
         ]);
 
         // ERROR: Aquí debería actualizar el equipo, no crear uno nuevo
-        Equipo::create($request->all());
+        $equipo = Equipo::findOrFail($id);
+
+        $equipo->update([
+            'etiqueta_cpu' => $request->etiqueta_cpu,
+            'marca_cpu' => $request->marca_cpu,
+            'modelo_cpu' => $request->modelo_cpu,
+            'numero_serie_cpu' => $request->numero_serie_cpu,
+            'tipo_cpu' => $request->tipo_cpu,
+            'memoria' => $request->memoria,
+            'disco_duro' => $request->disco_duro,
+            'conectores_video' => $request->conectores_video,
+            'etiqueta_monitor' => $request->etiqueta_monitor,
+            'marca_monitor' => $request->marca_monitor,
+            'modelo_monitor' => $request->modelo_monitor,
+            'conectores_monitor' => $request->conectores_monitor,
+            'pulgadas' => $request->pulgadas,
+            'numero_serie_monitor' => $request->numero_serie_monitor,
+            'etiqueta_teclado' => $request->etiqueta_teclado,
+            'etiqueta_raton' => $request->etiqueta_raton,
+            'observaciones' => $request->observaciones,
+            'aula_id' => $request->aula_id,
+            'numero_inventario' => $request->numero_inventario,
+        ]);
 
         $redirectUrl = $request->input('redirect_to');
         $aulaId = $request->input('aula_id');
 
+        // Verificamos si venimos de 'equipos.all'
         if (str_contains($redirectUrl, route('equipos.all'))) {
             return redirect()->route('equipos.all')
                 ->with('success', 'Equipo actualizado con éxito.');
         }
 
+        // Si no, redirigimos a la ubicación específica
         return redirect()->route('aulas.show', ['aula' => $aulaId])
             ->with('success', 'Equipo actualizado con éxito.');
     }
