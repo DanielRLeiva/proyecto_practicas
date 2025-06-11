@@ -10,7 +10,6 @@ use App\Models\Equipo;
 use App\Models\Material;
 use App\Models\Portatil;
 use App\Models\Profesor;
-use Carbon\Carbon;
 
 class AuditoriaController extends Controller
 {
@@ -165,13 +164,17 @@ class AuditoriaController extends Controller
                     break;
 
                 case 'ProfesorPortatil':
-                    // Obtener nombre del profesor y fecha de inicio para la etiqueta
+                    // Obtener nombre del profesor
                     $profesorId = $attributes['profesor_id'] ?? $old['profesor_id'] ?? $audit->auditable->profesor_id ?? null;
                     $profesor = optional(Profesor::find($profesorId));
                     $nombreProfesor = trim(($profesor->nombre ?? '') . ' ' . ($profesor->apellido_1 ?? '') . ' ' . ($profesor->apellido_2 ?? ''));
-                    $fechaRaw = $attributes['fecha_inicio'] ?? $old['fecha_inicio'] ?? $audit->auditable->fecha_inicio ?? '';
-                    $fechaInicio = $fechaRaw ? Carbon::parse($fechaRaw)->format('d/m/Y') : '';
-                    $label = $nombreProfesor ? "Usufructo de $nombreProfesor ($fechaInicio)" : "Usufructo ($fechaInicio)";
+
+                    // Obtener portátil asignado
+                    $portatilId = $attributes['portatil_id'] ?? $old['portatil_id'] ?? $audit->auditable->portatil_id ?? null;
+                    $portatil = optional(Portatil::find($portatilId));
+                    $equipo = $portatil->marca_modelo ?? 'Equipo desconocido';
+
+                    $label = $nombreProfesor ? "Usufructo de $nombreProfesor - $equipo" : "Usufructo ($equipo)";
                     break;
 
                 case 'User':
