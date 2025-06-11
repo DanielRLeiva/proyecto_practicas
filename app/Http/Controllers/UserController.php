@@ -6,8 +6,6 @@ use App\Models\Audit;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use OwenIt\Auditing\Auditable;
-use OwenIt\Auditing\Models\Audit as AuditModel;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
