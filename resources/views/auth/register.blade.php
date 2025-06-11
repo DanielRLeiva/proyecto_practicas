@@ -19,30 +19,18 @@
             <div class="form-group mb-3">
                 <label for="name" class="fw-bold mb-2">Nombre</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" required>
-                {{-- Mostrar mensaje de error si la validación de nombre falla --}}
-                @error('name')
-                <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
             </div>
 
             {{-- Campo para el correo electrónico --}}
             <div class="form-group mb-3">
                 <label for="email" class="fw-bold mb-2">Correo Electrónico</label>
                 <input type="text" class="form-control" id="email" name="email" placeholder="Correo Electrónico" required>
-                {{-- Mostrar mensaje de error si la validación de email falla --}}
-                @error('email')
-                <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
             </div>
 
             {{-- Campo para la contraseña --}}
             <div class="form-group mb-3">
                 <label for="password" class="fw-bold mb-2">Contraseña</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
-                {{-- Mostrar mensaje de error si la validación de contraseña falla --}}
-                @error('password')
-                <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
             </div>
 
             {{-- Campo para confirmar la contraseña --}}
